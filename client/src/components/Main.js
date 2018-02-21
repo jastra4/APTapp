@@ -24,7 +24,7 @@ class Main extends React.Component {
 		    <div>{this.props.items.map((item, i) => (
 		    	<AuctionItem item={item} key={i}/>
 		    ))}
-		    <button onClick={this.handleClick.bind(this)}>Get Data</button>
+		    <button onClick={this.handleClick.bind(this)}>Update DB</button>
 		    </div>
 		  </div>
 		);

@@ -25,21 +25,15 @@ app.use(bodyParser.json());
 /************************************************************/
 
 app.get('/updateDB', (req, res) => {
-	const userRegion = req.query.region;
-	const userRealm = req.query.realm;
-	console.log(`userRegion ${userRegion}`);
-	console.log(`userRealm ${userRealm}`);
-  blizzard.wow.auction({ realm: userRealm, origin: userRegion })
+	const { region, realm }  = req.query;
+  blizzard.wow.auction({ realm: realm, origin: region })
  .then(response => {
- 		const batchId = response.data.files[0].url
- 		console.log('batchId: ', batchId);
- 		rp(batchId).then((results) => {
- 			console.log('rp finished');
- 		  console.log('batchId: ', batchId);
-			dbMethod.insertBatch(results, batchId)
+ 		rp(response.data.files[0].url).then((results) => {
+			dbMethod.insertBatch(results)
 			res.send(results);
 		}).catch((err) => {
-			console.log('request error: ', err);
+			console.log('updateDB error: ', err);
+			res.sendStatus(500);
 		})
   });		
 })

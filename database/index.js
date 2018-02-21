@@ -45,20 +45,18 @@ var ahSchema = mongoose.Schema({
 // Inserts 
 /************************************************************/
 
-const insertBatch = (data, batch) => {
-console.log('insertBatch: ', batch);
-let test = new Date();
-test = JSON.stringify(test);
-mongoose.connection.db.listCollections({name: test})
-    .next(function(err, collinfo) {
-        if (collinfo) {
-          console.log(`Collection ${collinfo.name} already exists.`)
-        } else {
-          const newBatch = mongoose.model(test, ahSchema);
-          const dump = JSON.parse(data);
-          console.log('insertBatch running on: ', dump.auctions.length);
-          newBatch.insertMany(dump.auctions);
-        }
+const insertBatch = (data) => {
+  const dumpId = JSON.stringify(new Date());
+  mongoose.connection.db.listCollections({name: dumpId})
+    .next(function(err, doc) {
+      if (doc) {
+        console.log('dumpId already exists');
+      } else {
+        const newDump = mongoose.model(dumpId, ahSchema);
+        data = JSON.parse(data);
+        console.log('inserting: ', data.auctions.length);
+        newDump.insertMany(data.auctions);
+      }
     });
 }
 

@@ -1,10 +1,12 @@
-const auctionsReducer = (state = [], action) => {
-  if (action.type === 'SOME_ACTION') {
-    return action.payload;
-  } else if (action.type === 'OTHER_ACTION') {
-    return [];
-  }
-  return state;
-};
+const auctionsReducerDefaultState = [];
 
-export default auctionsReducer;
+const auctionsReducer = (state = auctionsReducerDefaultState, action) => {
+	switch (action.type) {
+		case 'AUCTION_DATA':
+			return [...state, action.auctions];
+		case 'DELETE_DATA':
+			return {};
+		default:
+			return state;
+	}
+};

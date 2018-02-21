@@ -24,20 +24,22 @@ app.use(bodyParser.json());
 // Routes
 /************************************************************/
 
-
 app.get('/updateDB', (req, res) => {
 	const userRegion = req.query.region;
 	const userRealm = req.query.realm;
+	console.log(`userRegion ${userRegion}`);
+	console.log(`userRealm ${userRealm}`);
   blizzard.wow.auction({ realm: userRealm, origin: userRegion })
  .then(response => {
  		const batchId = response.data.files[0].url
  		console.log('batchId: ', batchId);
  		rp(batchId).then((results) => {
  			console.log('rp finished');
+ 		  console.log('batchId: ', batchId);
 			dbMethod.insertBatch(results, batchId)
-			res.send('insertBatch should finish in a minute');
+			res.send(results);
 		}).catch((err) => {
-			res.send('request error: ', err);
+			console.log('request error: ', err);
 		})
   });		
 })

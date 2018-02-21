@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/edge');
 
 var db = mongoose.connection;
+// to start in terminal with no authorization restrictions:
+// mongod --port 27017 --dbpath /data/db
 
 db.on('error', function(err) {
   console.log('mongoose connection error ', err);
@@ -45,12 +47,14 @@ var ahSchema = mongoose.Schema({
 
 const insertBatch = (data, batch) => {
 console.log('insertBatch: ', batch);
-mongoose.connection.db.listCollections({name: batch})
+let test = new Date();
+test = JSON.stringify(test);
+mongoose.connection.db.listCollections({name: test})
     .next(function(err, collinfo) {
         if (collinfo) {
           console.log(`Collection ${collinfo.name} already exists.`)
         } else {
-          const newBatch = mongoose.model(batch, ahSchema);
+          const newBatch = mongoose.model(test, ahSchema);
           const dump = JSON.parse(data);
           console.log('insertBatch running on: ', dump.auctions.length);
           newBatch.insertMany(dump.auctions);

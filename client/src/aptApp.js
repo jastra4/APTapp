@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from '../store.js';
-import style from './style.scss';
+import Store from '../src/store/store.js';
+import style from '../src/styles/style.scss';
 import Main from './components/Main.js';
+import { connect } from 'react-redux';
 
 class AptApp extends React.Component {
   constructor(props) {
@@ -13,34 +14,27 @@ class AptApp extends React.Component {
   }
 
   render () {
+    {console.log(this.props.items)}
     return (
       <div>
-        <div>Hello world</div>
-        <Main />
+        <Main items={this.props.items}/>
       </div>
     )
   }
 }
 
+function mapStateToProps (state) {
+  return state;
+}
+
+function mapDispatchToProps (dispatch){
+  return {}
+}
+
+const App = connect(mapStateToProps, mapDispatchToProps)(AptApp);
+
 ReactDOM.render((
-  <Provider store={store} >
-    <AptApp />
+  <Provider store={ Store } >
+    <App />
   </Provider>
 ), document.getElementById('root'));
-
-// function mapStateToProps (state) {
-//   return {
-//     currentTab: state.currentTab,
-//     user: state.user
-//   }
-// }
-
-// function mapDispatchToProps (dispatch) {
-//   return bindActionCreators({
-//     selectTab: selectTab,
-//     setUser: setUser,
-//     logoutReset: logoutReset
-//   }, dispatch);
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(AptApp);

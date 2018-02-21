@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Store from '../src/store/store.js';
 import style from '../src/styles/style.scss';
-import Main from './components/Main.js';
+import MainConnected from './components/Main.js';
 import { connect } from 'react-redux';
 
 class AptApp extends React.Component {
@@ -17,7 +17,7 @@ class AptApp extends React.Component {
     {console.log(this.props.items)}
     return (
       <div>
-        <Main items={this.props.items}/>
+        <MainConnected items={this.props.items}/>
       </div>
     )
   }

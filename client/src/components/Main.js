@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
+import { connect } from 'react-redux';
 import AuctionItem from './auctionItem';
 
 class Main extends React.Component {
@@ -19,6 +20,11 @@ class Main extends React.Component {
 	    });
 	}
 
+	// TODO:
+	// add to store
+	// display
+	// do calcs
+	// display calcs
 	search(e) {
 		e.preventDefault();
 		let input = $('#search').val();
@@ -49,4 +55,21 @@ class Main extends React.Component {
 	}
 }
 
-export default Main;
+// export default Main;
+
+const mapDispatchToProps = dispatch => (
+  {}
+
+  // { loadMessages: messageInfo => dispatch(setMessages(messageInfo)) }
+);
+
+const mapStateToProps = (state) => {
+  // const messagesById = state.messages.byId;
+  // const messagesForChat = Object.keys(messagesById).map(key => messagesById[key]);
+  return state;
+};
+
+const MainConnected = connect(mapStateToProps, mapDispatchToProps)(Main);
+
+export default MainConnected;
+

@@ -3,7 +3,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/index.js';
-import AuctionItem from './auctionItem';
+import ItemList from './ItemList';
 
 class Main extends React.Component {
 	constructor (props) {
@@ -22,7 +22,6 @@ class Main extends React.Component {
 	}
 
 	// TODO:
-	// add to store
 	// display
 	// do calcs
 	// display calcs
@@ -40,36 +39,29 @@ class Main extends React.Component {
 	}
 
 	render() {
+		console.log('Main props ', this.props);
 		return(
 		  <div>
-		    <div>{this.props.items.map((item, i) => (
-		    	<AuctionItem item={item} key={i}/>
-		    ))}
 		    <button onClick={this.handleClick.bind(this)}>Update DB</button>
 		    <div>
 		    	<form onSubmit={this.search.bind(this)}>
 				    <input id="search" placeholder="enter item ID ex '12417'"/>
 		    	</form>
 		    </div>
-		    </div>
+				<ItemList items={this.props.items} />
 		  </div>
 		);
 	}
 }
-
-// export default Main;
 
 const mapDispatchToProps = dispatch => (
   { loadItems: itemList => dispatch(setItemList(itemList)) }
 );
 
 const mapStateToProps = (state) => {
-  // const messagesById = state.messages.byId;
-  // const messagesForChat = Object.keys(messagesById).map(key => messagesById[key]);
   return state;
 };
 
 const MainConnected = connect(mapStateToProps, mapDispatchToProps)(Main);
 
 export default MainConnected;
-

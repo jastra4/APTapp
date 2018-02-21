@@ -1,19 +1,19 @@
 import React from 'react';
 
-class AuctionItem extends React.Component {
+class Item extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render () {
-  	console.log(this.props.item);
+    console.log('Item ', this.props);
 		return (
 		  <div>
-		  	<h1>{this.props.item.item}</h1>
+		  	<p>Item</p>
 		  </div>
 		);
   }
 }
 
-export default AuctionItem;
+export default Item;

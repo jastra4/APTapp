@@ -1,10 +1,11 @@
 const itemsReducer = (state = [], action) => {
   switch (action.type) {
     case 'ITEM_LIST':
-    	const newItem = action.payload[0].item;
-      return [...state,{
-      	[action.payload[0].item]: action.payload,
-      }];
+      return action.payload;
+    	// const newItem = action.payload[0].item;
+     //  return [...state,{
+     //  	[action.payload[0].item]: action.payload,
+     //  }];
     default:
       return state;
   }

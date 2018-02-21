@@ -7,11 +7,15 @@ class Item extends React.Component {
   }
 
   render () {
-    console.log('Item ', this.props);
 		return (
-		  <div>
-		  	<p>Item</p>
-		  </div>
+		  <h4>
+		  	<div>{`Owner: ${this.props.item.owner}`}</div>
+        <div>{`Realm: ${this.props.item.ownerRealm}`}</div>
+        <div>{`Bid: ${this.props.item.bid}`}</div>
+        <div>{`Buyout: ${this.props.item.buyout}`}</div>
+        <div>{`Quantity: ${this.props.item.quantity}`}</div>
+        <div>{`Time left: ${this.props.item.timeLeft}`}</div>
+		  </h4>
 		);
   }
 }

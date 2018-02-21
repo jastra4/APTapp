@@ -25,7 +25,7 @@ class AptApp extends React.Component {
 
 const mapStateToProps = (state) => {
   console.log('mapStateToProps ', state);
-  return ( {items: state.itemsReducer} );
+  return ( {items: state.items} );
 }
 
 const mapDispatchToProps = (dispatch) => {

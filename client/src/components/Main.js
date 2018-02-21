@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
-import setItemList from '../../src/actions/index.js';
+import setItemList from '../../src/actions/itemsActions';
 import ItemList from './ItemList';
 
 class Main extends React.Component {
@@ -21,10 +21,6 @@ class Main extends React.Component {
 	    });
 	}
 
-	// TODO:
-	// display
-	// do calcs
-	// display calcs
 	search(e) {
 		e.preventDefault();
 		let input = $('#search').val();

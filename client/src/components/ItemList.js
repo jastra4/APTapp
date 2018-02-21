@@ -8,7 +8,6 @@ class ItemList extends React.Component {
   }
 
   render () {
-    console.log('ItemList props ', this.props);
 		return (
 		  <div>
 		  	{this.props.items.map((item, i) => (

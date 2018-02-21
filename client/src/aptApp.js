@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Store from '../src/store/store.js';
-import style from '../src/styles/style.scss';
-import MainConnected from './components/Main.js';
-import { connect } from 'react-redux';
+import MainConnected from './components/Main';
+import SummaryConnected from './components/Summary';
 
 class AptApp extends React.Component {
   constructor(props) {
@@ -14,28 +13,17 @@ class AptApp extends React.Component {
   }
 
   render () {
-    {console.log(this.props.items)}
     return (
       <div>
-        <MainConnected items={this.props.items}/>
+        <SummaryConnected />
+        <MainConnected />
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('mapStateToProps ', state);
-  return ( {items: state.items} );
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {};
-}
-
-const App = connect(mapStateToProps, mapDispatchToProps)(AptApp);
-
 ReactDOM.render((
   <Provider store={ Store } >
-    <App />
+    <AptApp />
   </Provider>
 ), document.getElementById('root'));

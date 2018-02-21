@@ -26,7 +26,6 @@ class Main extends React.Component {
 		let input = $('#search').val();
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
-				console.log('success ', res);
 				this.props.loadItems(res.data);
 			})
 			.catch((res) => {
@@ -35,16 +34,15 @@ class Main extends React.Component {
 	}
 
 	render() {
-		console.log('Main props ', this.props);
 		return(
 		  <div>
-		    <button onClick={this.handleClick.bind(this)}>Update DB</button>
 		    <div>
 		    	<form onSubmit={this.search.bind(this)}>
 				    <input id="search" placeholder="enter item ID ex '12417'"/>
 		    	</form>
 		    </div>
 				<ItemList items={this.props.items} />
+		    <button onClick={this.handleClick.bind(this)}>Update DB</button>
 		  </div>
 		);
 	}
@@ -55,7 +53,7 @@ const mapDispatchToProps = dispatch => (
 );
 
 const mapStateToProps = (state) => {
-  return state;
+  return ( {items: state.items} );
 };
 
 const MainConnected = connect(mapStateToProps, mapDispatchToProps)(Main);

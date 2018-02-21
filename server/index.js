@@ -23,7 +23,8 @@ app.use(bodyParser.json());
 /************************************************************/
 // Routes
 /************************************************************/
-
+// TODO:
+// handle different factions & realms
 app.get('/updateDB', (req, res) => {
 	const { region, realm }  = req.query;
   blizzard.wow.auction({ realm: realm, origin: region })

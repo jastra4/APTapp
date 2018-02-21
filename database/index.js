@@ -21,7 +21,7 @@ db.once('open', function() {
 // Schemas
 /************************************************************/
 
-var ahSchema = mongoose.Schema({
+const dumpSchema = mongoose.Schema({
   id: {
     type: String,
     unique: false,
@@ -39,7 +39,7 @@ var ahSchema = mongoose.Schema({
   seed: Number,
   timeLeft: String
 });
-// var AH = mongoose.model('AH', ahSchema);
+const Dumps = mongoose.model('dumps', dumpSchema);
 
 /************************************************************/
 // Inserts 
@@ -50,9 +50,9 @@ const insertBatch = (data) => {
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
       if (doc) {
-        console.log('dumpId already exists');
+        console.log('dump already exists');
       } else {
-        const newDump = mongoose.model(dumpId, ahSchema);
+        const newDump = mongoose.model(dumpId, dumpSchema);
         data = JSON.parse(data);
         console.log('inserting: ', data.auctions.length);
         newDump.insertMany(data.auctions);
@@ -71,14 +71,14 @@ const insertBatch = (data) => {
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, collInfos) {
     console.log(collInfos[collInfos.length-1].name);
-    const lastBatch= collInfos[collInfos.length-1].name;
-    const coll = mongoose.model(lastBatch, ahSchema);
+    const lastBatch = collInfos[collInfos.length-1].name;
+    // const coll = collInfos[collInfos.length-1];
+    const coll = mongoose.model(lastBatch, dumpSchema);
     coll.find({"item": item}, function(err, results) {
-      console.log('results: ', results)
-      console.log('err: ', err)
       if(err) {
-        callback(err);
+        console.log('err: ', err)
       } else {
+        console.log('results: ', results)
         callback(results);
       }
     })

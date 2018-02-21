@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import $ from 'jquery';
 import AuctionItem from './auctionItem';
 
 class Main extends React.Component {
@@ -18,6 +19,18 @@ class Main extends React.Component {
 	    });
 	}
 
+	search(e) {
+		e.preventDefault();
+		let input = $('#search').val();
+		axios.get(`/queryDB?item=${input}`)
+			.then((res) => {
+				console.log('success ', res);
+			})
+			.catch((res) => {
+				console.log('error ', res);
+			});
+	}
+
 	render() {
 		return(
 		  <div>
@@ -25,6 +38,11 @@ class Main extends React.Component {
 		    	<AuctionItem item={item} key={i}/>
 		    ))}
 		    <button onClick={this.handleClick.bind(this)}>Update DB</button>
+		    <div>
+		    	<form onSubmit={this.search.bind(this)}>
+				    <input id="search" placeholder="enter item ID ex '12417'"/>
+		    	</form>
+		    </div>
 		    </div>
 		  </div>
 		);

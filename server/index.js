@@ -40,7 +40,7 @@ app.get('/updateDB', (req, res) => {
 
 // client asks for db auctions back
 app.get('/queryDB', (req, res) => {
-	const item = req.query.item;
+	const { item } = req.query;
 	dbMethod.selectAll(item, (data)  => {
 		res.send(data);
 	})

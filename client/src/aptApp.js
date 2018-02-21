@@ -14,7 +14,7 @@ class AptApp extends React.Component {
   }
 
   render () {
-    {console.log(this.props.items)}
+    {console.log(this.props)}
     return (
       <div>
         <MainConnected items={this.props.items}/>
@@ -23,12 +23,13 @@ class AptApp extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
-  return state;
+const mapStateToProps = (state) => {
+  console.log('mapStateToProps ', state);
+  return ( {items: state.itemsReducer} );
 }
 
-function mapDispatchToProps (dispatch){
-  return {}
+const mapDispatchToProps = (dispatch) => {
+  return {};
 }
 
 const App = connect(mapStateToProps, mapDispatchToProps)(AptApp);

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
+import setItemList from '../../src/actions/index.js';
 import AuctionItem from './auctionItem';
 
 class Main extends React.Component {
@@ -31,6 +32,7 @@ class Main extends React.Component {
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
 				console.log('success ', res);
+				this.props.loadItems(res.data);
 			})
 			.catch((res) => {
 				console.log('error ', res);
@@ -58,9 +60,7 @@ class Main extends React.Component {
 // export default Main;
 
 const mapDispatchToProps = dispatch => (
-  {}
-
-  // { loadMessages: messageInfo => dispatch(setMessages(messageInfo)) }
+  { loadItems: itemList => dispatch(setItemList(itemList)) }
 );
 
 const mapStateToProps = (state) => {

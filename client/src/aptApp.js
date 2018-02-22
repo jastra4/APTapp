@@ -8,8 +8,7 @@ import SummaryConnected from './components/Summary';
 class AptApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render () {

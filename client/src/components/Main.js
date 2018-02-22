@@ -9,9 +9,12 @@ class Main extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {};
+
+		this.updateDB = this.updateDB.bind(this);
+		this.queryDB = this.queryDB.bind(this);
 	}
 
-	handleClick() {
+	updateDB() {
 	  axios.get(`/updateDB?region=${'US'}&&realm=${'Tichondrius'}`)
 	    .then((res) => {
 	    	console.log('success ', res);
@@ -21,9 +24,9 @@ class Main extends React.Component {
 	    });
 	}
 
-	search(e) {
+	queryDB(e) {
 		e.preventDefault();
-		let input = $('#search').val();
+		let input = $('#queryDB').val();
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
 				this.props.loadItems(res.data);
@@ -37,12 +40,12 @@ class Main extends React.Component {
 		return(
 		  <div>
 		    <div>
-		    	<form onSubmit={this.search.bind(this)}>
-				    <input id="search" placeholder="enter item ID ex '12417'"/>
+		    	<form onSubmit={this.queryDB}>
+				    <input id="queryDB" placeholder="enter item ID ex '12417'"/>
 		    	</form>
 		    </div>
 				<ItemList items={this.props.items} />
-		    <button onClick={this.handleClick.bind(this)}>Update DB</button>
+		    <button onClick={this.updateDB}>Update DB</button>
 		  </div>
 		);
 	}

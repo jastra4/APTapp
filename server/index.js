@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const helpers = require('./helpers');
 const dbMethod = require('../database/index.js');
 const config = require('../config.js');
+const dateFormat = require('dateformat');
+// message.timeStamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
 const blizzard = require('blizzard.js').initialize({ apikey: config.API.Key });
 const request = require('request');
 const rp = require('request-promise');
@@ -44,6 +46,7 @@ app.get('/queryDB', (req, res) => {
 	// https://us.api.battle.net/wow/item/12417?locale=en_US&apikey=7gh9d3c7n42cwpnakp2xrfgucvh8ydev
 	//helpers.test((result) => {
 		dbMethod.selectAll(item, (data) => {
+			console.log('selectAll ran');
 			res.send(data);
 		})
 	//});

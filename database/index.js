@@ -37,9 +37,9 @@ const dumpSchema = mongoose.Schema({
   quantity: Number,
   rand: Number,
   seed: Number,
-  timeLeft: String
+  timeLeft: String,
 });
-const Dumps = mongoose.model('dumps', dumpSchema);
+// const Dumps = mongoose.model('dumps', dumpSchema);
 
 /************************************************************/
 // Inserts 
@@ -68,20 +68,39 @@ const insertBatch = (data) => {
 // Queries
 /************************************************************/
 
+// working for 1
+// var selectAll = function(item, callback) {
+//   mongoose.connection.db.listCollections().toArray(function(err, docs) {
+//     const lastBatch = docs[docs.length-1].name;
+//     const coll = mongoose.model(lastBatch, dumpSchema);
+//     coll.find({"item": item}, function(err, results) {
+//       if(err) {
+//         console.log('err: ', err)
+//       } else {
+//         callback(results);
+//       }
+//     })
+//   })
+// };
+
 var selectAll = function(item, callback) {
-  mongoose.connection.db.listCollections().toArray(function(err, collInfos) {
-    console.log(collInfos[collInfos.length-1].name);
-    const lastBatch = collInfos[collInfos.length-1].name;
-    // const coll = collInfos[collInfos.length-1];
-    const coll = mongoose.model(lastBatch, dumpSchema);
-    coll.find({"item": item}, function(err, results) {
-      if(err) {
-        console.log('err: ', err)
-      } else {
-        console.log('results: ', results)
-        callback(results);
-      }
-    })
+  mongoose.connection.db.listCollections().toArray(function(err, docs) {
+    let list = [];
+    docs.forEach((doc) => {
+      let col = mongoose.model(doc.name, dumpSchema);
+      query = col.find({"item": item}).sort('-created');
+      query.exec((err, results) => {
+        if (err) {
+          console.log('err: ', err);
+        } else {
+          results.unshift(doc.name);
+          list.push(results);
+        }
+      });
+    });
+    setTimeout(() => {
+      callback(list);
+    }, 3000);
   })
 };
 

@@ -29,6 +29,7 @@ class Main extends React.Component {
 		let input = $('#queryDB').val();
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
+				console.log(res);
 				this.props.loadItems(res.data);
 			})
 			.catch((res) => {
@@ -36,6 +37,12 @@ class Main extends React.Component {
 			});
 	}
 
+	// "id": 127834,
+	// "spellId": 188016,
+ //    "itemSource": {
+ //      "sourceId": 188300,
+ //      "sourceType": "CREATED_BY_SPELL"
+ //  },
 	render() {
 		return(
 		  <div>

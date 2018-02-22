@@ -42,7 +42,11 @@ app.get('/queryDB', (req, res) => {
 	const { item } = req.query;
 	// git required materials from blizz item api
 	// https://us.api.battle.net/wow/item/12417?locale=en_US&apikey=7gh9d3c7n42cwpnakp2xrfgucvh8ydev
-	helpers.test();
+	//helpers.test((result) => {
+		dbMethod.selectAll(item, (data) => {
+			res.send(data);
+		})
+	//});
 	// blizzard.wow.item({ itemId: item })
 	//   .then((response) => {
 	//   	console.log('queryDB response ', response);
@@ -50,9 +54,6 @@ app.get('/queryDB', (req, res) => {
 	//   .catch((err) => {
 	// 		console.log('err ', err);
 	//   });
-	dbMethod.selectAll(item, (data)  => {
-		res.send(data);
-	})
 })
 
 /************************************************************/

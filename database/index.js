@@ -3,7 +3,15 @@
 /************************************************************/
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/edge');
+const keys = require('../server/config/keys');
+
+// local
+// mongoose.connect('mongodb://localhost/edge');
+
+// live
+mongoose.connect(keys.mongodb.dbURI)
+  .then(() => { console.log('✅  Successfully connected to Mongodb'); })
+  .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 
 var db = mongoose.connection;
 // to start in terminal with no authorization restrictions:

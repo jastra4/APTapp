@@ -12,6 +12,33 @@ class Item extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+   let minBuyout = 0;
+   let maxBuyout = 0;
+   let avgBuyout = 0;
+   let avgAuctionSize = 0;
+   let totalSupply = 0;
+   nextProps.itemList.forEach((item, i) => {
+     if (item.buyout > maxBuyout) {
+       maxBuyout = item.buyout;
+     }
+     if (item.buyout < minBuyout || minBuyout === 0) {
+       minBuyout = item.buyout
+     }
+     avgBuyout += item.buyout;
+     totalSupply += item.quantity;
+   });
+   avgBuyout = avgBuyout / (totalSupply || 1);
+   avgAuctionSize = totalSupply / (nextProps.itemList.length || 1);
+   this.setState({
+     minBuyout: Math.floor((minBuyout / 10000)),
+     maxBuyout: Math.floor((maxBuyout / 10000)),
+     avgBuyout: Math.floor((avgBuyout / 10000)),
+     avgAuctionSize: Math.floor(totalSupply / (nextProps.itemList.length || 1)),
+     totalSupply: totalSupply,
+   });    
+  }
+
   componentDidMount() {
    let minBuyout = 0;
    let maxBuyout = 0;
@@ -42,11 +69,11 @@ class Item extends React.Component {
   render () {
 		return (
       <h5>
-        <div>{`minBuyout: ${this.state.minBuyout}`}</div>
-        <div>{`maxBuyout: ${this.state.maxBuyout}`}</div>
-        <div>{`avgBuyout: ${this.state.avgBuyout}`}</div>
-        <div>{`avgAuctionSize: ${this.state.avgAuctionSize}`}</div>
-        <div>{`totalSupply: ${this.state.totalSupply}`}</div>
+        <div>{`Minimum buyout: ${this.state.minBuyout}`}</div>
+        <div>{`Maximum buyout: ${this.state.maxBuyout}`}</div>
+        <div>{`Average buyout: ${this.state.avgBuyout}`}</div>
+        <div>{`Auctions: ${this.props.itemList}`}</div>
+        <div>{`Total supply: ${this.state.totalSupply}`}</div>
       </h5>
 		);
   }

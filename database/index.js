@@ -68,21 +68,6 @@ const insertBatch = (data) => {
 // Queries
 /************************************************************/
 
-// working for 1
-// var selectAll = function(item, callback) {
-//   mongoose.connection.db.listCollections().toArray(function(err, docs) {
-//     const lastBatch = docs[docs.length-1].name;
-//     const coll = mongoose.model(lastBatch, dumpSchema);
-//     coll.find({"item": item}, function(err, results) {
-//       if(err) {
-//         console.log('err: ', err)
-//       } else {
-//         callback(results);
-//       }
-//     })
-//   })
-// };
-
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, docs) {
     let list = [];
@@ -93,7 +78,6 @@ var selectAll = function(item, callback) {
         if (err) {
           console.log('err: ', err);
         } else {
-          results.unshift(doc.name);
           list.push(results);
         }
       });

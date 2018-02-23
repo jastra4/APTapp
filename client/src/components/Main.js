@@ -3,7 +3,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/itemsActions';
-import ItemList from './ItemList';
+import ItemListConnected from './ItemList';
 
 class Main extends React.Component {
 	constructor (props) {
@@ -37,12 +37,6 @@ class Main extends React.Component {
 			});
 	}
 
-	// "id": 127834,
-	// "spellId": 188016,
- //    "itemSource": {
- //      "sourceId": 188300,
- //      "sourceType": "CREATED_BY_SPELL"
- //  },
 	render() {
 		return(
 		  <div>
@@ -51,7 +45,7 @@ class Main extends React.Component {
 				    <input id="queryDB" placeholder="enter item ID ex '12417'"/>
 		    	</form>
 		    </div>
-				<ItemList items={this.props.items} />
+				<ItemListConnected />
 		    <button onClick={this.updateDB}>Update DB</button>
 		  </div>
 		);
@@ -69,3 +63,5 @@ const mapStateToProps = (state) => {
 const MainConnected = connect(mapStateToProps, mapDispatchToProps)(Main);
 
 export default MainConnected;
+
+// items={this.props.items} 

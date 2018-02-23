@@ -6,10 +6,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers');
 const dbMethod = require('../database/index.js');
-const config = require('../config.js');
+// const config = require('../config.js');
+// const keys = require('.../server/config/keys');
+const keys = require('../server/config/keys');
 const dateFormat = require('dateformat');
 // message.timeStamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
-const blizzard = require('blizzard.js').initialize({ apikey: config.API.Key });
+// const blizzard = require('blizzard.js').initialize({ apikey: config.API.Key });
+const blizzard = require('blizzard.js').initialize({ apikey: keys.apiKey });
 const request = require('request');
 const rp = require('request-promise');
 

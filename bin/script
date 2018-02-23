@@ -1,7 +1,6 @@
 #!/usr/bin/evn node
 
-const keys = require('../server/config/keys');
-const blizzard = require('blizzard.js').initialize({ apikey: keys.apiKey });
+const blizzard = require('blizzard.js').initialize({ apikey: process.env.BLIZZARD_API });
 const rp = require('request-promise');
 
 
@@ -50,6 +49,7 @@ blizzard.wow.auction({ realm: 'Tichondrius', origin: 'US' })
 });		
 
 const insertBatch = (data) => {
+  console.log('insertBatch ran');
   const dumpId = JSON.stringify(new Date());
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {

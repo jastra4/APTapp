@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 
 // local
 // mongoose.connect('mongodb://localhost/edge');
-// mongodb://heroku_sb7l3f63:myFreyja1@ds147228.mlab.com:47228/heroku_sb7l3f63
 
 // live
 mongoose.connect(process.env.MONGODB_URI)

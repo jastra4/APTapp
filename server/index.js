@@ -29,7 +29,7 @@ app.get('/updateDB', (req, res) => {
  .then(response => {
  		rp(response.data.files[0].url).then((results) => {
  			// const stamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
-			//dbMethod.insertBatch(results)
+			dbMethod.insertBatch(results)
 			res.send(results);
 		}).catch((err) => {
 			console.log('updateDB error: ', err);
@@ -37,8 +37,6 @@ app.get('/updateDB', (req, res) => {
 		})
   });		
 })
-
-// message.timeStamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
 
 app.get('/queryDB', (req, res) => {
 	const { item } = req.query;

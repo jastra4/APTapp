@@ -11,11 +11,10 @@ class Summary extends React.Component {
 		this.state = { avgBuyout: 0 };
 	}
 
-	// calcs() {
 	componentWillReceiveProps(nextProps) {
 		let avgBuyout = 0;
 		let totalCount = 0;
-		nextProps.dumps.forEach((dump) => {
+		nextProps.items.forEach((dump) => {
 			dump.forEach((item) => {
 				avgBuyout += item.buyout;
 				totalCount ++;
@@ -26,18 +25,18 @@ class Summary extends React.Component {
 	}
 
 	render() {
-		console.log('Summary ', this.props);
 		return(
 			<div>
 				<div>{`Average price (in gold) ${this.state.avgBuyout}`}</div>
-			  <div>{`Number of data dumps: ${this.props.dumps.length}`}</div>
+			  <div>{`Number of data dumps: ${this.props.items.length}`}</div>
 		  </div>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
-  return ( {dumps: state.items} );
+	console.log('mapStateToProps ', state);
+  return ( {items: state.items} );
 };
 
 const SummaryConnected = connect(mapStateToProps)(Summary);

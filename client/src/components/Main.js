@@ -42,7 +42,7 @@ class Main extends React.Component {
 		  <div>
 		    <div>
 		    	<form onSubmit={this.queryDB}>
-				    <input id="queryDB" placeholder="enter item ID ex '12417'"/>
+				    <input id="queryDB" placeholder="enter item ID ex '124102'"/>
 		    	</form>
 		    </div>
 				<ItemListConnected />
@@ -63,5 +63,3 @@ const mapStateToProps = (state) => {
 const MainConnected = connect(mapStateToProps, mapDispatchToProps)(Main);
 
 export default MainConnected;
-
-// items={this.props.items} 

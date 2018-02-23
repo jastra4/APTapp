@@ -28,7 +28,8 @@ app.get('/updateDB', (req, res) => {
   blizzard.wow.auction({ realm: realm, origin: region })
  .then(response => {
  		rp(response.data.files[0].url).then((results) => {
-			dbMethod.insertBatch(results)
+ 			// const stamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
+			//dbMethod.insertBatch(results)
 			res.send(results);
 		}).catch((err) => {
 			console.log('updateDB error: ', err);

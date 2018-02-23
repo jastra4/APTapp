@@ -52,7 +52,7 @@ const dumpSchema = mongoose.Schema({
 // Inserts 
 /************************************************************/
 
-const insertBatch = (data) => {
+const insertBatch = (data, stamp) => {
   const dumpId = JSON.stringify(new Date());
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
@@ -78,6 +78,7 @@ const insertBatch = (data) => {
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, docs) {
     let list = [];
+    // let hist = {};
     docs.forEach((doc) => {
       if (doc.name !== 'system.indexes') {
         let col = mongoose.model(doc.name, dumpSchema);
@@ -86,6 +87,9 @@ var selectAll = function(item, callback) {
           if (err) {
             console.log('err: ', err);
           } else {
+            // let stamp = doc.name;
+            // hist.stamp = stamp;
+            // hist.results = results;
             list.push(results);
           }
         });

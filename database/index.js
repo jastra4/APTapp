@@ -3,13 +3,14 @@
 /************************************************************/
 
 var mongoose = require('mongoose');
-const keys = require('../server/config/keys');
+// const keys = require('../server/config/keys');
 
 // local
 // mongoose.connect('mongodb://localhost/edge');
 
 // live
-mongoose.connect(keys.mongodb.dbURI)
+mongoose.connect(process.env.MONGODB_URI)
+// mongoose.connect(keys.mongodb.dbURI)
   .then(() => { console.log('✅  Successfully connected to Mongodb'); })
   .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 

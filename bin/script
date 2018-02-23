@@ -1,0 +1,66 @@
+#!/usr/bin/evn node
+
+const keys = require('../server/config/keys');
+const blizzard = require('blizzard.js').initialize({ apikey: keys.apiKey });
+const rp = require('request-promise');
+
+
+var mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => { console.log('✅  Successfully connected to Mongodb'); })
+  .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
+
+var db = mongoose.connection;
+
+db.on('error', function(err) {
+  console.log('mongoose connection error ', err);
+});
+
+db.once('open', function() {
+  console.log('mongoose connected successfully');
+});	
+
+const dumpSchema = mongoose.Schema({
+  id: {
+    type: String,
+    unique: false,
+    required: false
+  },
+  auc: Number,
+  bid: Number,
+  buyout: Number,
+  context: Number,
+  item: Number,
+  owner: String,
+  ownerRealm: String,
+  quantity: Number,
+  rand: Number,
+  seed: Number,
+  timeLeft: String,
+});
+
+blizzard.wow.auction({ realm: 'Tichondrius', origin: 'US' })
+.then(response => {
+		rp(response.data.files[0].url).then((results) => {
+		insertBatch(results)
+	}).catch((err) => {
+		console.log('updateDB error: ', err);
+	})
+});		
+
+const insertBatch = (data) => {
+  const dumpId = JSON.stringify(new Date());
+  mongoose.connection.db.listCollections({name: dumpId})
+    .next(function(err, doc) {
+      if (doc) {
+        console.log('dump already exists');
+      } else {
+        const newDump = mongoose.model(dumpId, dumpSchema);
+        data = JSON.parse(data);
+        console.log('inserting: ', data.auctions.length);
+        newDump.insertMany(data.auctions);
+      }
+    });
+}
+

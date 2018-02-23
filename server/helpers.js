@@ -1,6 +1,6 @@
 const request = require('request');
 const rp = require('request-promise');
-const config = require('../config.js');
+// const config = require('../config.js');
 
 // inactive
 test = (callback) => {

@@ -4,9 +4,11 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const helpers = require('./helpers.js');
+const helpers = require('./helpers');
 const dbMethod = require('../database/index.js');
 const config = require('../config.js');
+const dateFormat = require('dateformat');
+// message.timeStamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
 const blizzard = require('blizzard.js').initialize({ apikey: config.API.Key });
 const request = require('request');
 const rp = require('request-promise');
@@ -25,35 +27,28 @@ app.use(bodyParser.json());
 /************************************************************/
 
 app.get('/updateDB', (req, res) => {
-	const userRegion = req.query.region;
-	const userRealm = req.query.realm;
-	console.log(`userRegion ${userRegion}`);
-	console.log(`userRealm ${userRealm}`);
-  blizzard.wow.auction({ realm: userRealm, origin: userRegion })
+	const { region, realm }  = req.query;
+  blizzard.wow.auction({ realm: realm, origin: region })
  .then(response => {
- 		const batchId = response.data.files[0].url
- 		console.log('batchId: ', batchId);
- 		rp(batchId).then((results) => {
- 			console.log('rp finished');
- 		  console.log('batchId: ', batchId);
-			dbMethod.insertBatch(results, batchId)
+ 		rp(response.data.files[0].url).then((results) => {
+			dbMethod.insertBatch(results)
 			res.send(results);
 		}).catch((err) => {
-			console.log('request error: ', err);
+			console.log('updateDB error: ', err);
+			res.sendStatus(500);
 		})
   });		
 })
 
-// client asks for db auctions back
 app.get('/queryDB', (req, res) => {
-	const item = req.query.item;
-	dbMethod.selectAll(item, (data)  => {
+	const { item } = req.query;
+	dbMethod.selectAll(item, (data) => {
 		res.send(data);
-	})
+	});
 })
 
 /************************************************************/
 /************************************************************/
 
 let port = process.env.PORT || 1128;
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));

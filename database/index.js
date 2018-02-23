@@ -3,7 +3,15 @@
 /************************************************************/
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/edge');
+const keys = require('../server/config/keys');
+
+// local
+// mongoose.connect('mongodb://localhost/edge');
+
+// live
+mongoose.connect(keys.mongodb.dbURI)
+  .then(() => { console.log('✅  Successfully connected to Mongodb'); })
+  .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 
 var db = mongoose.connection;
 // to start in terminal with no authorization restrictions:
@@ -21,7 +29,7 @@ db.once('open', function() {
 // Schemas
 /************************************************************/
 
-var ahSchema = mongoose.Schema({
+const dumpSchema = mongoose.Schema({
   id: {
     type: String,
     unique: false,
@@ -37,28 +45,26 @@ var ahSchema = mongoose.Schema({
   quantity: Number,
   rand: Number,
   seed: Number,
-  timeLeft: String
+  timeLeft: String,
 });
-// var AH = mongoose.model('AH', ahSchema);
+// const Dumps = mongoose.model('dumps', dumpSchema);
 
 /************************************************************/
 // Inserts 
 /************************************************************/
 
-const insertBatch = (data, batch) => {
-console.log('insertBatch: ', batch);
-let test = new Date();
-test = JSON.stringify(test);
-mongoose.connection.db.listCollections({name: test})
-    .next(function(err, collinfo) {
-        if (collinfo) {
-          console.log(`Collection ${collinfo.name} already exists.`)
-        } else {
-          const newBatch = mongoose.model(test, ahSchema);
-          const dump = JSON.parse(data);
-          console.log('insertBatch running on: ', dump.auctions.length);
-          newBatch.insertMany(dump.auctions);
-        }
+const insertBatch = (data) => {
+  const dumpId = JSON.stringify(new Date());
+  mongoose.connection.db.listCollections({name: dumpId})
+    .next(function(err, doc) {
+      if (doc) {
+        console.log('dump already exists');
+      } else {
+        const newDump = mongoose.model(dumpId, dumpSchema);
+        data = JSON.parse(data);
+        console.log('inserting: ', data.auctions.length);
+        newDump.insertMany(data.auctions);
+      }
     });
 }
 
@@ -71,19 +77,22 @@ mongoose.connection.db.listCollections({name: test})
 /************************************************************/
 
 var selectAll = function(item, callback) {
-  mongoose.connection.db.listCollections().toArray(function(err, collInfos) {
-    console.log(collInfos[collInfos.length-1].name);
-    const lastBatch= collInfos[collInfos.length-1].name;
-    const coll = mongoose.model(lastBatch, ahSchema);
-    coll.find({"item": item}, function(err, results) {
-      console.log('results: ', results)
-      console.log('err: ', err)
-      if(err) {
-        callback(err);
-      } else {
-        callback(results);
-      }
-    })
+  mongoose.connection.db.listCollections().toArray(function(err, docs) {
+    let list = [];
+    docs.forEach((doc) => {
+      let col = mongoose.model(doc.name, dumpSchema);
+      query = col.find({"item": item}).sort('-created');
+      query.exec((err, results) => {
+        if (err) {
+          console.log('err: ', err);
+        } else {
+          list.push(results);
+        }
+      });
+    });
+    setTimeout(() => {
+      callback(list);
+    }, 3000);
   })
 };
 

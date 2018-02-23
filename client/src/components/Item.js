@@ -72,7 +72,7 @@ class Item extends React.Component {
         <div>{`Minimum buyout: ${this.state.minBuyout}`}</div>
         <div>{`Maximum buyout: ${this.state.maxBuyout}`}</div>
         <div>{`Average buyout: ${this.state.avgBuyout}`}</div>
-        <div>{`Auctions: ${this.props.itemList}`}</div>
+        <div>{`Auctions: ${this.props.itemList.length}`}</div>
         <div>{`Total supply: ${this.state.totalSupply}`}</div>
       </h5>
 		);

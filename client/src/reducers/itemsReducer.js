@@ -1,4 +1,4 @@
-const itemsReducer = (state = [], action) => {
+const itemsReducer = (state = [], action) => { // make state default {}
   switch (action.type) {
     case 'ITEM_LIST':
       return action.payload;

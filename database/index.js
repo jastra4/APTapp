@@ -3,14 +3,12 @@
 /************************************************************/
 
 var mongoose = require('mongoose');
-// const keys = require('../server/config/keys');
 
 // local
 // mongoose.connect('mongodb://localhost/edge');
 
 // live
 mongoose.connect(process.env.MONGODB_URI)
-// mongoose.connect(keys.mongodb.dbURI)
   .then(() => { console.log('✅  Successfully connected to Mongodb'); })
   .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 
@@ -48,13 +46,12 @@ const dumpSchema = mongoose.Schema({
   seed: Number,
   timeLeft: String,
 });
-// const Dumps = mongoose.model('dumps', dumpSchema);
 
 /************************************************************/
 // Inserts 
 /************************************************************/
 
-const insertBatch = (data) => {
+const insertBatch = (data, stamp) => {
   const dumpId = JSON.stringify(new Date());
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
@@ -80,16 +77,22 @@ const insertBatch = (data) => {
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, docs) {
     let list = [];
+    // let hist = {};
     docs.forEach((doc) => {
-      let col = mongoose.model(doc.name, dumpSchema);
-      query = col.find({"item": item}).sort('-created');
-      query.exec((err, results) => {
-        if (err) {
-          console.log('err: ', err);
-        } else {
-          list.push(results);
-        }
-      });
+      if (doc.name !== 'system.indexes') {
+        let col = mongoose.model(doc.name, dumpSchema);
+        query = col.find({"item": item}).sort('-created');
+        query.exec((err, results) => {
+          if (err) {
+            console.log('err: ', err);
+          } else {
+            // let stamp = doc.name;
+            // hist.stamp = stamp;
+            // hist.results = results;
+            list.push(results);
+          }
+        });
+      }
     });
     setTimeout(() => {
       callback(list);

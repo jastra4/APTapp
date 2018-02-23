@@ -4,14 +4,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const helpers = require('./helpers');
 const dbMethod = require('../database/index.js');
-// const config = require('../config.js');
-// const keys = require('../server/config/keys');
 const dateFormat = require('dateformat');
-// message.timeStamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
-// const blizzard = require('blizzard.js').initialize({ apikey: config.API.Key });
-
 const blizzard = require('blizzard.js').initialize({ apikey: process.env.BLIZZARD_API });
 const request = require('request');
 const rp = require('request-promise');
@@ -34,6 +28,7 @@ app.get('/updateDB', (req, res) => {
   blizzard.wow.auction({ realm: realm, origin: region })
  .then(response => {
  		rp(response.data.files[0].url).then((results) => {
+ 			// const stamp = dateFormat(new Date(), 'dddd, mmm dS, h:MM TT');
 			dbMethod.insertBatch(results)
 			res.send(results);
 		}).catch((err) => {

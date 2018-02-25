@@ -1,24 +1,13 @@
 #!/usr/bin/evn node
 
-const blizzard = require('blizzard.js').initialize({ apikey: process.env.BLIZZARD_API });
-const rp = require('request-promise');
+const mongoose = require('mongoose');
+mongoose.Promise = require("bluebird");
 
-
-var mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => { console.log('✅  Successfully connected to Mongodb'); })
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
+  .then(() => { console.log('✅  Successfully connected to', process.env.MONGODB_URI); })
   .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 
-var db = mongoose.connection;
-
-db.on('error', function(err) {
-  console.log('mongoose connection error ', err);
-});
-
-db.once('open', function() {
-  console.log('mongoose connected successfully');
-});	
+const db = mongoose.connection;
 
 const dumpSchema = mongoose.Schema({
   id: {
@@ -38,6 +27,9 @@ const dumpSchema = mongoose.Schema({
   seed: Number,
   timeLeft: String,
 });
+
+const blizzard = require('blizzard.js').initialize({ apikey: process.env.BLIZZARD_API });
+const rp = require('request-promise');
 
 blizzard.wow.auction({ realm: 'Tichondrius', origin: 'US' })
 .then(response => {

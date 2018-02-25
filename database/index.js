@@ -1,28 +1,19 @@
+// to start in terminal with no authorization restrictions:
+// mongod --port 27017 --dbpath /data/db
+
 /************************************************************/
 // Startup Process
 /************************************************************/
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+mongoose.Promise = require("bluebird");
 
-// local
 // mongoose.connect('mongodb://localhost/edge');
-
-// live
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => { console.log('✅  Successfully connected to Mongodb'); })
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
+  .then(() => { console.log('✅  Successfully connected to', process.env.MONGODB_URI); })
   .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 
-var db = mongoose.connection;
-// to start in terminal with no authorization restrictions:
-// mongod --port 27017 --dbpath /data/db
-
-db.on('error', function(err) {
-  console.log('mongoose connection error ', err);
-});
-
-db.once('open', function() {
-  console.log('mongoose connected successfully');
-});
+const db = mongoose.connection;
 
 /************************************************************/
 // Schemas
@@ -65,10 +56,6 @@ const insertBatch = (data, stamp) => {
       }
     });
 }
-
-// each batch should be a new collection
-// each batch is roughly 23.1 megabytes / 23,100 kilobytes
-// mlab offers 500 megabytes free
 
 /************************************************************/
 // Queries

@@ -9,22 +9,33 @@ class ItemList extends React.Component {
   }
 
   render () {
+    let results = Object.values(this.props.items);
+    results = results.slice(0, results.length-1);
+    let obj = {results: results};
+    console.log('render ', obj);
 		return (
       <div>
-  		  <div>
-  		  	{this.props.items.map((itemList, i) => (
-            <Item itemList={itemList} key={i} />
-          ))}
-  		  </div>
+        <div>
+          {results.map((dump, i) => {
+            return (<Item dump={dump} key={i} stamp={this.props.items[0].stamp}/>);
+          })}
+        </div>
       </div>
-		);
+    );
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps ', state.items[0].stamp);
   return ( {items: state.items} );
 };
 
 const ItemListConnected = connect(mapStateToProps)(ItemList);
 
 export default ItemListConnected;
+
+        // <div>
+        //   {dumpArr.map((dump, i) => (
+        //     <Item dump={dump} key={i} />
+        //  ))}
+        // </div>

@@ -29,8 +29,8 @@ class Search extends React.Component {
 		let input = $('#queryDB').val();
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
-				console.log(res);
-				// this.props.loadItems(res.data);
+				console.log('res ', res.data);
+				this.props.loadItems(res.data);
 			})
 			.catch((res) => {
 				console.log('error ', res);

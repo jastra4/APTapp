@@ -13,12 +13,13 @@ class Item extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+   console.log('componentWillReceiveProps ', nextProps);
    let minBuyout = 0;
    let maxBuyout = 0;
    let avgBuyout = 0;
    let avgAuctionSize = 0;
    let totalSupply = 0;
-   nextProps.itemList.forEach((item, i) => {
+   nextProps.dump.results.forEach((item, i) => {
      if (item.buyout > maxBuyout) {
        maxBuyout = item.buyout;
      }
@@ -29,23 +30,24 @@ class Item extends React.Component {
      totalSupply += item.quantity;
    });
    avgBuyout = avgBuyout / (totalSupply || 1);
-   avgAuctionSize = totalSupply / (nextProps.itemList.length || 1);
+   avgAuctionSize = totalSupply / (nextProps.dump.results.length || 1);
    this.setState({
      minBuyout: Math.floor((minBuyout / 10000)),
      maxBuyout: Math.floor((maxBuyout / 10000)),
      avgBuyout: Math.floor((avgBuyout / 10000)),
-     avgAuctionSize: Math.floor(totalSupply / (nextProps.itemList.length || 1)),
+     avgAuctionSize: Math.floor(totalSupply / (nextProps.dump.results.length || 1)),
      totalSupply: totalSupply,
    });    
   }
 
   componentDidMount() {
+   console.log('componentDidMount ', this.props.dump.results);
    let minBuyout = 0;
    let maxBuyout = 0;
    let avgBuyout = 0;
    let avgAuctionSize = 0;
    let totalSupply = 0;
-   this.props.itemList.forEach((item, i) => {
+   this.props.dump.results.forEach((item, i) => {
      if ((item.buyout/item.quantity) > maxBuyout) {
        maxBuyout = (item.buyout/item.quantity);
      }
@@ -56,23 +58,25 @@ class Item extends React.Component {
      totalSupply += item.quantity;
    });
    avgBuyout = avgBuyout / (totalSupply || 1);
-   avgAuctionSize = totalSupply / (this.props.itemList.length || 1);
+   avgAuctionSize = totalSupply / (this.props.dump.length || 1);
    this.setState({
      minBuyout: Math.floor((minBuyout / 10000)),
      maxBuyout: Math.floor((maxBuyout / 10000)),
      avgBuyout: Math.floor((avgBuyout / 10000)),
-     avgAuctionSize: Math.floor(totalSupply / (this.props.itemList.length || 1)),
+     avgAuctionSize: Math.floor(totalSupply / (this.props.dump.length || 1)),
      totalSupply: totalSupply,
    });
   }
 
   render () {
+    console.log(this.props);
 		return (
       <h5>
+        <div>{this.props.stamp}</div>
         <div>{`Minimum unit price: ${this.state.minBuyout}`}</div>
         <div>{`Maximum unit price: ${this.state.maxBuyout}`}</div>
         <div>{`Average unit price: ${this.state.avgBuyout}`}</div>
-        <div>{`Auctions: ${this.props.itemList.length}`}</div>
+        <div>{`Auctions: ${this.props.dump.length}`}</div>
         <div>{`Total supply: ${this.state.totalSupply}`}</div>
       </h5>
 		);

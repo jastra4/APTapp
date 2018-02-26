@@ -1,4 +1,4 @@
-const itemsReducer = (state = [], action) => { // make state default {}
+const itemsReducer = (state = [{results: []}], action) => { // make state default {}
   switch (action.type) {
     case 'ITEM_LIST':
       return action.payload;
@@ -8,6 +8,14 @@ const itemsReducer = (state = [], action) => { // make state default {}
 };
 
 export default itemsReducer;
+
+// { dump: { results: [ [] ] } }
+
+// [
+//   {results: [{}, {}, {}]}, 
+//   {results: [{}, {}, {}]}, 
+//   {results: [{}, {}, {}]},
+// ]
 
 // Example itemsReducer:
 // const itemInStore = [

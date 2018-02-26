@@ -24,7 +24,7 @@ class AptApp extends React.Component {
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
         <div className="main">
           <SearchConnected />
-          <SummaryConnected />
+          
           <ItemListConnected />
         </div>
       </div>
@@ -37,3 +37,5 @@ ReactDOM.render((
     <AptApp />
   </Provider>
 ), document.getElementById('root'));
+
+// <SummaryConnected />

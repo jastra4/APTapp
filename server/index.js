@@ -7,6 +7,7 @@ const dbMethod = require('../database/index.js');
 const blizzard = require('blizzard.js').initialize({ apikey: process.env.BLIZZARD_API });
 const request = require('request');
 const rp = require('request-promise');
+const dateFormat = require('dateformat');
 
 /************************************************************/
 // Startup Process
@@ -20,12 +21,16 @@ app.use(express.static(__dirname + '/../client/dist'));
 /************************************************************/
 
 app.get('/updateDB', (req, res) => {
+	const newStamp = dateFormat(new Date(), 'dddd, HH:MM TT');
+	const dump = {};
 	const { region, realm }  = req.query;
   blizzard.wow.auction({ realm: realm, origin: region })
  .then(response => {
  		rp(response.data.files[0].url).then((results) => {
-			dbMethod.insertBatch(results)
-			res.send(results);
+ 			dump.results = results;
+ 			dump.stamp = newStamp;
+			// dbMethod.insertBatch(results)
+			res.send(dump);
 		}).catch((err) => {
 			console.log('updateDB error: ', err);
 			res.sendStatus(500);

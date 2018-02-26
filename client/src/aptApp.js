@@ -2,8 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Store from '../src/store/store.js';
-import MainConnected from './components/Main';
+import SearchConnected from './components/Search';
 import SummaryConnected from './components/Summary';
+import ItemListConnected from './components/ItemList';
+
+// todo:
+// add time stamp to each dump
+// add each dump to store
+// indicate best buy/sell times in summary
 
 class AptApp extends React.Component {
   constructor(props) {
@@ -14,8 +20,13 @@ class AptApp extends React.Component {
   render () {
     return (
       <div>
-        <SummaryConnected />
-        <MainConnected />
+        <h2 className="title">Make your own luck.</h2>
+        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
+        <div className="main">
+          <SearchConnected />
+          <SummaryConnected />
+          <ItemListConnected />
+        </div>
       </div>
     )
   }

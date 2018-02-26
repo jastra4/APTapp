@@ -17,7 +17,7 @@ class Summary extends React.Component {
 		nextProps.items.forEach((dump) => {
 			dump.forEach((item) => {
 				avgBuyout += item.buyout;
-				totalCount ++;
+				totalCount += item.quantity;
 			});
 		});
 		avgBuyout = avgBuyout / (totalCount || 1);
@@ -27,7 +27,7 @@ class Summary extends React.Component {
 	render() {
 		return(
 			<div>
-				<div>{`Average price (in gold) ${this.state.avgBuyout}`}</div>
+				<div>{`Average unit price ${this.state.avgBuyout}`}</div>
 			  <div>{`Number of data dumps: ${this.props.items.length}`}</div>
 		  </div>
 		);
@@ -35,7 +35,6 @@ class Summary extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log('mapStateToProps ', state);
   return ( {items: state.items} );
 };
 

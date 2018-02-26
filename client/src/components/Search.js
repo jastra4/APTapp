@@ -3,9 +3,8 @@ import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/itemsActions';
-import ItemListConnected from './ItemList';
 
-class Main extends React.Component {
+class Search extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {};
@@ -15,6 +14,7 @@ class Main extends React.Component {
 	}
 
 	updateDB() {
+		console.log('updateDB ran');
 	  axios.get(`/updateDB?region=${'US'}&&realm=${'Tichondrius'}`)
 	    .then((res) => {
 	    	console.log('success ', res);
@@ -40,13 +40,10 @@ class Main extends React.Component {
 	render() {
 		return(
 		  <div>
-		    <div>
-		    	<form onSubmit={this.queryDB}>
-				    <input id="queryDB" placeholder="enter item ID ex '124102'"/>
-		    	</form>
-		    </div>
-				<ItemListConnected />
-		    <button onClick={this.updateDB}>Update DB</button>
+	    	<form onSubmit={this.queryDB}>
+			    <input id="queryDB" placeholder="enter item ID ex '124102'"/>
+	    	</form>
+	    	<button onClick={this.updateDB}>Update</button>
 		  </div>
 		);
 	}
@@ -60,6 +57,6 @@ const mapStateToProps = (state) => {
   return ( {items: state.items} );
 };
 
-const MainConnected = connect(mapStateToProps, mapDispatchToProps)(Main);
+const SearchConnected = connect(mapStateToProps, mapDispatchToProps)(Search);
 
-export default MainConnected;
+export default SearchConnected;

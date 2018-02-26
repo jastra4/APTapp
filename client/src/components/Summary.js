@@ -15,7 +15,8 @@ class Summary extends React.Component {
 		let avgBuyout = 0;
 		let totalCount = 0;
 		nextProps.items.forEach((dump) => {
-			dump.forEach((item) => {
+			console.log('DUMP ', dump);
+			dump.results.forEach((item) => {
 				avgBuyout += item.buyout;
 				totalCount += item.quantity;
 			});

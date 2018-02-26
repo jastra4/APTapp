@@ -64,7 +64,7 @@ const insertBatch = (data, stamp) => {
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, docs) {
     let list = [];
-    let hist = {};
+    
     docs.forEach((doc) => {
       if (doc.name !== 'system.indexes') {
         let col = mongoose.model(doc.name, dumpSchema);
@@ -74,6 +74,7 @@ var selectAll = function(item, callback) {
           if (err) {
             console.log('err: ', err);
           } else {
+            let hist = {};
             hist.results = results;
             hist.stamp = doc.name;
             list.push(hist);

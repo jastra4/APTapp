@@ -10,14 +10,14 @@ class ItemList extends React.Component {
 
   render () {
     let results = Object.values(this.props.items);
-    results = results.slice(0, results.length-1);
+    results = results.slice(0, results.length);
     let obj = {results: results};
     console.log('render ', obj);
 		return (
       <div>
         <div>
           {results.map((dump, i) => {
-            return (<Item dump={dump} key={i} stamp={this.props.items[0].stamp}/>);
+            return (<Item dump={dump} key={i} stamp={this.props.items[i].stamp}/>);
           })}
         </div>
       </div>

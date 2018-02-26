@@ -7,7 +7,6 @@ import SummaryConnected from './components/Summary';
 import ItemListConnected from './components/ItemList';
 
 // todo:
-// add time stamp to each dump
 // add each dump to store
 // indicate best buy/sell times in summary
 

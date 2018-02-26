@@ -40,9 +40,10 @@ blizzard.wow.auction({ realm: 'Tichondrius', origin: 'US' })
 	})
 });		
 
-const insertBatch = (data) => {
-  console.log('insertBatch ran');
-  const dumpId = JSON.stringify(new Date());
+const dateFormat = require('dateformat');
+
+const insertBatch = (data, stamp) => {
+  const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, HH:MM TT'));
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
       if (doc) {
@@ -50,7 +51,6 @@ const insertBatch = (data) => {
       } else {
         const newDump = mongoose.model(dumpId, dumpSchema);
         data = JSON.parse(data);
-        console.log('inserting: ', data.auctions.length);
         newDump.insertMany(data.auctions);
       }
     });

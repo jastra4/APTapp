@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import setDumpTotals from '../../src/actions/dumpActions';
 
 class Item extends React.Component {
   constructor(props) {
@@ -12,41 +14,13 @@ class Item extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-   console.log('componentWillReceiveProps ', nextProps);
-   let minBuyout = 0;
-   let maxBuyout = 0;
-   let avgBuyout = 0;
-   let avgAuctionSize = 0;
-   let totalSupply = 0;
-   nextProps.dump.results.forEach((item, i) => {
-     if (item.buyout > maxBuyout) {
-       maxBuyout = item.buyout;
-     }
-     if (item.buyout < minBuyout || minBuyout === 0) {
-       minBuyout = item.buyout
-     }
-     avgBuyout += item.buyout;
-     totalSupply += item.quantity;
-   });
-   avgBuyout = avgBuyout / (totalSupply || 1);
-   avgAuctionSize = totalSupply / (nextProps.dump.results.length || 1);
-   this.setState({
-     minBuyout: Math.floor((minBuyout / 10000)),
-     maxBuyout: Math.floor((maxBuyout / 10000)),
-     avgBuyout: Math.floor((avgBuyout / 10000)),
-     avgAuctionSize: Math.floor(totalSupply / (nextProps.dump.results.length || 1)),
-     totalSupply: totalSupply,
-   });    
-  }
-
   componentDidMount() {
-   console.log('componentDidMount ', this.props.dump.results);
    let minBuyout = 0;
    let maxBuyout = 0;
    let avgBuyout = 0;
    let avgAuctionSize = 0;
    let totalSupply = 0;
+
    this.props.dump.results.forEach((item, i) => {
      if ((item.buyout/item.quantity) > maxBuyout) {
        maxBuyout = (item.buyout/item.quantity);
@@ -65,22 +39,36 @@ class Item extends React.Component {
      avgBuyout: Math.floor((avgBuyout / 10000)),
      avgAuctionSize: Math.floor(totalSupply / (this.props.dump.length || 1)),
      totalSupply: totalSupply,
+   }, () => {
+     this.props.loadDumpTotals({
+      minBuyout: this.state.minBuyout,
+      maxBuyout: this.state.maxBuyout,
+      avgBuyout: this.state.avgBuyout,
+      auctions: this.props.dump.results.length,
+      totalSupply: this.state.totalSupply,
+      name: this.props.stamp,
+     });
    });
   }
 
   render () {
-    console.log(this.props);
 		return (
       <h5>
-        <div>{this.props.stamp}</div>
+        <div>{`Data from: ${this.props.stamp}`}</div>
         <div>{`Minimum unit price: ${this.state.minBuyout}`}</div>
         <div>{`Maximum unit price: ${this.state.maxBuyout}`}</div>
         <div>{`Average unit price: ${this.state.avgBuyout}`}</div>
-        <div>{`Auctions: ${this.props.dump.length}`}</div>
+        <div>{`Auctions: ${this.props.dump.results.length}`}</div>
         <div>{`Total supply: ${this.state.totalSupply}`}</div>
       </h5>
 		);
   }
 }
 
-export default Item;
+const mapDispatchToProps = dispatch => (
+  { loadDumpTotals: dumpTotals => dispatch(setDumpTotals(dumpTotals)) }
+);
+
+const ItemConnected = connect(null, mapDispatchToProps)(Item);
+
+export default ItemConnected;

@@ -41,9 +41,10 @@ const dumpSchema = mongoose.Schema({
 /************************************************************/
 // Inserts 
 /************************************************************/
+const dateFormat = require('dateformat');
 
 const insertBatch = (data, stamp) => {
-  const dumpId = JSON.stringify(new Date());
+  const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, HH:MM TT'));
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
       if (doc) {
@@ -51,7 +52,6 @@ const insertBatch = (data, stamp) => {
       } else {
         const newDump = mongoose.model(dumpId, dumpSchema);
         data = JSON.parse(data);
-        console.log('inserting: ', data.auctions.length);
         newDump.insertMany(data.auctions);
       }
     });
@@ -68,7 +68,6 @@ var selectAll = function(item, callback) {
     docs.forEach((doc) => {
       if (doc.name !== 'system.indexes') {
         let col = mongoose.model(doc.name, dumpSchema);
-        console.log('col ', col);
         query = col.find({"item": item}).sort('-created');
         query.exec((err, results) => {
           if (err) {
@@ -78,7 +77,6 @@ var selectAll = function(item, callback) {
             hist.results = results;
             hist.stamp = doc.name;
             list.push(hist);
-            // list.push(results);
           }
         });
       }

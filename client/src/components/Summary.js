@@ -8,26 +8,41 @@ import ItemList from './ItemList';
 class Summary extends React.Component {
 	constructor (props) {
 		super(props);
-		this.state = { avgBuyout: 0 };
+		this.state = {
+			avgBuyout: 0,
+			min: 0,
+		};
 	}
 
 	componentWillReceiveProps(nextProps) {
 		let avgBuyout = 0;
 		let totalCount = 0;
 		nextProps.items.forEach((dump) => {
-			console.log('DUMP ', dump);
 			dump.results.forEach((item) => {
 				avgBuyout += item.buyout;
 				totalCount += item.quantity;
 			});
 		});
+
+		let min = {minBuyout: 0, name: undefined};
+		nextProps.dumps.forEach((dump) => {
+			if (min.minBuyout === 0 || dump.minBuyout < min.minBuyout) {
+				min = dump;
+			}
+		});
+
+		this.setState({ min: min.name });
+
 		avgBuyout = avgBuyout / (totalCount || 1);
-		this.setState({ avgBuyout: Math.floor((avgBuyout / 10000)) });
+		this.setState({
+			avgBuyout: Math.floor((avgBuyout / 10000)),
+		});
 	}
 
 	render() {
 		return(
 			<div>
+				<div>{`Best buy ${this.state.min}`}</div>
 				<div>{`Average unit price ${this.state.avgBuyout}`}</div>
 			  <div>{`Number of data dumps: ${this.props.items.length}`}</div>
 		  </div>
@@ -36,7 +51,7 @@ class Summary extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ( {items: state.items} );
+  return ( { items: state.items, dumps: state.dumps } );
 };
 
 const SummaryConnected = connect(mapStateToProps)(Summary);

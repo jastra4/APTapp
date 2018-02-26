@@ -21,16 +21,12 @@ app.use(express.static(__dirname + '/../client/dist'));
 /************************************************************/
 
 app.get('/updateDB', (req, res) => {
-	const newStamp = dateFormat(new Date(), 'dddd, HH:MM TT'); // x
-	const dump = {}; // x
 	const { region, realm }  = req.query;
   blizzard.wow.auction({ realm: realm, origin: region })
  .then(response => {
  		rp(response.data.files[0].url).then((results) => {
- 			dump.results = results; // x
- 			dump.stamp = newStamp; // x
-			// dbMethod.insertBatch(results); // results
-			res.send(dump); // results
+			dbMethod.insertBatch(results);
+			res.send(results);
 		}).catch((err) => {
 			console.log('updateDB error: ', err);
 			res.sendStatus(500);

@@ -9,20 +9,19 @@ class Search extends React.Component {
 		super(props);
 		this.state = {};
 
-		this.updateDB = this.updateDB.bind(this);
+		// this.updateDB = this.updateDB.bind(this);
 		this.queryDB = this.queryDB.bind(this);
 	}
 
-	updateDB() {
-		console.log('updateDB ran');
-	  axios.get(`/updateDB?region=${'US'}&&realm=${'Tichondrius'}`)
-	    .then((res) => {
-	    	console.log('success ', res);
-	    })
-	    .catch((res) => {
-	    	console.log('error ', res);
-	    });
-	}
+	// updateDB() {
+	//   axios.get(`/updateDB?region=${'US'}&&realm=${'Tichondrius'}`)
+	//     .then((res) => {
+	//     	console.log('success ', res);
+	//     })
+	//     .catch((res) => {
+	//     	console.log('error ', res);
+	//     });
+	// }
 
 	queryDB(e) {
 		e.preventDefault();
@@ -43,7 +42,6 @@ class Search extends React.Component {
 	    	<form onSubmit={this.queryDB}>
 			    <input id="queryDB" placeholder="enter item ID ex '124102'"/>
 	    	</form>
-	    	<button onClick={this.updateDB}>Update</button>
 		  </div>
 		);
 	}

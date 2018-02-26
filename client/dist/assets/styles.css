@@ -9,12 +9,24 @@
   min-height: 100%;
 }
 
+#queryDB {
+  width: 14em;
+}
+
 .title {
 	color: white;
 }
 
 .main {
-	background-color: rgba(255, 255, 255, .75);;
+	background-color: rgba(255, 255, 255, .75);
+  border: 1px black solid;
+  padding: 1%;
+  height: 30em;
 	margin: auto;
 	width: 50%;
+  overflow: auto;
+}
+
+.summary {
+  border-bottom: 1px black solid;
 }

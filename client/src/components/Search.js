@@ -26,6 +26,7 @@ class Search extends React.Component {
 	queryDB(e) {
 		e.preventDefault();
 		let input = $('#queryDB').val();
+		$('#queryDB').val('');
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
 				console.log('res ', res);

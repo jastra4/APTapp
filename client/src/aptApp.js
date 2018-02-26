@@ -21,8 +21,8 @@ class AptApp extends React.Component {
       <div>
         <h2 className="title">Make your own luck.</h2>
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
+        <SearchConnected />
         <div className="main">
-          <SearchConnected />
           <SummaryConnected />
           <ItemListConnected />
         </div>

@@ -9,41 +9,39 @@ class Summary extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			avgBuyout: 0,
-			min: 0,
+			// avgBuyout: 0,
+			buy: { price: 0, time: null },
+			sell: { price: 0, time: null },
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let avgBuyout = 0;
-		let totalCount = 0;
-		nextProps.items.forEach((dump) => {
-			dump.results.forEach((item) => {
-				avgBuyout += item.buyout;
-				totalCount += item.quantity;
-			});
-		});
-
-		let min = {minBuyout: 0, name: undefined};
+		let buy = { price: 0, time: null };
+		let sell = { price: 0, time: null };
 		nextProps.dumps.forEach((dump) => {
-			if (min.minBuyout === 0 || dump.minBuyout < min.minBuyout) {
-				min = dump;
+			if (buy.price === 0 || dump.minBuyout < buy.price) {
+				buy.price = dump.minBuyout;
+				buy.time = dump.name;
+			}
+			if (sell.price === 0 || dump.minBuyout > sell.price) {
+				sell.price = dump.minBuyout;
+				sell.time = dump.name;
 			}
 		});
 
-		this.setState({ min: min.name });
-
-		avgBuyout = avgBuyout / (totalCount || 1);
 		this.setState({
-			avgBuyout: Math.floor((avgBuyout / 10000)),
+			buy: buy,
+			sell: sell,
 		});
 	}
 
 	render() {
 		return(
-			<div>
-				<div>{`Best buy ${this.state.min}`}</div>
-				<div>{`Average unit price ${this.state.avgBuyout}`}</div>
+			<div className="summary">
+				<div>{`Best time to buy: ${this.state.buy.time}`}</div>
+				<div>{`Buy price: ${this.state.buy.price} gold`}</div>
+				<div>{`Best time to sell: ${this.state.sell.time}`}</div>
+				<div>{`Sell price: ${this.state.sell.price} gold`}</div>
 			  <div>{`Number of data dumps: ${this.props.items.length}`}</div>
 		  </div>
 		);

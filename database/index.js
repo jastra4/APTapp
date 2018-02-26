@@ -64,19 +64,20 @@ const insertBatch = (data, stamp) => {
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, docs) {
     let list = [];
-    // let hist = {};
+    let hist = {};
     docs.forEach((doc) => {
       if (doc.name !== 'system.indexes') {
         let col = mongoose.model(doc.name, dumpSchema);
+        console.log('col ', col);
         query = col.find({"item": item}).sort('-created');
         query.exec((err, results) => {
           if (err) {
             console.log('err: ', err);
           } else {
-            // let stamp = doc.name;
-            // hist.stamp = stamp;
-            // hist.results = results;
-            list.push(results);
+            hist.results = results;
+            hist.stamp = doc.name;
+            list.push(hist);
+            // list.push(results);
           }
         });
       }

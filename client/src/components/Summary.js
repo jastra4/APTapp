@@ -9,7 +9,6 @@ class Summary extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			// avgBuyout: 0,
 			buy: { price: 0, time: null },
 			sell: { price: 0, time: null },
 		};

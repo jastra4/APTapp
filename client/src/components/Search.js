@@ -41,7 +41,7 @@ class Search extends React.Component {
 		return(
 		  <div>
 	    	<form onSubmit={this.queryDB}>
-			    <input id="queryDB" placeholder="enter item ID ex '124102'"/>
+			    <input id="queryDB" placeholder="enter item ID (ex. 124102)"/>
 	    	</form>
 		  </div>
 		);

@@ -44,7 +44,7 @@ const dumpSchema = mongoose.Schema({
 const dateFormat = require('dateformat');
 
 const insertBatch = (data, stamp) => {
-  const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, HH:MM TT'));
+  const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, H:MM TT'));
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
       if (doc) {
@@ -64,12 +64,11 @@ const insertBatch = (data, stamp) => {
 var selectAll = function(item, callback) {
   mongoose.connection.db.listCollections().toArray(function(err, docs) {
     let list = [];
-    
-    docs.forEach((doc) => {
+    let j = 0;
+    docs.forEach((doc, i, docs) => {
       if (doc.name !== 'system.indexes') {
         let col = mongoose.model(doc.name, dumpSchema);
-        query = col.find({"item": item}).sort('-created');
-        query.exec((err, results) => {
+        col.find({"item": item}, (err, results) => {
           if (err) {
             console.log('err: ', err);
           } else {
@@ -77,13 +76,14 @@ var selectAll = function(item, callback) {
             hist.results = results;
             hist.stamp = doc.name;
             list.push(hist);
-          }
+            j++;
+            if (j === docs.length-1) {
+              callback(list);
+            }  
+          }        
         });
       }
     });
-    setTimeout(() => {
-      callback(list);
-    }, 3000);
   })
 };
 

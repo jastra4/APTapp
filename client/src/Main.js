@@ -6,11 +6,7 @@ import SearchConnected from './components/Search';
 import SummaryConnected from './components/Summary';
 import ItemListConnected from './components/ItemList';
 
-// todo:
-// add each dump to store
-// indicate best buy/sell times in summary
-
-class AptApp extends React.Component {
+class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -19,7 +15,7 @@ class AptApp extends React.Component {
   render () {
     return (
       <div>
-        <h2 className="title">Make your own luck.</h2>
+        <h2 className="title">Buy low, sell high.</h2>
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
         <SearchConnected />
         <div className="main">
@@ -33,6 +29,6 @@ class AptApp extends React.Component {
 
 ReactDOM.render((
   <Provider store={ Store } >
-    <AptApp />
+    <Main />
   </Provider>
 ), document.getElementById('root'));

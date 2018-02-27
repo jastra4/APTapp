@@ -4,7 +4,7 @@ var SRC_DIR = path.join(__dirname, '/client/src');
 var DIST_DIR = path.join(__dirname, '/client/dist');
 
 module.exports = {
-  entry: [`${SRC_DIR}/aptApp.js`],
+  entry: [`${SRC_DIR}/Main.js`],
   output: {
     path: DIST_DIR,
     filename: 'bundle.js'

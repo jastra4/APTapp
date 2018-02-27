@@ -15,9 +15,11 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <h2 className="title">Buy low, sell high.</h2>
-        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
+        <h2 className="header">Buy low, sell high.
+          <div className="subHeader">(a World of Warcraft pricing tool)</div>
+        </h2>
         <SearchConnected />
+        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
         <div className="main">
           <SummaryConnected />
           <ItemListConnected />

@@ -44,5 +44,5 @@ app.get('/queryDB', (req, res) => {
 /************************************************************/
 /************************************************************/
 
-let port = process.env.PORT || 1128;
+let port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`✅  aptAPP listening on port ${port}!`));

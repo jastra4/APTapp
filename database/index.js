@@ -8,8 +8,8 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require("bluebird");
 
-// mongoose.connect('mongodb://localhost/edge');
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
+mongoose.connect('mongodb://localhost/edge')
+// mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
   .then(() => { console.log('✅  Successfully connected to', process.env.MONGODB_URI); })
   .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 

@@ -40,7 +40,7 @@ class Search extends React.Component {
 	render() {
 		return(
 		  <div>
-			<p>Type your item's number and hit enter.</p>
+			<p className="intro">Type your item's number and hit enter.</p>
 	    	<form onSubmit={this.queryDB}>
 			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124102)"/>
 	    	</form>

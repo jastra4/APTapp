@@ -12708,11 +12708,11 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h2',
         { className: 'header' },
-        'Buy low, sell high.',
+        'BestBid',
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'subHeader' },
-          '(a World of Warcraft pricing tool)'
+          'A World of Warcraft app'
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
@@ -32265,6 +32265,11 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			'div',
 			null,
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'p',
+				null,
+				'Type your item\'s number and hit enter.'
+			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'form',
 				{ onSubmit: this.queryDB },

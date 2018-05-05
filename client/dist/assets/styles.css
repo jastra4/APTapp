@@ -19,6 +19,11 @@
   font-size: .7em;
 }
 
+.desc {
+  font-size: .7em;
+  color: white;
+  padding-left: 225px;
+}
 
 .search {
   margin-left: 24%;

@@ -32267,7 +32267,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			null,
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
-				null,
+				{ className: 'intro' },
 				'Type your item\'s number and hit enter.'
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

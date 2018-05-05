@@ -32268,18 +32268,21 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },
-				'Type your item\'s number and hit enter.',
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.',
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'This will help you determine a competitive price to begin auctioning your item at in world of warcraft.',
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'* Due to database resource costs Blizzard data updates have been temporarily suspended.'
+				' Type your item\'s number and hit enter.'
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'form',
 				{ onSubmit: this.queryDB },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'search', id: 'queryDB', placeholder: 'search by item ID (ex. 124102)' })
+			),
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'p',
+				{ className: 'intro' },
+				'This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.',
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+				'This will help you determine a competitive price to begin auctioning your item at in world of warcraft.',
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+				'* Due to database resource costs Blizzard data updates have been temporarily suspended.'
 			)
 		);
 	}

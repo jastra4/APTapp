@@ -54,7 +54,7 @@ class Item extends React.Component {
   render () {
 		return (
       <h5>
-        <div>{`Data from: ${JSON.parse(this.props.stamp)}`}</div>
+        <div>{`Data from: ${this.props.stamp}`}</div>
         <div>{`Minimum unit price: ${this.state.minBuyout}`}</div>
         <div>{`Maximum unit price: ${this.state.maxBuyout}`}</div>
         <div>{`Average unit price: ${this.state.avgBuyout}`}</div>

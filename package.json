@@ -1,5 +1,5 @@
 {
-  "name": "bestbid",
+  "name": "aptapp",
   "version": "1.0.0",
   "description": "auction house arbitrage finder",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jastra4/BestBid.git"
+    "url": "git+https://github.com/jastra4/APTapp.git"
   },
   "author": "Joseph Strandmo",
   "license": "ISC",

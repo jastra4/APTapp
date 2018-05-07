@@ -37,9 +37,9 @@ class Summary extends React.Component {
 	render() {
 		return(
 			<div className="summary">
-				<div>{`Best time to buy: ${this.state.buy.time}`}</div>
+				<div>{`Best time to buy: ${JSON.parse(this.state.buy.time)}`}</div>
 				<div>{`Buy price: ${this.state.buy.price} gold`}</div>
-				<div>{`Best time to sell: ${this.state.sell.time}`}</div>
+				<div>{`Best time to sell: ${JSON.parse(this.state.sell.time)}`}</div>
 				<div>{`Sell price: ${this.state.sell.price} gold`}</div>
 			  <div>{`Number of data dumps: ${this.props.items.length}`}</div>
 		  </div>

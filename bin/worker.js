@@ -43,7 +43,8 @@ blizzard.wow.auction({ realm: 'Tichondrius', origin: 'US' })
 const dateFormat = require('dateformat');
 
 const insertBatch = (data, stamp) => {
-  const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, H:MM TT'));
+  // const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, H:MM TT'));
+  const dumpId = JSON.stringify(dateFormat(new Date(), 'm/d/yy H:MM TT Z'));
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
       if (doc) {

@@ -32254,7 +32254,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		let input = __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val();
 		__WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
 		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
-			console.log('res ', JSON.parse(res.data[0].stamp));
+			console.log('res ', res.data);
 			this.props.loadItems(res.data);
 		}).catch(res => {
 			console.log('error ', res);

@@ -1,7 +1,7 @@
 {
-  "name": "aptapp",
+  "name": "bestbid",
   "version": "1.0.0",
-  "description": "auction house arbitrage finder",
+  "description": "wow acuction house app",
   "main": "index.js",
   "scripts": {
     "start": "webpack && node server/index.js",

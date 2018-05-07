@@ -29,7 +29,7 @@ class Search extends React.Component {
 		$('#queryDB').val('');
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
-				console.log('res ', res);
+				console.log('res ', JSON.parse(res.data[0].stamp));
 				this.props.loadItems(res.data);
 			})
 			.catch((res) => {
@@ -45,13 +45,13 @@ class Search extends React.Component {
 	    	<form onSubmit={this.queryDB}>
 			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124102)"/>
 	    	</form>
-			
+
 			<p className="intro">
 			  This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.
 			  <br></br>
-			  This will help you determine a competitive price to begin auctioning your item at in world of warcraft.
+			  This will help you determine a competitive price to list your item at on the World of Warcraft auction house.
 			  <br></br>
-			  * Due to database resource costs Blizzard data updates have been temporarily suspended.
+			  * Due to database limits updates from Blizzard have been suspended. 500 MB of historical data is still available.
 			</p>
 		  </div>
 		);

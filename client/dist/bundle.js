@@ -32254,7 +32254,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		let input = __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val();
 		__WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
 		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
-			console.log('res ', res);
+			console.log('res ', JSON.parse(res.data[0].stamp));
 			this.props.loadItems(res.data);
 		}).catch(res => {
 			console.log('error ', res);
@@ -32280,9 +32280,9 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 				{ className: 'intro' },
 				'This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.',
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'This will help you determine a competitive price to begin auctioning your item at in world of warcraft.',
+				'This will help you determine a competitive price to list your item at on the World of Warcraft auction house.',
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'* Due to database resource costs Blizzard data updates have been temporarily suspended.'
+				'* Due to database limits updates from Blizzard have been suspended. 500 MB of historical data is still available.'
 			)
 		);
 	}
@@ -33240,7 +33240,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Best time to buy: ${this.state.buy.time}`
+				`Best time to buy: ${JSON.parse(this.state.buy.time)}`
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
@@ -33250,7 +33250,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Best time to sell: ${this.state.sell.time}`
+				`Best time to sell: ${JSON.parse(this.state.sell.time)}`
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
@@ -33344,7 +33344,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `Data from: ${this.props.stamp}`
+        `Data from: ${JSON.parse(this.props.stamp)}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',

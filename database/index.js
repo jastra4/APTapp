@@ -9,8 +9,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = require("bluebird");
 
 // mongoose.connect('mongodb://localhost/edge')
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
-  .then(() => { console.log('✅  Successfully connected to', process.env.MONGODB_URI); })
+const config = require('../config.js');
+let myMongo = process.env.MONGODB_URI || config.localEnv;
+mongoose.connect(myMongo, { useMongoClient: true })
+  .then(() => { console.log('✅  Successfully connected to mlab mongodb'); })
   .catch((e) => { console.error('⚠️ Error connected to MongoDB: ', e); });
 
 const db = mongoose.connection;
@@ -39,12 +41,13 @@ const dumpSchema = mongoose.Schema({
 });
 
 /************************************************************/
-// Inserts 
+// Insert
 /************************************************************/
 const dateFormat = require('dateformat');
 
 const insertBatch = (data, stamp) => {
-  const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, H:MM TT'));
+  // const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, H:MM TT'));
+  const dumpId = JSON.stringify(dateFormat(new Date(), 'm/d/yy H:MM TT Z'));
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
       if (doc) {
@@ -58,7 +61,7 @@ const insertBatch = (data, stamp) => {
 }
 
 /************************************************************/
-// Queries
+// Query
 /************************************************************/
 
 var selectAll = function(item, callback) {
@@ -88,10 +91,21 @@ var selectAll = function(item, callback) {
 };
 
 /************************************************************/
+// Delete
+/************************************************************/
+
+const deleteBatch = function() {
+  // This function was going to keep the database within it's size limits.
+  // However, deleted files keep their foot print so the database would need to be manually compacted which also requires downtime.
+  console.log('this should delete the oldest data dump');
+};
+
+/************************************************************/
 // Node Exports
 /************************************************************/
 
 module.exports = {
   insertBatch,
-  selectAll
+  selectAll,
+  deleteBatch
 }

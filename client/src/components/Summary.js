@@ -17,7 +17,9 @@ class Summary extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		let buy = { price: 0, time: null };
 		let sell = { price: 0, time: null };
+		let priceData = [];
 		nextProps.dumps.forEach((dump) => {
+			priceData.push(dump.avgBuyout);
 			if (buy.price === 0 || dump.minBuyout < buy.price) {
 				buy.price = dump.minBuyout;
 				buy.time = dump.name;
@@ -27,6 +29,39 @@ class Summary extends React.Component {
 				sell.time = dump.name;
 			}
 		});
+		console.log(priceData);
+
+		// d3.select("body")
+		// 	.selectAll("p")
+		// 	.data(priceData)
+		// 	.enter()
+		// 	.append("p")
+		// 	.text(function (d) { return d; });
+
+
+		var svgWidth = 500, svgHeight = 300, barPadding = 5;
+		var barWidth = (svgWidth / priceData.length);
+
+
+		var svg = d3.select('svg')
+			.attr("width", svgWidth)
+			.attr("height", svgHeight);
+
+		var barChart = svg.selectAll("rect")
+			.data(priceData)
+			.enter()
+			.append("rect")
+			.attr("y", function (d) {
+				return svgHeight - (d * 10)
+			})
+			.attr("height", function (d) {
+				return d * 10;
+			})
+			.attr("width", barWidth - barPadding)
+			.attr("transform", function (d, i) {
+				var translate = [barWidth * i, 0];
+				return "translate(" + translate + ")";
+			});
 
 		this.setState({
 			buy: buy,
@@ -41,7 +76,7 @@ class Summary extends React.Component {
 				<div>{`Buy price: ${this.state.buy.price} gold`}</div>
 				<div>{`Best time to sell: ${JSON.parse(this.state.sell.time)}`}</div>
 				<div>{`Sell price: ${this.state.sell.price} gold`}</div>
-			  <div>{`Number of data dumps: ${this.props.items.length}`}</div>
+			  <div>{`Number of data points: ${this.props.items.length}`}</div>
 		  </div>
 		);
 	}

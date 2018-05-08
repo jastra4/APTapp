@@ -14,7 +14,7 @@ class Search extends React.Component {
 	}
 
 	// updateDB() {
-	//   axios.get(`/updateDB?region=${'US'}&&realm=${'Tichondrius'}`)
+	//   axios.get(`/updateDB?region=${'US'}&&realm=${'Thrall'}`)
 	//     .then((res) => {
 	//     	console.log('success ', res);
 	//     })

@@ -32269,21 +32269,16 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },
-				' Type your item\'s number and hit enter.'
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'form',
-				{ onSubmit: this.queryDB },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'search', id: 'queryDB', placeholder: 'search by item ID (ex. 124102)' })
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'p',
-				{ className: 'intro' },
 				'This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.',
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
 				'This will help you determine a competitive price to list your item at on the World of Warcraft auction house.',
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
 				'* Due to database limits updates from Blizzard have been suspended. 500 MB of historical data is still available.'
+			),
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'form',
+				{ onSubmit: this.queryDB },
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'search', id: 'queryDB', placeholder: 'search by item ID (ex. 124102)' })
 			)
 		);
 	}
@@ -33229,15 +33224,6 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 				sell.time = dump.name;
 			}
 		});
-		console.log(priceData);
-
-		// d3.select("body")
-		// 	.selectAll("p")
-		// 	.data(priceData)
-		// 	.enter()
-		// 	.append("p")
-		// 	.text(function (d) { return d; });
-
 
 		var svgWidth = 500,
 		    svgHeight = 300,

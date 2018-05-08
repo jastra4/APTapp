@@ -13,6 +13,7 @@
 
 .header {
   background: green;
+  text-align: center;
 }
 
 .subHeader {
@@ -22,22 +23,27 @@
 .intro {
   font-size: 1em;
   color: black;
-  margin-left: 24%;
+  margin-left: 10%;
 }
 
 .search {
-  margin-left: 24%;
-  margin-bottom: 1%;
-  width: 25%;
+  /*margin: auto;*/
+  width: 100%;
   background-color: rgba(255, 255, 255, .75);
+}
+
+form {
+    width: 17.5%;
+    margin: 0 auto;
 }
 
 .main {
 	background-color: rgba(255, 255, 255, .75);
   /*border: 1px black solid;*/
-  padding: 1%;
-  height: 30em;
-	width: 40%;
+  padding-left: 10%;
+  padding-top:2%;
+  /*height: 30em;*/
+	width: 35%;
   /*overflow: auto;*/
   float:left;
 }

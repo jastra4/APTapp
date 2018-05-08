@@ -29,19 +29,9 @@ class Summary extends React.Component {
 				sell.time = dump.name;
 			}
 		});
-		console.log(priceData);
-
-		// d3.select("body")
-		// 	.selectAll("p")
-		// 	.data(priceData)
-		// 	.enter()
-		// 	.append("p")
-		// 	.text(function (d) { return d; });
-
 
 		var svgWidth = 500, svgHeight = 300, barPadding = 5;
 		var barWidth = (svgWidth / priceData.length);
-
 
 		var svg = d3.select('svg')
 			.attr("width", svgWidth)

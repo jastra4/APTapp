@@ -19,10 +19,14 @@ class Main extends React.Component {
           <div className="subHeader">A World of Warcraft app</div>
         </h2>
         <SearchConnected />
+        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
+        
         <div className="main">
           <SummaryConnected />
           <ItemListConnected />
         </div>
+        <svg className="bar-chart" ></svg>
+        
       </div>
     )
   }
@@ -35,3 +39,4 @@ ReactDOM.render((
 ), document.getElementById('root'));
 
 // <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
+// style="float:left; padding-left:10%; padding-top:2%"

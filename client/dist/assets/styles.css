@@ -6,7 +6,13 @@
   
   /* Preserve aspet ratio */
   min-width: 100%;
-  max-height: 25%;
+  min-height: 25%;
+}
+
+.bar-chart {
+  float:left;
+  padding-left:10%;
+  padding-top:2%
 }
 
 .mainContainer {
@@ -14,6 +20,8 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: yellow;
+  width:80%;
+  margin: auto;
 }
 
 .header {
@@ -28,7 +36,7 @@
 .intro {
   font-size: 1em;
   color: black;
-  margin-left: 10%;
+  padding-left: 2%;
 }
 
 .search {
@@ -43,9 +51,9 @@ form {
 }
 
 .main {
-	background-color: rgba(255, 255, 255, .75);
+	/*background-color: rgba(255, 255, 255, .75);*/
   /*border: 1px black solid;*/
-  padding-left: 10%;
+  padding-left: 2%;
   padding-top:2%;
   /*height: 30em;*/
 	width: 35%;

@@ -9,7 +9,12 @@
   max-height: 25%;
 }
 
-
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: yellow;
+}
 
 .header {
   background: green;

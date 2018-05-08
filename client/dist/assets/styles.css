@@ -19,13 +19,13 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: yellow;
-  width:80%;
+  background-color:rgba(255, 244, 86, .75);
+  width:70%;
   margin: auto;
 }
 
 .header {
-  background: green;
+  background:linear-gradient(green, yellow);
   text-align: center;
 }
 

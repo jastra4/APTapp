@@ -42,7 +42,7 @@ class Search extends React.Component {
 		  <div>
 
 			<p className="intro">
-					This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.
+					This app pulls real data directly from Blizzard and applies an algorithm to get you market color about your item.
 			  <br></br>
 					This will help you determine a competitive price to list your item at on the World of Warcraft auction house.
 			  <br></br>

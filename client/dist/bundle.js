@@ -32272,7 +32272,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },
-				'This app pulls real world data directly from Blizzard and applies an algorithm to get you market color about your item.',
+				'This app pulls real data directly from Blizzard and applies an algorithm to get you market color about your item.',
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
 				'This will help you determine a competitive price to list your item at on the World of Warcraft auction house.',
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),

@@ -53,6 +53,21 @@ class Summary extends React.Component {
 				return "translate(" + translate + ")";
 			});
 
+		var text = svg.selectAll("text")
+			.data(priceData)
+			.enter()
+			.append("text")
+			.text(function (d) {
+				return d;
+			})
+			.attr("y", function (d, i) {
+				return svgHeight - (d * 10) - 2;
+			})
+			.attr("x", function (d, i) {
+				return barWidth * i;
+			})
+			.attr("fill", "#A64C38");
+
 		this.setState({
 			buy: buy,
 			sell: sell,

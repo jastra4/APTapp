@@ -9,10 +9,21 @@
   min-height: 100%;
 }
 
-.bar-chart {
+/* .bar-chart {
   float:left;
   padding-left:10%;
   padding-top:2%
+} */
+
+.bar-chart {
+  float:left;
+  margin-left:10%;
+  margin-top:2%;
+  background-color: #C7D9D9;
+}
+    
+.bar {
+  fill: #115D8C;
 }
 
 .mainContainer {

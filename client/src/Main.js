@@ -19,7 +19,6 @@ class Main extends React.Component {
           <div className="subHeader">A World of Warcraft app</div>
         </h2>
         <SearchConnected />
-        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt=""/>
         <div className="main">
           <SummaryConnected />
           <ItemListConnected />
@@ -34,3 +33,5 @@ ReactDOM.render((
     <Main />
   </Provider>
 ), document.getElementById('root'));
+
+// <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />

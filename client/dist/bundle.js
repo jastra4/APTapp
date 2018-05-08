@@ -12716,7 +12716,6 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'main' },
@@ -12732,6 +12731,8 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
   { store: __WEBPACK_IMPORTED_MODULE_3__src_store_store_js__["a" /* default */] },
   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Main, null)
 ), document.getElementById('root'));
+
+// <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
 
 /***/ }),
 /* 40 */
@@ -33267,22 +33268,12 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Best time to buy: ${JSON.parse(this.state.buy.time)}`
+				`Lowest price was ${this.state.buy.price} gold on ${JSON.parse(this.state.buy.time)}`
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Buy price: ${this.state.buy.price} gold`
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				`Best time to sell: ${JSON.parse(this.state.sell.time)}`
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				`Sell price: ${this.state.sell.price} gold`
+				`Highest price was price: ${this.state.sell.price} gold on ${JSON.parse(this.state.sell.time)}`
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
@@ -33371,22 +33362,22 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `Data from: ${JSON.parse(this.props.stamp)}`
+        `${JSON.parse(this.props.stamp)}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `Minimum unit price: ${this.state.minBuyout}`
+        `Min price: ${this.state.minBuyout}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `Maximum unit price: ${this.state.maxBuyout}`
+        `Max price: ${this.state.maxBuyout}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `Average unit price: ${this.state.avgBuyout}`
+        `Average price: ${this.state.avgBuyout}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -33396,7 +33387,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `Total supply: ${this.state.totalSupply}`
+        `Supply: ${this.state.totalSupply}`
       )
     );
   }

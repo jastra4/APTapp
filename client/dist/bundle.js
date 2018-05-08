@@ -32272,11 +32272,12 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },
-				'This app pulls real data directly from Blizzard and applies an algorithm to get you market color about your item.',
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'This will help you determine a competitive price to list your item at on the World of Warcraft auction house.',
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-				'* Due to database limits updates from Blizzard have been suspended. 500 MB of historical data is still available.'
+				'Use this app to help you calculate a competitive price to buy or sell items on the World of Warcraft auction house. It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
+			),
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'p',
+				{ className: 'disclaimer' },
+				'* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'form',

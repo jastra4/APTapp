@@ -6,7 +6,7 @@
   
   /* Preserve aspet ratio */
   min-width: 100%;
-  min-height: 25%;
+  min-height: 100%;
 }
 
 .bar-chart {
@@ -19,14 +19,15 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color:rgba(255, 244, 86, .75);
+  background-color:rgb(255, 234, 177);
   width:70%;
   margin: auto;
 }
 
 .header {
-  background:linear-gradient(green, yellow);
+  background:linear-gradient(rgb(234, 140, 23), rgba(38, 22, 103, 0.3));
   text-align: center;
+  margin-top:0;
 }
 
 .subHeader {
@@ -36,6 +37,12 @@
 .intro {
   font-size: 1em;
   color: black;
+  padding-left: 2%;
+}
+
+.disclaimer {
+  font-size: .8em;
+  color: gray;
   padding-left: 2%;
 }
 

@@ -103,6 +103,14 @@ class Summary extends React.Component {
 			.style("text-anchor", "middle")
 			.text("Blizzad Data Updates (hourly)");
 
+		svg.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", -40)
+			.attr("x", 0 - (svgHeight / 2))
+			.attr("dy", "1em")
+			.style("text-anchor", "middle")
+			.text("Gold");
+
 		this.setState({
 			buy: buy,
 			sell: sell,

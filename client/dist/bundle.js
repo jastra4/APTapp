@@ -33277,6 +33277,8 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		svg.append("text") // text label for the x axis
 		.attr("x", svgWidth / 2).attr("y", svgHeight + 35).style("text-anchor", "middle").text("Blizzad Data Updates (hourly)");
 
+		svg.append("text").attr("transform", "rotate(-90)").attr("y", -40).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Gold");
+
 		this.setState({
 			buy: buy,
 			sell: sell

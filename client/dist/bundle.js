@@ -33236,10 +33236,12 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 		var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
 
+		var yScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
+
 		var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
-			return svgHeight - d * 10;
+			return svgHeight - yScale(d); // x
 		}).attr("height", function (d) {
-			return d * 10;
+			return yScale(d); // x
 		}).attr("width", barWidth - barPadding).attr("transform", function (d, i) {
 			var translate = [barWidth * i, 0];
 			return "translate(" + translate + ")";
@@ -33248,7 +33250,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		var text = svg.selectAll("text").data(priceData).enter().append("text").text(function (d) {
 			return d;
 		}).attr("y", function (d, i) {
-			return svgHeight - d * 10 - 2;
+			return svgHeight - d - 2; // x
 		}).attr("x", function (d, i) {
 			return barWidth * i;
 		}).attr("fill", "#A64C38");

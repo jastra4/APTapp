@@ -37,15 +37,19 @@ class Summary extends React.Component {
 			.attr("width", svgWidth)
 			.attr("height", svgHeight);
 
+		var yScale = d3.scaleLinear()
+			.domain([0, d3.max(priceData)])
+			.range([0, svgHeight]);		
+			
 		var barChart = svg.selectAll("rect")
 			.data(priceData)
 			.enter()
 			.append("rect")
 			.attr("y", function (d) {
-				return svgHeight - (d * 10)
+				return svgHeight - yScale(d) // x
 			})
 			.attr("height", function (d) {
-				return d * 10;
+				return yScale(d); // x
 			})
 			.attr("width", barWidth - barPadding)
 			.attr("transform", function (d, i) {
@@ -61,7 +65,7 @@ class Summary extends React.Component {
 				return d;
 			})
 			.attr("y", function (d, i) {
-				return svgHeight - (d * 10) - 2;
+				return svgHeight - d - 2; // x
 			})
 			.attr("x", function (d, i) {
 				return barWidth * i;

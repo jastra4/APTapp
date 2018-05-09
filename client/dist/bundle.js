@@ -33236,28 +33236,33 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 		var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
 
-		var xScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgWidth]);
+		var xScale = d3.scaleLinear().domain([0, priceData.length]) // d3.max(priceData)
+		.range([0, svgWidth]);
 
-		var yScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
+		var yScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]); // orig
 
-		var x_axis = d3.axisBottom().scale(xScale);
+		var yScale2 = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight, 0]); // switched args
 
-		var y_axis = d3.axisLeft().scale(yScale);
+		var x_axis = d3.axisBottom()
+		//.tickValues(15)		
+		.scale(xScale).ticks(15);
+
+		var y_axis = d3.axisLeft().scale(yScale2);
 
 		svg.append("g").attr("transform", "translate(0, 5)") // from 40, 10
 		.call(y_axis);
 
-		var xAxisTranslate = svgHeight - 20;
+		var xAxisTranslate = svgHeight; // from svgHeight - 20
 
-		svg.append("g").attr("transform", "translate(0, " + (xAxisTranslate + 20) + ")") // from 50, xAxisTranslate
+		svg.append("g").attr("transform", "translate(0, " + xAxisTranslate + ")") // from 50, xAxisTranslate
 		.call(x_axis);
 
 		var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
-			return svgHeight - yScale(d); //
+			return svgHeight - yScale(d);
 		}).attr("height", function (d) {
 			return yScale(d);
 		}).attr("width", barWidth - barPadding).attr("transform", function (d, i) {
-			var translate = [barWidth * i, 0]; //
+			var translate = [barWidth * i, 0];
 			return "translate(" + translate + ")";
 		});
 

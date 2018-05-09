@@ -33274,6 +33274,9 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			return barWidth * i;
 		}).attr("fill", "#A64C38");
 
+		svg.append("text") // text label for the x axis
+		.attr("x", svgWidth / 2).attr("y", svgHeight + 35).style("text-anchor", "middle").text("Blizzad Data Updates (hourly)");
+
 		this.setState({
 			buy: buy,
 			sell: sell

@@ -97,6 +97,12 @@ class Summary extends React.Component {
 			})
 			.attr("fill", "#A64C38");
 
+		svg.append("text")      // text label for the x axis
+			.attr("x", svgWidth/2)
+			.attr("y", svgHeight + 35)
+			.style("text-anchor", "middle")
+			.text("Blizzad Data Updates (hourly)");
+
 		this.setState({
 			buy: buy,
 			sell: sell,

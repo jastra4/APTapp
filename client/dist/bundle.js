@@ -32239,19 +32239,26 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		super(props);
 		this.state = {};
 
-		// this.updateDB = this.updateDB.bind(this);
+		this.updateDB = this.updateDB.bind(this);
+		this.testIsoDateSorting = this.testIsoDateSorting.bind(this);
 		this.queryDB = this.queryDB.bind(this);
 	}
 
-	// updateDB() {
-	//   axios.get(`/updateDB?region=${'US'}&&realm=${'Thrall'}`)
-	//     .then((res) => {
-	//     	console.log('success ', res);
-	//     })
-	//     .catch((res) => {
-	//     	console.log('error ', res);
-	//     });
-	// }
+	updateDB() {
+		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/updateDB?region=${'US'}&&realm=${'Thrall'}`).then(res => {
+			console.log('success ', res);
+		}).catch(res => {
+			console.log('error ', res);
+		});
+	}
+
+	testIsoDateSorting() {
+		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/dates`).then(res => {
+			console.log('res: ', res);
+		}).catch(res => {
+			console.log('error ', res);
+		});
+	}
 
 	queryDB(e) {
 		e.preventDefault();
@@ -32269,6 +32276,11 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			'div',
 			null,
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'button',
+				{ onClick: this.updateDB },
+				'Update DB'
+			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },

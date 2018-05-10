@@ -65,9 +65,12 @@ app.get('/queryDB', (req, res) => {
       }
     });
     // FORMAT
-    // data.forEach((isoDate, i, data) => {
-    //   data[i] = dateFormat(isoDate.stamp, 'm/d/yy H:MM TT Z');
-    // });
+    data.forEach((isoDate, i, data) => {
+      if (i === data.length-1) {
+        console.log(JSON.parse(isoDate.stamp));
+        data[i].stamp = dateFormat(JSON.parse(isoDate.stamp), 'm/d/yy H:MM TT Z');
+      }
+    });
 
 		res.send(data);
 	});

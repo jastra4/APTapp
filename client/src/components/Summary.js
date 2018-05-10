@@ -17,8 +17,12 @@ class Summary extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		let buy = { price: 0, time: null };
 		let sell = { price: 0, time: null };
-		let priceData = [];
+    let priceData = [];
+    let dateData = [];
+
 		nextProps.dumps.forEach((dump) => {
+      let x = dump.name;
+      dateData.push(x);
 			priceData.push(dump.avgBuyout);
 			if (buy.price === 0 || dump.minBuyout < buy.price) {
 				buy.price = dump.minBuyout;
@@ -27,54 +31,64 @@ class Summary extends React.Component {
 			if (sell.price === 0 || dump.minBuyout > sell.price) {
 				sell.price = dump.minBuyout;
 				sell.time = dump.name;
-			}
+      }
 		});
+    console.log('dateData: ', dateData);
 
+    // GRAPH BEGIN //
+
+    // define svg element boundaries
 		var svgWidth = 500, svgHeight = 300, barPadding = 5;
 		var barWidth = (svgWidth / priceData.length);
 
+    // create svg element
 		var svg = d3.select('svg')
 			.attr("width", svgWidth)
 			.attr("height", svgHeight);
 
-		var xScale = d3.scaleLinear()
-			.domain([0, priceData.length]) // d3.max(priceData)
-			.range([0, svgWidth]);
-
-		var yScale = d3.scaleLinear()
+    // define scale for bars
+		var yBarScale = d3.scaleLinear()
 			.domain([0, d3.max(priceData)])
-			.range([0, svgHeight]); // orig
+			.range([0, svgHeight]);
 
-		var yScale2 = d3.scaleLinear()
+    // define scale for y axis
+		var yAxisScale = d3.scaleLinear()
 			.domain([0, d3.max(priceData)])
-			.range([svgHeight, 0]); // switched args
+			.range([svgHeight, 0]);
 
-		var x_axis = d3.axisBottom()
-			//.tickValues(15)		
-			.scale(xScale).ticks(15);
-
+    // create y axis
 		var y_axis = d3.axisLeft()
-			.scale(yScale2);
-
+      .scale(yAxisScale);
+    
+    // add y axis to svg element
 		svg.append("g")
-			.attr("transform", "translate(0, 5)") // from 40, 10
+			.attr("transform", "translate(0, 5)")
 			.call(y_axis);
 
-		var xAxisTranslate = svgHeight; // from svgHeight - 20
+    // define x axis
+    var xScale = d3.scaleLinear()
+      .domain([0, dateData.length])
+      .range([0, svgWidth]);
 
+    // create x axis
+    var x_axis = d3.axisBottom()
+      .scale(xScale).ticks(priceData.length - 1);    
+
+    // add x axis to svg element
 		svg.append("g")
-			.attr("transform", "translate(0, " + (xAxisTranslate) + ")") // from 50, xAxisTranslate
+      .attr("transform", "translate(0, " + (svgHeight) + ")")
 			.call(x_axis);
-			
+      
+    // bars
 		var barChart = svg.selectAll("rect")
 			.data(priceData)
 			.enter()
 			.append("rect")
 			.attr("y", function (d) {
-				return svgHeight - yScale(d);
+				return svgHeight - yBarScale(d);
 			})
 			.attr("height", function (d) {
-				return yScale(d);
+				return yBarScale(d);
 			})
 			.attr("width", barWidth - barPadding)
 			.attr("transform", function (d, i) {
@@ -82,6 +96,7 @@ class Summary extends React.Component {
 				return "translate(" + translate + ")";
 			});
 
+    // bar labels
 		var text = svg.selectAll("text")
 			.data(priceData)
 			.enter()
@@ -90,26 +105,30 @@ class Summary extends React.Component {
 				return d;
 			})
 			.attr("y", function (d, i) {
-				return svgHeight - yScale(d) - 2;
+				return svgHeight - yBarScale(d) - 2;
 			})
 			.attr("x", function (d, i) {
 				return barWidth * i;
 			})
 			.attr("fill", "#A64C38");
 
-		svg.append("text")      // text label for the x axis
+    // add x axis label
+		svg.append("text")
 			.attr("x", svgWidth/2)
 			.attr("y", svgHeight + 35)
 			.style("text-anchor", "middle")
-			.text("Blizzad Data Updates (hourly)");
-
+			.text("Blizzad Data Updates");
+    
+    // add y axis label
 		svg.append("text")
 			.attr("transform", "rotate(-90)")
 			.attr("y", -40)
 			.attr("x", 0 - (svgHeight / 2))
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
-			.text("Gold");
+      .text("Gold");
+      
+    // GRAPH END //
 
 		this.setState({
 			buy: buy,
@@ -120,8 +139,8 @@ class Summary extends React.Component {
 	render() {
 		return(
 			<div className="summary">
-				<div>{`Lowest price was ${this.state.buy.price} gold on ${JSON.parse(this.state.buy.time)}`}</div>
-				<div>{`Highest price was price: ${this.state.sell.price} gold on ${JSON.parse(this.state.sell.time)}`}</div>
+				<div>{`Lowest price was ${this.state.buy.price} gold on ${this.state.buy.time}`}</div>
+				<div>{`Highest price was price: ${this.state.sell.price} gold on ${this.state.sell.time}`}</div>
 			  <div>{`Number of data points: ${this.props.items.length}`}</div>
 		  </div>
 		);

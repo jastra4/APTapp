@@ -1,5 +1,5 @@
 #!/usr/bin/evn node
-
+// "node bin/worker.js" is the command for the heroku job scheduler
 const mongoose = require('mongoose');
 mongoose.Promise = require("bluebird");
 

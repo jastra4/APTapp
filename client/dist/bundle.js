@@ -33220,39 +33220,54 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			buy: { price: 0, time: null },
-			sell: { price: 0, time: null }
+			high: { price: 0, time: null },
+			low: { price: 0, time: null },
+			runningAverage: { price: 0 }
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let buy = { price: 0, time: null };
-		let sell = { price: 0, time: null };
+		let high = { price: 0, time: null };
+		let low = { price: 0, time: null };
 		let priceData = [];
 		let dateData = [];
+		let total = 0;
+		let num = 0;
+		let runningAverage = 0;
 
 		nextProps.dumps.forEach(dump => {
 			let x = dump.name;
 			dateData.push(x);
 			priceData.push(dump.avgBuyout);
-			if (buy.price === 0 || dump.minBuyout < buy.price) {
-				buy.price = dump.minBuyout;
-				buy.time = dump.name;
+			if (high.price === 0 || dump.minBuyout < high.price) {
+				high.price = dump.minBuyout;
+				high.time = dump.name;
 			}
-			if (sell.price === 0 || dump.minBuyout > sell.price) {
-				sell.price = dump.minBuyout;
-				sell.time = dump.name;
+			if (low.price === 0 || dump.minBuyout > low.price) {
+				low.price = dump.minBuyout;
+				low.time = dump.name;
 			}
+			total += total + dump.avgBuyout;
+			num++;
 		});
-		console.log('dateData: ', dateData);
+		// console.log('dateData: ', dateData);
 
 		// GRAPH BEGIN //
 
+		// parse the date / time
+		let fakeData = [{ date: "10-May-12", close: "58.13" }, { date: "11-May-12", close: "53.98" }];
+
+		var parseTime = d3.timeParse("%d-%b-%y");
+		fakeData.forEach(function (d) {
+			d.date = parseTime(d.date);
+			d.close = +d.close;
+		});
+
 		// define svg element boundaries
-		var svgWidth = 500,
-		    svgHeight = 300,
-		    barPadding = 5;
-		var barWidth = svgWidth / priceData.length;
+		let svgWidth = 500;
+		let svgHeight = 300;
+		let barPadding = 5;
+		let barWidth = svgWidth / priceData.length;
 
 		// create svg element
 		var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
@@ -33270,13 +33285,15 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		svg.append("g").attr("transform", "translate(0, 5)").call(y_axis);
 
 		// define x axis
-		var xScale = d3.scaleLinear().domain([0, dateData.length]).range([0, svgWidth]);
+		var xScale = d3.scaleTime().domain(d3.extent(fakeData, function (d) {
+			return d.date;
+		})).range([0, svgWidth]);
 
 		// create x axis
-		var x_axis = d3.axisBottom().scale(xScale).ticks(priceData.length - 1);
+		var x_axis = d3.axisBottom(xScale).ticks(fakeData.length - 1).tickFormat(d3.timeFormat("%d-%b-%y"));
 
 		// add x axis to svg element
-		svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis);
+		svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
 		// bars
 		var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
@@ -33298,7 +33315,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		}).attr("fill", "#A64C38");
 
 		// add x axis label
-		svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 35).style("text-anchor", "middle").text("Blizzad Data Updates");
+		svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Blizzad Data Updates");
 
 		// add y axis label
 		svg.append("text").attr("transform", "rotate(-90)").attr("y", -40).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Gold");
@@ -33306,8 +33323,9 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		// GRAPH END //
 
 		this.setState({
-			buy: buy,
-			sell: sell
+			high: high,
+			low: low,
+			runningAverage: runningAverage
 		});
 	}
 
@@ -33318,17 +33336,22 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Lowest price was ${this.state.buy.price} gold on ${this.state.buy.time}`
+				`Lowest price was ${this.state.high.price}`
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Highest price was price: ${this.state.sell.price} gold on ${this.state.sell.time}`
+				`Highest price was ${this.state.low.price}`
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
 				null,
-				`Number of data points: ${this.props.items.length}`
+				`Running 15 day average is ${this.state.runningAverage.price}`
+			),
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'div',
+				null,
+				'On an average day there is x amount of this item for sale.'
 			)
 		);
 	}

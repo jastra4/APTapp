@@ -9,37 +9,54 @@ class Summary extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			buy: { price: 0, time: null },
-			sell: { price: 0, time: null },
+	    high: { price: 0, time: null },
+      low: { price: 0, time: null },
+      runningAverage: {price: 0}
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let buy = { price: 0, time: null };
-		let sell = { price: 0, time: null };
+		let high = { price: 0, time: null };
+		let low = { price: 0, time: null };
     let priceData = [];
     let dateData = [];
+    let total = 0;
+    let num = 0;
+    let runningAverage = 0;
 
 		nextProps.dumps.forEach((dump) => {
       let x = dump.name;
       dateData.push(x);
-			priceData.push(dump.avgBuyout);
-			if (buy.price === 0 || dump.minBuyout < buy.price) {
-				buy.price = dump.minBuyout;
-				buy.time = dump.name;
+      priceData.push(dump.avgBuyout);
+			if (high.price === 0 || dump.minBuyout < high.price) {
+				high.price = dump.minBuyout;
+				high.time = dump.name;
 			}
-			if (sell.price === 0 || dump.minBuyout > sell.price) {
-				sell.price = dump.minBuyout;
-				sell.time = dump.name;
+			if (low.price === 0 || dump.minBuyout > low.price) {
+				low.price = dump.minBuyout;
+				low.time = dump.name;
       }
+      total += total + dump.avgBuyout;
+      num++;
 		});
-    console.log('dateData: ', dateData);
+    // console.log('dateData: ', dateData);
 
     // GRAPH BEGIN //
 
+    // parse the date / time
+    let fakeData = [{ date: "10-May-12", close: "58.13" }, { date:"11-May-12", close: "53.98"}];
+    
+    var parseTime = d3.timeParse("%d-%b-%y");
+    fakeData.forEach(function (d) {
+      d.date = parseTime(d.date);
+      d.close = +d.close;
+    });
+
     // define svg element boundaries
-		var svgWidth = 500, svgHeight = 300, barPadding = 5;
-		var barWidth = (svgWidth / priceData.length);
+    let svgWidth = 500; 
+    let svgHeight = 300;
+    let barPadding = 5;
+		let barWidth = (svgWidth / priceData.length);
 
     // create svg element
 		var svg = d3.select('svg')
@@ -66,18 +83,24 @@ class Summary extends React.Component {
 			.call(y_axis);
 
     // define x axis
-    var xScale = d3.scaleLinear()
-      .domain([0, dateData.length])
+    var xScale = d3.scaleTime()
+      .domain(d3.extent(fakeData, function (d) { return d.date; }))
       .range([0, svgWidth]);
 
     // create x axis
-    var x_axis = d3.axisBottom()
-      .scale(xScale).ticks(priceData.length - 1);    
+    var x_axis = d3.axisBottom(xScale)
+      .ticks(fakeData.length-1)
+      .tickFormat(d3.timeFormat("%d-%b-%y"))
 
     // add x axis to svg element
 		svg.append("g")
       .attr("transform", "translate(0, " + (svgHeight) + ")")
-			.call(x_axis);
+      .call(x_axis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
       
     // bars
 		var barChart = svg.selectAll("rect")
@@ -115,7 +138,7 @@ class Summary extends React.Component {
     // add x axis label
 		svg.append("text")
 			.attr("x", svgWidth/2)
-			.attr("y", svgHeight + 35)
+			.attr("y", svgHeight + 75)
 			.style("text-anchor", "middle")
 			.text("Blizzad Data Updates");
     
@@ -131,17 +154,19 @@ class Summary extends React.Component {
     // GRAPH END //
 
 		this.setState({
-			buy: buy,
-			sell: sell,
+			high: high,
+      low: low,
+      runningAverage: runningAverage,
 		});
 	}
 
 	render() {
 		return(
 			<div className="summary">
-				<div>{`Lowest price was ${this.state.buy.price} gold on ${this.state.buy.time}`}</div>
-				<div>{`Highest price was price: ${this.state.sell.price} gold on ${this.state.sell.time}`}</div>
-			  <div>{`Number of data points: ${this.props.items.length}`}</div>
+				<div>{`Lowest price was ${this.state.high.price}`}</div>
+				<div>{`Highest price was ${this.state.low.price}`}</div>
+        <div>{`Running 15 day average is ${this.state.runningAverage.price}`}</div>
+        <div>{'On an average day there is x amount of this item for sale.'}</div>
 		  </div>
 		);
 	}

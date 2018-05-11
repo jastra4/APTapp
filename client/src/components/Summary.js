@@ -11,7 +11,8 @@ class Summary extends React.Component {
 		this.state = {
 	    high: { price: 0, time: null },
       low: { price: 0, time: null },
-      runningAverage: {price: 0}
+      average: 0,
+      supply: 0,
 		};
 	}
 
@@ -19,27 +20,27 @@ class Summary extends React.Component {
 		let high = { price: 0, time: null };
 		let low = { price: 0, time: null };
     let priceData = [];
-    let dateData = [];
-    let total = 0;
+    let totalAvg = 0;
+    let totalSupply = 0;
     let num = 0;
-    let runningAverage = 0;
 
 		nextProps.dumps.forEach((dump) => {
+      console.log(dump);
       let x = dump.name;
-      dateData.push(x);
       priceData.push(dump.avgBuyout);
-			if (high.price === 0 || dump.minBuyout < high.price) {
-				high.price = dump.minBuyout;
+      if (high.price === 0 || dump.avgBuyout < high.price) {
+        high.price = dump.avgBuyout;
 				high.time = dump.name;
 			}
-			if (low.price === 0 || dump.minBuyout > low.price) {
-				low.price = dump.minBuyout;
+      if (low.price === 0 || dump.avgBuyout > low.price) {
+        low.price = dump.avgBuyout;
 				low.time = dump.name;
       }
-      total += total + dump.avgBuyout;
+
+      totalSupply += dump.totalSupply;
+      totalAvg += dump.avgBuyout;
       num++;
 		});
-    // console.log('dateData: ', dateData);
 
     // GRAPH BEGIN //
 
@@ -156,7 +157,8 @@ class Summary extends React.Component {
 		this.setState({
 			high: high,
       low: low,
-      runningAverage: runningAverage,
+      average: Math.round(totalAvg / num),
+      supply: Math.round(totalSupply / num),
 		});
 	}
 
@@ -165,8 +167,8 @@ class Summary extends React.Component {
 			<div className="summary">
 				<div>{`Lowest price was ${this.state.high.price}`}</div>
 				<div>{`Highest price was ${this.state.low.price}`}</div>
-        <div>{`Running 15 day average is ${this.state.runningAverage.price}`}</div>
-        <div>{'On an average day there is x amount of this item for sale.'}</div>
+        <div>{`Running ${this.props.items.length} day average is ${this.state.average}`}</div>
+        <div>{`On an average day there is ${this.state.supply} amount of this item for sale.`}</div>
 		  </div>
 		);
 	}

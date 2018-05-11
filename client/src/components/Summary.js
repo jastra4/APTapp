@@ -218,8 +218,8 @@ componentDidMount() {
   
 	render() {
 		return(
-			<div className="summary">
-        <div>{`Market Color:`}</div>
+			<div>
+        <div class="summaryHeader">{`Market Summary`}</div>
 				<div>{`Lowest price was ${this.state.high.price}`}</div>
 				<div>{`Highest price was ${this.state.low.price}`}</div>
         <div>{`Running ${this.props.items.length} day average is ${this.state.average}`}</div>

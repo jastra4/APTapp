@@ -53,14 +53,14 @@ class Item extends React.Component {
 
   render () {
 		return (
-      <h5>
-        <div>{`${this.props.stamp.date}`}</div>
+      <div>
+        <div class="dailyHeader">{`${this.props.stamp.date}`}</div>
         <div>{`Min price: ${this.state.minBuyout}`}</div>
         <div>{`Max price: ${this.state.maxBuyout}`}</div>
         <div>{`Average price: ${this.state.avgBuyout}`}</div>
         <div>{`Auctions: ${this.props.dump.results.length}`}</div>
         <div>{`Supply: ${this.state.totalSupply}`}</div>
-      </h5>
+      </div>
 		);
   }
 }

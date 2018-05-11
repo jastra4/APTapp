@@ -40,7 +40,7 @@
 }
 
 .header {
-  background:linear-gradient(rgb(234, 140, 23), rgba(38, 22, 103, 0.3));
+  background:linear-gradient(rgb(202, 155, 97), rgba(38, 22, 103, 0.3));
   text-align: center;
   margin-top:0;
 }
@@ -59,6 +59,22 @@
   font-size: .8em;
   color: gray;
   padding-left: 2%;
+}
+
+.summaryHeader {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.dailyListHeader {
+  font-weight: bold;
+  margin-top: 30px;
+  font-size: 1.2em;
+}
+
+.dailyHeader {
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .search {
@@ -81,8 +97,4 @@ form {
 	width: 35%;
   /*overflow: auto;*/
   float:left;
-}
-
-.summary {
-  border-bottom: 1px black solid;
 }

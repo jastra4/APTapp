@@ -12647,6 +12647,11 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
+        { 'class': 'dailyListHeader' },
+        'Daily Breakdown'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
         null,
         results.map((dump, i) => {
           return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Item__["a" /* default */], { dump: dump, key: i, stamp: this.props.items[i].stamp });
@@ -33366,11 +33371,11 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      { className: 'summary' },
+      null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
-        `Market Color:`
+        { 'class': 'summaryHeader' },
+        `Market Summary`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -33469,11 +33474,11 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'h5',
+      'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { 'class': 'dailyHeader' },
         `${this.props.stamp.date}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

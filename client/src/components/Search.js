@@ -51,8 +51,6 @@ class Search extends React.Component {
 	render() {
 		return(
 		  <div>
-        <button onClick={this.updateDB}>Update DB</button>
-
         <p className="intro">
           Use this app to help you calculate a competitive price to buy or sell items on the World of Warcraft auction house. It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.
         </p>

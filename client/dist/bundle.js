@@ -32277,11 +32277,6 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			'div',
 			null,
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'button',
-				{ onClick: this.updateDB },
-				'Update DB'
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },
 				'Use this app to help you calculate a competitive price to buy or sell items on the World of Warcraft auction house. It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
@@ -33217,150 +33212,192 @@ module.exports = function spread(callback) {
 
 
 class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			high: { price: 0, time: null },
-			low: { price: 0, time: null },
-			average: 0,
-			supply: 0
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      high: { price: 0, time: null },
+      low: { price: 0, time: null },
+      average: 0,
+      supply: 0
+    };
+  }
 
-	componentWillReceiveProps(nextProps) {
-		let high = { price: 0, time: null };
-		let low = { price: 0, time: null };
-		let priceData = [];
-		let totalAvg = 0;
-		let totalSupply = 0;
-		let num = 0;
+  componentWillReceiveProps(nextProps) {
+    let high = { price: 0, time: null };
+    let low = { price: 0, time: null };
+    let priceData = [];
+    let totalAvg = 0;
+    let totalSupply = 0;
+    let num = 0;
+    let dumpDates = [];
 
-		nextProps.dumps.forEach(dump => {
-			console.log(dump);
-			let x = dump.name;
-			priceData.push(dump.avgBuyout);
-			if (high.price === 0 || dump.avgBuyout < high.price) {
-				high.price = dump.avgBuyout;
-				high.time = dump.name;
-			}
-			if (low.price === 0 || dump.avgBuyout > low.price) {
-				low.price = dump.avgBuyout;
-				low.time = dump.name;
-			}
+    nextProps.dumps.forEach(dump => {
+      console.log(dump);
+      let x = dump.name;
+      priceData.push(dump.avgBuyout);
+      if (high.price === 0 || dump.avgBuyout < high.price) {
+        high.price = dump.avgBuyout;
+        high.time = dump.name;
+      }
+      if (low.price === 0 || dump.avgBuyout > low.price) {
+        low.price = dump.avgBuyout;
+        low.time = dump.name;
+      }
 
-			totalSupply += dump.totalSupply;
-			totalAvg += dump.avgBuyout;
-			num++;
-		});
+      totalSupply += dump.totalSupply;
+      totalAvg += dump.avgBuyout;
+      num++;
+      dumpDates.push(dump.name);
+    });
 
-		// GRAPH BEGIN //
+    // GRAPH BEGIN //
 
-		// parse the date / time
-		let fakeData = [{ date: "10-May-12", close: "58.13" }, { date: "11-May-12", close: "53.98" }];
+    // parse the date / time
+    // let fakeData = [{ date: "10-May-12", close: "58.13" }, { date:"11-May-12", close: "53.98"}];
 
-		var parseTime = d3.timeParse("%d-%b-%y");
-		fakeData.forEach(function (d) {
-			d.date = parseTime(d.date);
-			d.close = +d.close;
-		});
+    var parseTime = d3.timeParse("%d-%b-%y");
+    dumpDates.forEach(function (d) {
+      d.date = parseTime(d.date);
+      // d.close = +d.close;
+    });
 
-		// define svg element boundaries
-		let svgWidth = 500;
-		let svgHeight = 300;
-		let barPadding = 5;
-		let barWidth = svgWidth / priceData.length;
+    // define svg element boundaries
+    let svgWidth = 500;
+    let svgHeight = 300;
+    let barPadding = 5;
+    let barWidth = svgWidth / priceData.length;
 
-		// create svg element
-		var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
+    // create svg element
+    var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
 
-		// define scale for bars
-		var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
+    // define scale for bars
+    var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
 
-		// define scale for y axis
-		var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight, 0]);
+    // define scale for y axis
+    var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight, 0]);
 
-		// create y axis
-		var y_axis = d3.axisLeft().scale(yAxisScale);
+    // create y axis
+    var y_axis = d3.axisLeft().scale(yAxisScale);
 
-		// add y axis to svg element
-		svg.append("g").attr("transform", "translate(0, 5)").call(y_axis);
+    // add y axis to svg element
+    svg.append("g").attr("transform", "translate(0, 5)").call(y_axis);
 
-		// define x axis
-		var xScale = d3.scaleTime().domain(d3.extent(fakeData, function (d) {
-			return d.date;
-		})).range([0, svgWidth]);
+    // define x axis
+    var xScale = d3.scaleTime().domain(d3.extent(dumpDates, function (d) {
+      return d.date;
+    })).range([0, svgWidth]);
 
-		// create x axis
-		var x_axis = d3.axisBottom(xScale).ticks(fakeData.length - 1).tickFormat(d3.timeFormat("%d-%b-%y"));
+    // create x axis
+    var x_axis = d3.axisBottom(xScale).ticks(dumpDates.length).tickFormat(d3.timeFormat("%d-%b-%y"));
 
-		// add x axis to svg element
-		svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
+    // add x axis to svg element
+    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
-		// bars
-		var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
-			return svgHeight - yBarScale(d);
-		}).attr("height", function (d) {
-			return yBarScale(d);
-		}).attr("width", barWidth - barPadding).attr("transform", function (d, i) {
-			var translate = [barWidth * i, 0];
-			return "translate(" + translate + ")";
-		});
+    // bars
+    var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
+      return svgHeight - yBarScale(d);
+    }).attr("height", function (d) {
+      return yBarScale(d);
+    }).attr("width", barWidth - barPadding).attr("transform", function (d, i) {
+      var translate = [barWidth * i, 0];
+      return "translate(" + translate + ")";
+    });
 
-		// bar labels
-		var text = svg.selectAll("text").data(priceData).enter().append("text").text(function (d) {
-			return d;
-		}).attr("y", function (d, i) {
-			return svgHeight - yBarScale(d) - 2;
-		}).attr("x", function (d, i) {
-			return barWidth * i;
-		}).attr("fill", "#A64C38");
+    // GRAPH END //
 
-		// add x axis label
-		svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Blizzad Data Updates");
+    this.setState({
+      high: high,
+      low: low,
+      average: Math.round(totalAvg / num),
+      supply: Math.round(totalSupply / num)
+    });
+  }
 
-		// add y axis label
-		svg.append("text").attr("transform", "rotate(-90)").attr("y", -40).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Gold");
+  componentDidMount() {
+    let fakeData = [];
 
-		// GRAPH END //
+    var parseTime = d3.timeParse("%d-%b-%y");
+    fakeData.forEach(function (d) {
+      d.date = parseTime(d.date);
+      d.close = +d.close;
+    });
 
-		this.setState({
-			high: high,
-			low: low,
-			average: Math.round(totalAvg / num),
-			supply: Math.round(totalSupply / num)
-		});
-	}
+    // define svg element boundaries
+    let svgWidth = 500;
+    let svgHeight = 300;
+    let barPadding = 5;
+    let barWidth = svgWidth / 0;
 
-	render() {
-		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-			'div',
-			{ className: 'summary' },
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				`Lowest price was ${this.state.high.price}`
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				`Highest price was ${this.state.low.price}`
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				`Running ${this.props.items.length} day average is ${this.state.average}`
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'div',
-				null,
-				`On an average day there is ${this.state.supply} amount of this item for sale.`
-			)
-		);
-	}
+    // create svg element
+    var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
+
+    // define scale for bars
+    var yBarScale = d3.scaleLinear().domain([0, 0]).range([0, svgHeight]);
+
+    // define scale for y axis
+    var yAxisScale = d3.scaleLinear().domain([0, 0]).range([svgHeight, 0]);
+
+    // create y axis
+    var y_axis = d3.axisLeft().scale(yAxisScale);
+
+    // add y axis to svg element
+    svg.append("g").attr("transform", "translate(0, 5)").call(y_axis);
+
+    // define x axis
+    var xScale = d3.scaleTime().domain(d3.extent(fakeData, function (d) {
+      return d.date;
+    })).range([0, svgWidth]);
+
+    // create x axis
+    var x_axis = d3.axisBottom(xScale).ticks(fakeData.length - 1).tickFormat(d3.timeFormat("%d-%b-%y"));
+
+    // add x axis to svg element
+    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
+
+    // add x axis label
+    svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Date");
+
+    svg.append("text").attr("x", svgWidth / 2).attr("y", -10).style("text-anchor", "middle").text("Average Daily Price");
+
+    // add y axis label
+    svg.append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Gold");
+  }
+
+  render() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      { className: 'summary' },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Market Color:`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Lowest price was ${this.state.high.price}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Highest price was ${this.state.low.price}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Running ${this.props.items.length} day average is ${this.state.average}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Average daily supply of this item is ${this.state.supply}`
+      )
+    );
+  }
 }
 
 const mapStateToProps = state => {
-	return { items: state.items, dumps: state.dumps };
+  return { items: state.items, dumps: state.dumps };
 };
 
 const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps)(Summary);
@@ -33437,7 +33474,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        `${this.props.stamp}`
+        `${this.props.stamp.date}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',

@@ -21,8 +21,9 @@
   margin-top:2%;
   background-color: #C7D9D9;
   width:40%;
-  padding: 40px; /**/
+  padding: 50px; /**/
   padding-bottom: 90px;
+  border: black solid 1px;
 }
     
 .bar {

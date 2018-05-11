@@ -65,12 +65,13 @@ app.get('/queryDB', (req, res) => {
       }
     });
     // FORMAT
-    // data.forEach((isoDate, i, data) => {
-    //   if (i === data.length-1) {
-    //     console.log(JSON.parse(isoDate.stamp));
-    //     data[i].stamp = dateFormat(JSON.parse(isoDate.stamp), 'm/d/yy H:MM TT Z');
-    //   }
-    // });
+    data.forEach((isoDate, i, data) => {
+      //if (i === data.length-1) {
+        // console.log(JSON.parse(isoDate.stamp));
+        // data[i].stamp = dateFormat(JSON.parse(isoDate.stamp), 'm/d/yy H:MM TT Z');
+        data[i].stamp = { date: dateFormat(JSON.parse(isoDate.stamp), 'dd-mmm-yy') };
+      //}
+    });
 
 		res.send(data);
 	});
@@ -99,7 +100,7 @@ app.get('/dates', (req, res) => {
   });
   // reformat isodates dates
   testDates.forEach((isoDate, i, testDates) => {
-    testDates[i] = dateFormat(isoDate, 'm/d/yy H:MM TT Z');
+    testDates[i] = {date: dateFormat(isoDate, 'dd-mmm-yy')};
   });
   res.send(testDates);
 })

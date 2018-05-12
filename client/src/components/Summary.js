@@ -26,7 +26,6 @@ class Summary extends React.Component {
     let dumpDates = [];
 
 		nextProps.dumps.forEach((dump) => {
-      console.log(dump);
       let x = dump.name;
       priceData.push(dump.avgBuyout);
       if (high.price === 0 || dump.avgBuyout < high.price) {
@@ -219,7 +218,7 @@ componentDidMount() {
 	render() {
 		return(
 			<div>
-        <div class="summaryHeader">{`Market Summary`}</div>
+        <div className="summaryHeader">{`Market Summary`}</div>
 				<div>{`Lowest price was ${this.state.high.price}`}</div>
 				<div>{`Highest price was ${this.state.low.price}`}</div>
         <div>{`Running ${this.props.items.length} day average is ${this.state.average}`}</div>

@@ -5,18 +5,25 @@ import { connect } from 'react-redux';
 class ItemList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    // this.state = {};
+  }
+
+  componentWillReceiveProps() {
+
   }
 
   render () {
+    // console.log('ItemList render props ', this.props.items);
     let results = Object.values(this.props.items);
     results = results.slice(0, results.length);
     let obj = {results: results};
+    // console.log('results ', results)
 		return (
       <div> 
-        <div class="dailyListHeader">Daily Breakdown</div>
+        <div className="dailyListHeader">Daily Breakdown</div>
         <div>
           {results.map((dump, i) => {
+            // console.log('map dump ', dump);
             return (<ItemConnected dump={dump} key={i} stamp={this.props.items[i].stamp}/>);
           })}
         </div>

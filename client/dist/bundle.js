@@ -12635,25 +12635,30 @@ const setItemList = items => ({
 class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    // this.state = {};
   }
 
+  componentWillReceiveProps() {}
+
   render() {
+    // console.log('ItemList render props ', this.props.items);
     let results = Object.values(this.props.items);
     results = results.slice(0, results.length);
     let obj = { results: results };
+    // console.log('results ', results)
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { 'class': 'dailyListHeader' },
+        { className: 'dailyListHeader' },
         'Daily Breakdown'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
         results.map((dump, i) => {
+          // console.log('map dump ', dump);
           return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Item__["a" /* default */], { dump: dump, key: i, stamp: this.props.items[i].stamp });
         })
       )
@@ -32294,7 +32299,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'form',
 				{ onSubmit: this.queryDB },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'search', id: 'queryDB', placeholder: 'search by item ID (ex. 124102)' })
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'search', id: 'queryDB', placeholder: 'search by item ID (ex. 124669)' })
 			)
 		);
 	}
@@ -33237,7 +33242,6 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let dumpDates = [];
 
     nextProps.dumps.forEach(dump => {
-      console.log(dump);
       let x = dump.name;
       priceData.push(dump.avgBuyout);
       if (high.price === 0 || dump.avgBuyout < high.price) {
@@ -33374,7 +33378,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { 'class': 'summaryHeader' },
+        { className: 'summaryHeader' },
         `Market Summary`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33433,16 +33437,20 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       avgAuctionSize: 0,
       totalSupply: 0
     };
+
+    this.getMarketColor = this.getMarketColor.bind(this);
   }
 
-  componentDidMount() {
+  // data = this.props.dump
+  // timeStamp = this.props.stamp
+  getMarketColor(data, timeStamp) {
     let minBuyout = 0;
     let maxBuyout = 0;
     let avgBuyout = 0;
     let avgAuctionSize = 0;
     let totalSupply = 0;
 
-    this.props.dump.results.forEach((item, i) => {
+    data.results.forEach((item, i) => {
       if (item.buyout / item.quantity > maxBuyout) {
         maxBuyout = item.buyout / item.quantity;
       }
@@ -33453,23 +33461,67 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       totalSupply += item.quantity;
     });
     avgBuyout = avgBuyout / (totalSupply || 1);
-    avgAuctionSize = totalSupply / (this.props.dump.length || 1);
+    avgAuctionSize = totalSupply / (data.length || 1);
+
     this.setState({
       minBuyout: Math.floor(minBuyout / 10000),
       maxBuyout: Math.floor(maxBuyout / 10000),
       avgBuyout: Math.floor(avgBuyout / 10000),
-      avgAuctionSize: Math.floor(totalSupply / (this.props.dump.length || 1)),
+      avgAuctionSize: Math.floor(totalSupply / (data.length || 1)),
       totalSupply: totalSupply
     }, () => {
       this.props.loadDumpTotals({
         minBuyout: this.state.minBuyout,
         maxBuyout: this.state.maxBuyout,
         avgBuyout: this.state.avgBuyout,
-        auctions: this.props.dump.results.length,
+        auctions: data.results.length,
         totalSupply: this.state.totalSupply,
-        name: this.props.stamp
+        name: timeStamp
       });
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps ', nextProps);
+    this.getMarketColor(nextProps.dump, nextProps.stamp);
+  }
+
+  componentDidMount() {
+    this.getMarketColor(this.props.dump, this.props.stamp);
+    //  let minBuyout = 0;
+    //  let maxBuyout = 0;
+    //  let avgBuyout = 0;
+    //  let avgAuctionSize = 0;
+    //  let totalSupply = 0;
+
+    //  this.props.dump.results.forEach((item, i) => {
+    //    if ((item.buyout/item.quantity) > maxBuyout) {
+    //      maxBuyout = (item.buyout/item.quantity);
+    //    }
+    //    if ((item.buyout/item.quantity) < minBuyout || minBuyout === 0) {
+    //      minBuyout = (item.buyout/item.quantity);
+    //    }
+    //    avgBuyout += item.buyout;
+    //    totalSupply += item.quantity;
+    //  });
+    //  avgBuyout = avgBuyout / (totalSupply || 1);
+    //  avgAuctionSize = totalSupply / (this.props.dump.length || 1);
+    //  this.setState({
+    //    minBuyout: Math.floor((minBuyout / 10000)),
+    //    maxBuyout: Math.floor((maxBuyout / 10000)),
+    //    avgBuyout: Math.floor((avgBuyout / 10000)),
+    //    avgAuctionSize: Math.floor(totalSupply / (this.props.dump.length || 1)),
+    //    totalSupply: totalSupply,
+    //  }, () => {
+    //    this.props.loadDumpTotals({
+    //     minBuyout: this.state.minBuyout,
+    //     maxBuyout: this.state.maxBuyout,
+    //     avgBuyout: this.state.avgBuyout,
+    //     auctions: this.props.dump.results.length,
+    //     totalSupply: this.state.totalSupply,
+    //     name: this.props.stamp,
+    //    });
+    //  });
   }
 
   render() {
@@ -33478,7 +33530,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { 'class': 'dailyHeader' },
+        { className: 'dailyHeader' },
         `${this.props.stamp.date}`
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

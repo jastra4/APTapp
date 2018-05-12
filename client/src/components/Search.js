@@ -59,7 +59,7 @@ class Search extends React.Component {
         </p>
 
 	    	<form onSubmit={this.queryDB}>
-			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124102)"/>
+			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124669)"/>
 	    	</form>
 		  </div>
 		);

@@ -1,4 +1,12 @@
 const defaultState = [];
+// const defaultState = {
+//   auctions: 0,
+//   maxBuyout: 0,
+//   minBuyout: 0,
+//   avgBuyout: 0,
+//   totalSupply: 0,
+//   name: { date: null },
+// };
 
 const dumpsReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -8,7 +16,6 @@ const dumpsReducer = (state = defaultState, action) => {
       	action.payload]
       );
     case 'CLEAR':
-      console.log('CLEAR reducer ran ', action.payload);
       return (
         [action.payload]
       );

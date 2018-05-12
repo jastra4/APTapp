@@ -3,6 +3,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/itemsActions';
+import { clearDumpTotals } from '../../src/actions/dumpActions';
 
 class Search extends React.Component {
 	constructor (props) {
@@ -40,7 +41,17 @@ class Search extends React.Component {
 		$('#queryDB').val('');
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
-				console.log('res ', res.data);
+        console.log('res ', res.data);
+        // clear dump totals in store
+        this.props.clearDumpTotals({
+          auctions: 0,
+          maxBuyout: 0,
+          minBuyout: 0,
+          avgBuyout: 0,
+          totalSupply: 0,
+          name: { date: null },
+        });
+
 				this.props.loadItems(res.data);
 			})
 			.catch((res) => {
@@ -67,7 +78,9 @@ class Search extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => (
-  { loadItems: itemList => dispatch(setItemList(itemList)) }
+  { loadItems: itemList => dispatch(setItemList(itemList)),
+    clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
+  }
 );
 
 const mapStateToProps = (state) => {

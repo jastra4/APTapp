@@ -67,13 +67,19 @@ class Item extends React.Component {
 
   testAction() {
     console.log('testAction ran');
-    this.props.clearDumpTotals([]);
+    this.props.clearDumpTotals({
+      auctions: 0,
+      maxBuyout: 0,
+      minBuyout: 0,
+      avgBuyout: 0,
+      totalSupply: 0,
+      name: {date: null},
+    });
   }
 
   render () {
 		return (
       <div>
-        <button onClick={this.testAction}>test action</button>
         <div className="dailyHeader">{`${this.props.stamp.date}`}</div>
         <div>{`Min price: ${this.state.minBuyout}`}</div>
         <div>{`Max price: ${this.state.maxBuyout}`}</div>

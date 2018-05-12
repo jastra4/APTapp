@@ -32217,12 +32217,20 @@ const dumpsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'DUMP':
       return [...state, action.payload];
+    case 'CLEAR':
+      console.log('CLEAR reducer ran ', action.payload);
+      return [action.payload];
     default:
       return state;
   }
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (dumpsReducer);
+
+// updated by Item.js
+// new searches are adding state on top of old state from previous searches
+// this is messing up the market summary component
+// state from old searches should be cleared out when a new one is run
 
 /***/ }),
 /* 87 */
@@ -33230,6 +33238,8 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       average: 0,
       supply: 0
     };
+
+    this.createGraph = this.createGraph.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33259,22 +33269,191 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       dumpDates.push(dump.name);
     });
 
+    this.setState({
+      high: high,
+      low: low,
+      average: Math.round(totalAvg / num),
+      supply: Math.round(totalSupply / num)
+    });
+
+    this.createGraph(dumpDates, priceData);
+
     // GRAPH BEGIN //
 
-    // parse the date / time
-    // let fakeData = [{ date: "10-May-12", close: "58.13" }, { date:"11-May-12", close: "53.98"}];
+    // // parse the date / time
+    // // let fakeData = [{ date: "10-May-12", close: "58.13" }, { date:"11-May-12", close: "53.98"}];
 
+    // var parseTime = d3.timeParse("%d-%b-%y");
+    // dumpDates.forEach(function (d) {
+    //   d.date = parseTime(d.date);
+    //   // d.close = +d.close;
+    // });
+
+    // // define svg element boundaries
+    // let svgWidth = 500; 
+    // let svgHeight = 300;
+    // let barPadding = 5;
+    // let barWidth = (svgWidth / priceData.length);
+
+    // // create svg element
+    // var svg = d3.select('svg')
+    // 	.attr("width", svgWidth)
+    // 	.attr("height", svgHeight);
+
+    // // define scale for bars
+    // var yBarScale = d3.scaleLinear()
+    // 	.domain([0, d3.max(priceData)])
+    // 	.range([0, svgHeight]);
+
+    // // define scale for y axis
+    // var yAxisScale = d3.scaleLinear()
+    // 	.domain([0, d3.max(priceData)])
+    // 	.range([svgHeight, 0]);
+
+    // // create y axis
+    // var y_axis = d3.axisLeft()
+    //   .scale(yAxisScale);
+
+    // // add y axis to svg element -- problem: adds new axis on top of old
+    // svg.append("g")
+    // 	.attr("transform", "translate(0, 0)")
+    // 	.call(y_axis);
+
+    // // define x axis
+    // var xScale = d3.scaleTime()
+    //   .domain(d3.extent(dumpDates, function (d) { return d.date; }))
+    //   .range([0, svgWidth]);
+
+    // // create x axis
+    // var x_axis = d3.axisBottom(xScale)
+    //   .ticks(dumpDates.length)
+    //   .tickFormat(d3.timeFormat("%d-%b-%y"))
+
+    // // add x axis to svg element
+    // svg.append("g")
+    //   .attr("transform", "translate(0, " + (svgHeight) + ")")
+    //   .call(x_axis)
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", ".15em")
+    //   .attr("transform", "rotate(-65)");
+
+    // // bars
+    // var barChart = svg.selectAll("rect")
+    // 	.data(priceData)
+    // 	.enter()
+    // 	.append("rect")
+    // 	.attr("y", function (d) {
+    // 		return svgHeight - yBarScale(d);
+    // 	})
+    // 	.attr("height", function (d) {
+    // 		return yBarScale(d);
+    // 	})
+    // 	.attr("width", barWidth - barPadding)
+    // 	.attr("transform", function (d, i) {
+    // 		var translate = [barWidth * i, 0];
+    // 		return "translate(" + translate + ")";
+    // 	});
+    // GRAPH END //
+  }
+
+  componentDidMount() {
+    this.createGraph();
+    // let fakeData = [];
+
+    // var parseTime = d3.timeParse("%d-%b-%y");
+    // fakeData.forEach(function (d) {
+    //   d.date = parseTime(d.date);
+    //   d.close = +d.close;
+    // });
+
+    // // define svg element boundaries
+    // let svgWidth = 500;
+    // let svgHeight = 300;
+    // let barPadding = 5;
+    // let barWidth = (svgWidth / 0);
+
+    // // create svg element
+    // var svg = d3.select('svg')
+    //   .attr("width", svgWidth)
+    //   .attr("height", svgHeight);
+
+    // // define scale for bars
+    // var yBarScale = d3.scaleLinear()
+    //   .domain([0, 0])
+    //   .range([0, svgHeight]);
+
+    // // define scale for y axis
+    // var yAxisScale = d3.scaleLinear()
+    //   .domain([0, 0])
+    //   .range([svgHeight, 0]);
+
+    // // create y axis
+    // var y_axis = d3.axisLeft()
+    //   .scale(yAxisScale);
+
+    // // add y axis to svg element
+    // svg.append("g")
+    //   .attr("transform", "translate(0, 0)")
+    //   .call(y_axis);
+
+    // // define x axis
+    // var xScale = d3.scaleTime()
+    //   .domain(d3.extent(fakeData, function (d) { return d.date; }))
+    //   .range([0, svgWidth]);
+
+    // // create x axis
+    // var x_axis = d3.axisBottom(xScale)
+    //   .ticks(fakeData.length - 1)
+    //   .tickFormat(d3.timeFormat("%d-%b-%y"))
+
+    // // add x axis to svg element
+    // svg.append("g")
+    //   .attr("transform", "translate(0, " + (svgHeight) + ")")
+    //   .call(x_axis)
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", ".15em")
+    //   .attr("transform", "rotate(-65)");
+
+    // // add x axis label
+    // svg.append("text")
+    //   .attr("x", svgWidth / 2)
+    //   .attr("y", svgHeight + 75)
+    //   .style("text-anchor", "middle")
+    //   .text("Date");
+
+    // // add title
+    // svg.append("text")
+    //   .attr("x", svgWidth / 2)
+    //   .attr("y", -10)
+    //   .style("text-anchor", "middle")
+    //   .text("Average Daily Price");
+
+    // // add y axis label
+    // svg.append("text")
+    //   .attr("transform", "rotate(-90)")
+    //   .attr("y", -45)
+    //   .attr("x", 0 - (svgHeight / 2))
+    //   .attr("dy", "1em")
+    //   .style("text-anchor", "middle")
+    //   .text("Gold");
+  }
+
+  createGraph(dataDump = [], priceData = []) {
     var parseTime = d3.timeParse("%d-%b-%y");
-    dumpDates.forEach(function (d) {
+    dataDump.forEach(function (d) {
       d.date = parseTime(d.date);
-      // d.close = +d.close;
+      // d.close = +d.close; // not parsing hours and minutes
     });
 
     // define svg element boundaries
-    let svgWidth = 500;
-    let svgHeight = 300;
-    let barPadding = 5;
-    let barWidth = svgWidth / priceData.length;
+    var svgWidth = 500;
+    var svgHeight = 300;
+    var barPadding = 5;
+    var barWidth = svgWidth / priceData.length;
 
     // create svg element
     var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
@@ -33289,20 +33468,20 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     var y_axis = d3.axisLeft().scale(yAxisScale);
 
     // add y axis to svg element
-    svg.append("g").attr("transform", "translate(0, 5)").call(y_axis);
+    svg.append("g").attr("transform", "translate(0, 0)").call(y_axis);
 
     // define x axis
-    var xScale = d3.scaleTime().domain(d3.extent(dumpDates, function (d) {
+    var xScale = d3.scaleTime().domain(d3.extent(dataDump, function (d) {
       return d.date;
     })).range([0, svgWidth]);
 
     // create x axis
-    var x_axis = d3.axisBottom(xScale).ticks(dumpDates.length).tickFormat(d3.timeFormat("%d-%b-%y"));
+    var x_axis = d3.axisBottom(xScale).ticks(dataDump.length).tickFormat(d3.timeFormat("%d-%b-%y"));
 
     // add x axis to svg element
     svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
-    // bars
+    // create bars
     var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
       return svgHeight - yBarScale(d);
     }).attr("height", function (d) {
@@ -33312,64 +33491,16 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       return "translate(" + translate + ")";
     });
 
-    // GRAPH END //
-
-    this.setState({
-      high: high,
-      low: low,
-      average: Math.round(totalAvg / num),
-      supply: Math.round(totalSupply / num)
-    });
-  }
-
-  componentDidMount() {
-    let fakeData = [];
-
-    var parseTime = d3.timeParse("%d-%b-%y");
-    fakeData.forEach(function (d) {
-      d.date = parseTime(d.date);
-      d.close = +d.close;
-    });
-
-    // define svg element boundaries
-    let svgWidth = 500;
-    let svgHeight = 300;
-    let barPadding = 5;
-    let barWidth = svgWidth / 0;
-
-    // create svg element
-    var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
-
-    // define scale for bars
-    var yBarScale = d3.scaleLinear().domain([0, 0]).range([0, svgHeight]);
-
-    // define scale for y axis
-    var yAxisScale = d3.scaleLinear().domain([0, 0]).range([svgHeight, 0]);
-
-    // create y axis
-    var y_axis = d3.axisLeft().scale(yAxisScale);
-
-    // add y axis to svg element
-    svg.append("g").attr("transform", "translate(0, 5)").call(y_axis);
-
-    // define x axis
-    var xScale = d3.scaleTime().domain(d3.extent(fakeData, function (d) {
-      return d.date;
-    })).range([0, svgWidth]);
-
-    // create x axis
-    var x_axis = d3.axisBottom(xScale).ticks(fakeData.length - 1).tickFormat(d3.timeFormat("%d-%b-%y"));
-
-    // add x axis to svg element
-    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
-
     // add x axis label
     svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Date");
 
-    svg.append("text").attr("x", svgWidth / 2).attr("y", -10).style("text-anchor", "middle").text("Average Daily Price");
-
     // add y axis label
     svg.append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Gold");
+
+    // add title
+    svg.append("text").attr("x", svgWidth / 2).attr("y", -10).style("text-anchor", "middle").text("Average Daily Price");
+
+    console.log('createGraph finished');
   }
 
   render() {
@@ -33426,6 +33557,7 @@ const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["conne
 
 
 
+// import clearDumpTotals from '../../src/actions/dumpActions';
 
 class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
@@ -33438,11 +33570,10 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       totalSupply: 0
     };
 
+    this.testAction = this.testAction.bind(this);
     this.getMarketColor = this.getMarketColor.bind(this);
   }
 
-  // data = this.props.dump
-  // timeStamp = this.props.stamp
   getMarketColor(data, timeStamp) {
     let minBuyout = 0;
     let maxBuyout = 0;
@@ -33482,52 +33613,27 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps ', nextProps);
     this.getMarketColor(nextProps.dump, nextProps.stamp);
   }
 
   componentDidMount() {
     this.getMarketColor(this.props.dump, this.props.stamp);
-    //  let minBuyout = 0;
-    //  let maxBuyout = 0;
-    //  let avgBuyout = 0;
-    //  let avgAuctionSize = 0;
-    //  let totalSupply = 0;
+  }
 
-    //  this.props.dump.results.forEach((item, i) => {
-    //    if ((item.buyout/item.quantity) > maxBuyout) {
-    //      maxBuyout = (item.buyout/item.quantity);
-    //    }
-    //    if ((item.buyout/item.quantity) < minBuyout || minBuyout === 0) {
-    //      minBuyout = (item.buyout/item.quantity);
-    //    }
-    //    avgBuyout += item.buyout;
-    //    totalSupply += item.quantity;
-    //  });
-    //  avgBuyout = avgBuyout / (totalSupply || 1);
-    //  avgAuctionSize = totalSupply / (this.props.dump.length || 1);
-    //  this.setState({
-    //    minBuyout: Math.floor((minBuyout / 10000)),
-    //    maxBuyout: Math.floor((maxBuyout / 10000)),
-    //    avgBuyout: Math.floor((avgBuyout / 10000)),
-    //    avgAuctionSize: Math.floor(totalSupply / (this.props.dump.length || 1)),
-    //    totalSupply: totalSupply,
-    //  }, () => {
-    //    this.props.loadDumpTotals({
-    //     minBuyout: this.state.minBuyout,
-    //     maxBuyout: this.state.maxBuyout,
-    //     avgBuyout: this.state.avgBuyout,
-    //     auctions: this.props.dump.results.length,
-    //     totalSupply: this.state.totalSupply,
-    //     name: this.props.stamp,
-    //    });
-    //  });
+  testAction() {
+    console.log('testAction ran');
+    this.props.clearDumpTotals([]);
   }
 
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        { onClick: this.testAction },
+        'test action'
+      ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'dailyHeader' },
@@ -33562,7 +33668,9 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({ loadDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["a" /* default */])(dumpTotals)) });
+const mapDispatchToProps = dispatch => ({ loadDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["b" /* setDumpTotals */])(dumpTotals)),
+  clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals))
+});
 
 const ItemConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(null, mapDispatchToProps)(Item);
 
@@ -33577,8 +33685,17 @@ const setDumpTotals = dumpTotals => ({
    type: 'DUMP',
    payload: dumpTotals
 });
+/* harmony export (immutable) */ __webpack_exports__["b"] = setDumpTotals;
 
-/* harmony default export */ __webpack_exports__["a"] = (setDumpTotals);
+
+const clearDumpTotals = dumpTotals => ({
+   type: 'CLEAR',
+   payload: dumpTotals
+});
+/* harmony export (immutable) */ __webpack_exports__["a"] = clearDumpTotals;
+
+
+// export default setDumpTotals;
 
 /***/ })
 /******/ ]);

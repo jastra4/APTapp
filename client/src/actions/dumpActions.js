@@ -1,6 +1,11 @@
-const setDumpTotals = (dumpTotals) => ({
+export const setDumpTotals = (dumpTotals) => ({
    type: 'DUMP',
    payload: dumpTotals,
 });
 
-export default setDumpTotals;
+export const clearDumpTotals = (dumpTotals) => ({
+    type: 'CLEAR',
+    payload: dumpTotals,
+});
+
+// export default setDumpTotals;

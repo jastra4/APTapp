@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import setDumpTotals from '../../src/actions/dumpActions';
+import { setDumpTotals, clearDumpTotals} from '../../src/actions/dumpActions';
+// import clearDumpTotals from '../../src/actions/dumpActions';
 
 class Item extends React.Component {
   constructor(props) {
@@ -13,11 +14,10 @@ class Item extends React.Component {
       totalSupply: 0,
     };
 
+    this.testAction = this.testAction.bind(this);
     this.getMarketColor = this.getMarketColor.bind(this);
   }
 
-  // data = this.props.dump
-  // timeStamp = this.props.stamp
   getMarketColor(data, timeStamp) {
     let minBuyout = 0;
     let maxBuyout = 0;
@@ -63,45 +63,17 @@ class Item extends React.Component {
 
   componentDidMount() {
     this.getMarketColor(this.props.dump, this.props.stamp);
-  //  let minBuyout = 0;
-  //  let maxBuyout = 0;
-  //  let avgBuyout = 0;
-  //  let avgAuctionSize = 0;
-  //  let totalSupply = 0;
+  }
 
-  //  this.props.dump.results.forEach((item, i) => {
-  //    if ((item.buyout/item.quantity) > maxBuyout) {
-  //      maxBuyout = (item.buyout/item.quantity);
-  //    }
-  //    if ((item.buyout/item.quantity) < minBuyout || minBuyout === 0) {
-  //      minBuyout = (item.buyout/item.quantity);
-  //    }
-  //    avgBuyout += item.buyout;
-  //    totalSupply += item.quantity;
-  //  });
-  //  avgBuyout = avgBuyout / (totalSupply || 1);
-  //  avgAuctionSize = totalSupply / (this.props.dump.length || 1);
-  //  this.setState({
-  //    minBuyout: Math.floor((minBuyout / 10000)),
-  //    maxBuyout: Math.floor((maxBuyout / 10000)),
-  //    avgBuyout: Math.floor((avgBuyout / 10000)),
-  //    avgAuctionSize: Math.floor(totalSupply / (this.props.dump.length || 1)),
-  //    totalSupply: totalSupply,
-  //  }, () => {
-  //    this.props.loadDumpTotals({
-  //     minBuyout: this.state.minBuyout,
-  //     maxBuyout: this.state.maxBuyout,
-  //     avgBuyout: this.state.avgBuyout,
-  //     auctions: this.props.dump.results.length,
-  //     totalSupply: this.state.totalSupply,
-  //     name: this.props.stamp,
-  //    });
-  //  });
+  testAction() {
+    console.log('testAction ran');
+    this.props.clearDumpTotals([]);
   }
 
   render () {
 		return (
       <div>
+        <button onClick={this.testAction}>test action</button>
         <div className="dailyHeader">{`${this.props.stamp.date}`}</div>
         <div>{`Min price: ${this.state.minBuyout}`}</div>
         <div>{`Max price: ${this.state.maxBuyout}`}</div>
@@ -114,7 +86,9 @@ class Item extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => (
-  { loadDumpTotals: dumpTotals => dispatch(setDumpTotals(dumpTotals)) }
+  { loadDumpTotals: dumpTotals => dispatch(setDumpTotals(dumpTotals)),
+    clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
+  }
 );
 
 const ItemConnected = connect(null, mapDispatchToProps)(Item);

@@ -17,7 +17,8 @@ const dumpsReducer = (state = defaultState, action) => {
       );
     case 'CLEAR':
       return (
-        [action.payload]
+        // [action.payload]
+        []
       );
     default:
       return state;

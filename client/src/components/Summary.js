@@ -16,6 +16,7 @@ class Summary extends React.Component {
     };
     
     this.createGraph = this.createGraph.bind(this);
+    this.updateGraph = this.updateGraph.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -27,6 +28,7 @@ class Summary extends React.Component {
     let num = 0;
     let dumpDates = [];
 
+    console.log('nextProps.dumps ', nextProps.dumps)
 		nextProps.dumps.forEach((dump) => {
       let x = dump.name;
       priceData.push(dump.avgBuyout);
@@ -51,12 +53,97 @@ class Summary extends React.Component {
       average: Math.round(totalAvg / num),
       supply: Math.round(totalSupply / num),
     });
+    console.log('priceData ', priceData)
 
     // this.createGraph(dumpDates, priceData);
+    this.updateGraph(dumpDates, priceData);
 	}
 
   componentDidMount() {
     this.createGraph();
+  }
+
+  updateGraph(dataDump, priceData) {
+    var svgWidth = 500;
+    var svgHeight = 300;
+    var barPadding = 5;
+    var barWidth = (svgWidth / priceData.length);
+    var svg = d3.select('svg')
+
+    // ================== //
+    // ***** Y-AXIS ***** //
+    // ================== //
+
+    // define scale for y axis
+    var yAxisScale = d3.scaleLinear()
+      .domain([0, d3.max(priceData)])
+      .range([svgHeight, 0]);
+
+    // create y axis
+    var y_axis = d3.axisLeft()
+      .scale(yAxisScale);
+
+    // add y axis to svg element
+    d3.select('#y_axis')
+      .call(y_axis);
+
+    // ================== //
+    // ***** X-AXIS ***** //
+    // ================== //
+
+    var parseTime = d3.timeParse("%d-%b-%y");
+    dataDump.forEach(function (d) {
+      d.date = parseTime(d.date);
+      // d.close = +d.close; // not parsing hours and minutes
+    });
+
+    // define x axis
+    var xScale = d3.scaleTime()
+      .domain(d3.extent(dataDump, function (d) { return d.date; }))
+      .range([0, svgWidth]);
+
+    // create x axis
+    var x_axis = d3.axisBottom(xScale)
+      .ticks(dataDump.length-1)
+      .tickFormat(d3.timeFormat("%d-%b-%y"))
+
+    // add x axis to svg element
+    svg.append("g")
+      .attr("transform", "translate(0, " + (svgHeight) + ")")
+      .attr("id", "#x_axis")
+      .call(x_axis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
+
+    // ================ //
+    // ***** BARS ***** //
+    // ================ //
+      
+    // define scale for bars
+    var yBarScale = d3.scaleLinear()
+      .domain([0, d3.max(priceData)])
+      .range([0, svgHeight]);
+
+    // create bars
+    var barChart = svg.selectAll("rect")
+      .data(priceData)
+      .enter()
+      .append("rect")
+      .attr("y", function (d) {
+        return svgHeight - yBarScale(d);
+      })
+      .attr("height", function (d) {
+        return yBarScale(d);
+      })
+      .attr("width", barWidth - barPadding)
+      .attr("transform", function (d, i) {
+        var translate = [barWidth * i, 0];
+        return "translate(" + translate + ")";
+      });
+
   }
 
   createGraph(dataDump=[], priceData=[]) {
@@ -71,7 +158,7 @@ class Summary extends React.Component {
     var svgHeight = 300;
     var barPadding = 5;
     var barWidth = (svgWidth / priceData.length);
-
+    
     // create svg element
     var svg = d3.select('svg')
       .attr("width", svgWidth)
@@ -94,6 +181,7 @@ class Summary extends React.Component {
     // add y axis to svg element
     svg.append("g")
       .attr("transform", "translate(0, 0)")
+      .attr("id", "y_axis")
       .call(y_axis);
 
     // define x axis
@@ -109,6 +197,7 @@ class Summary extends React.Component {
     // add x axis to svg element
     svg.append("g")
       .attr("transform", "translate(0, " + (svgHeight) + ")")
+      .attr("id", "#x_axis")
       .call(x_axis)
       .selectAll("text")
       .style("text-anchor", "end")

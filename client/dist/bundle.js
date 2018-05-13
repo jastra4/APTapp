@@ -33371,7 +33371,9 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     var x_axis = d3.axisBottom(xScale).ticks(dataDump.length - 1).tickFormat(d3.timeFormat("%d-%b-%y"));
 
     // add x axis to svg element
-    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").attr("id", "#x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
+    svg.append("g")
+    // d3.select('#x_axis')
+    .attr("transform", "translate(0, " + svgHeight + ")").attr("id", "#x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
     // ================ //
     // ***** BARS ***** //
@@ -33381,7 +33383,12 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
 
     // create bars
-    var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {
+    console.log('priceData ', priceData);
+    var barChart = svg.selectAll("rect").data(priceData);
+
+    barChart.exit().remove();
+    barChart.enter().append("rect").merge(barChart).attr("y", function (d) {
+      console.log('barChart running');
       return svgHeight - yBarScale(d);
     }).attr("height", function (d) {
       return yBarScale(d);

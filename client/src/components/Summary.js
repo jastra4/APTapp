@@ -109,6 +109,7 @@ class Summary extends React.Component {
 
     // add x axis to svg element
     svg.append("g")
+    // d3.select('#x_axis')
       .attr("transform", "translate(0, " + (svgHeight) + ")")
       .attr("id", "#x_axis")
       .call(x_axis)
@@ -130,8 +131,9 @@ class Summary extends React.Component {
     // create bars
     var barChart = svg.selectAll("rect")
       .data(priceData)
-      .enter()
-      .append("rect")
+
+    barChart.exit().remove();
+    barChart.enter().append("rect").merge(barChart)
       .attr("y", function (d) {
         return svgHeight - yBarScale(d);
       })

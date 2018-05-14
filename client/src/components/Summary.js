@@ -1,9 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import $ from 'jquery';
 import { connect } from 'react-redux';
-import setItemList from '../../src/actions/itemsActions';
-import ItemList from './ItemList';
 
 class Summary extends React.Component {
 	constructor (props) {
@@ -17,31 +13,41 @@ class Summary extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-    let highPrice = 0;
-    let lowPrice = 0;
-    let totalAvg = 0;
-    let totalSupply = 0;
-
-		nextProps.dumps.forEach((dump, i, arr) => {
-
-      if (lowPrice === 0 || dump.avgBuyout < lowPrice) {
-        lowPrice = dump.avgBuyout;
-			}
-      if (highPrice === 0 || dump.avgBuyout > highPrice) {
-        highPrice = dump.avgBuyout;
-      }
-
-      totalSupply += dump.totalSupply;
-      totalAvg += dump.avgBuyout;
-    });
+    let marketSummary = this.analyzeData(nextProps.dumps)
     
     this.setState({
-      highPrice: highPrice,
-      lowPrice: lowPrice,
-      average: Math.round(totalAvg / nextProps.dumps.length),
-      supply: Math.round(totalSupply / nextProps.dumps.length),
+      highPrice: marketSummary.highPrice,
+      lowPrice: marketSummary.lowPrice,
+      average: marketSummary.avgPrice,
+      supply: marketSummary.supply,
     });
-	}
+  }
+  
+  analyzeData(summaryList) {
+    let marketSummary = {
+      highPrice: 0,
+      lowPrice: 0,
+      avgPrice: 0,
+      supply: 0,
+    }
+
+    summaryList.forEach((dailySummary) => {
+      if (marketSummary.lowPrice === 0 || dailySummary.avgBuyout < marketSummary.lowPrice) {
+        marketSummary.lowPrice = dailySummary.avgBuyout;
+      }
+      if (dailySummary.avgBuyout > marketSummary.highPrice) {
+        marketSummary.highPrice = dailySummary.avgBuyout;
+      }
+
+      marketSummary.supply += dailySummary.totalSupply;
+      marketSummary.avgPrice += dailySummary.avgBuyout;  
+    })
+
+    marketSummary.supply = Math.round(marketSummary.supply / summaryList.length);
+    marketSummary.avgPrice = Math.round(marketSummary.avgPrice / summaryList.length);
+
+    return marketSummary;
+  }
   
 	render() {
 		return(

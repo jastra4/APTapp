@@ -63,20 +63,24 @@ class Graph extends React.Component {
 
     // create x axis
     let xAxis = d3
+      // .select('#x_axis').exit().remove()
       .axisBottom(x)
       //.ticks(d3.timeDay.every(1))
       .tickValues(dataDump.map(function (d) { return d.date }))
     //.tickFormat(d3.timeFormat("%d-%b-%y"));
 
-    // add x axis to svg element
-    svg.append("g")
-      .attr("transform", "translate(0, " + (svgHeight) + ")")
+    d3.select('#x_axis')
       .call(xAxis)
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-65)");
+    // add x axis to svg element
+    // svg.append("g")
+    //   .attr("transform", "translate(0, " + (svgHeight) + ")")
+    //   .attr("id", "#x_axis")
+    //   .call(xAxis)
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", ".15em")
+    //   .attr("transform", "rotate(-65)");
 
     // ================ //
     // ***** BARS ***** //
@@ -158,7 +162,7 @@ class Graph extends React.Component {
     // add x axis to svg element
     svg.append("g")
       .attr("transform", "translate(0, " + (svgHeight) + ")")
-      .attr("id", "#x_axis")
+      .attr("id", "x_axis")
       .call(x_axis)
       .selectAll("text")
       .style("text-anchor", "end")

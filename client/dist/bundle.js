@@ -33410,15 +33410,26 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }));
 
     // create x axis
-    let xAxis = d3.axisBottom(x)
+    let xAxis = d3
+    // .select('#x_axis').exit().remove()
+    .axisBottom(x)
     //.ticks(d3.timeDay.every(1))
     .tickValues(dataDump.map(function (d) {
       return d.date;
     }));
     //.tickFormat(d3.timeFormat("%d-%b-%y"));
 
+    d3.select('#x_axis').call(xAxis);
     // add x axis to svg element
-    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").call(xAxis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
+    // svg.append("g")
+    //   .attr("transform", "translate(0, " + (svgHeight) + ")")
+    //   .attr("id", "#x_axis")
+    //   .call(xAxis)
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", ".15em")
+    //   .attr("transform", "rotate(-65)");
 
     // ================ //
     // ***** BARS ***** //
@@ -33478,7 +33489,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     var x_axis = d3.axisBottom(xScale).ticks(dataDump.length).tickFormat(d3.timeFormat("%d-%b-%y"));
 
     // add x axis to svg element
-    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").attr("id", "#x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
+    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").attr("id", "x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
     // create bars
     var barChart = svg.selectAll("rect").data(priceData).enter().append("rect").attr("y", function (d) {

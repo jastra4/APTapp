@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Store from '../src/store/store.js';
 import SearchConnected from './components/Search';
 import SummaryConnected from './components/Summary';
+import GraphConnected from './components/Graph';
 import ItemListConnected from './components/ItemList';
 
 class Main extends React.Component {
@@ -23,6 +24,7 @@ class Main extends React.Component {
         
         <div className="main">
           <SummaryConnected />
+          <GraphConnected />
           <ItemListConnected />
         </div>
         <svg className="bar-chart" ></svg>

@@ -33373,6 +33373,12 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       dumpDates.push(dump.name);
     });
 
+    dumpDates.push({ date: "15-May-18" });
+    dumpDates.push({ date: "16-May-18" });
+    dumpDates.push({ date: "17-May-18" });
+    dumpDates.push({ date: "18-May-18" });
+    //dumpDates.push({ date: "19-May-18" });
+
     this.updateGraph(dumpDates, priceData);
   }
 
@@ -33387,13 +33393,13 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     // ***** Y-AXIS ***** //
     // ================== //
 
-    // define scale for y axis
+    // define y axis scale
     var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight, 0]);
 
     // create y axis
     var y_axis = d3.axisLeft().scale(yAxisScale);
 
-    // add y axis to svg element
+    // modify y axis
     d3.select('#y_axis').call(y_axis);
 
     // ================== //
@@ -33404,32 +33410,19 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       d.date = parseTime(d.date);
     });
 
-    // define x axis
-    let x = d3.scaleTime().range([0, svgWidth]).domain(d3.extent(dataDump, function (d) {
+    // define x axis scale
+    let xAxisScale = d3.scaleTime().range([0, svgWidth - barWidth]).domain(d3.extent(dataDump, function (d) {
       return d.date;
     }));
 
     // create x axis
-    let xAxis = d3
-    // .select('#x_axis').exit().remove()
-    .axisBottom(x)
-    //.ticks(d3.timeDay.every(1))
-    .tickValues(dataDump.map(function (d) {
+    let xAxis = d3.axisBottom().scale(xAxisScale).tickValues(dataDump.map(function (d) {
       return d.date;
     }));
     //.tickFormat(d3.timeFormat("%d-%b-%y"));
 
+    // modify x axis
     d3.select('#x_axis').call(xAxis);
-    // add x axis to svg element
-    // svg.append("g")
-    //   .attr("transform", "translate(0, " + (svgHeight) + ")")
-    //   .attr("id", "#x_axis")
-    //   .call(xAxis)
-    //   .selectAll("text")
-    //   .style("text-anchor", "end")
-    //   .attr("dx", "-.8em")
-    //   .attr("dy", ".15em")
-    //   .attr("transform", "rotate(-65)");
 
     // ================ //
     // ***** BARS ***** //

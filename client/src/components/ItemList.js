@@ -14,19 +14,28 @@ class ItemList extends React.Component {
   }
 
   render () {
-    let results = Object.values(this.props.items);
-    results = results.slice(0, results.length);
-    let obj = {results: results};
-		return (
-      <div> 
-        <div className="dailyListHeader">Daily Breakdown</div>
+    if (this.props.items.length === 0) {
+      return (
         <div>
-          {results.map((dump, i) => {
-            return (<ItemConnected dump={dump} key={i} stamp={this.props.items[i].stamp}/>);
-          })}
+          <div className="dailyListHeader">Daily Breakdown</div>
+          <div>No Data</div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      let results = Object.values(this.props.items);
+      results = results.slice(0, results.length);
+      let obj = {results: results};
+      return (
+        <div> 
+          <div className="dailyListHeader">Daily Breakdown</div>
+          <div>
+            {results.map((dump, i) => {
+              return (<ItemConnected dump={dump} key={i} stamp={this.props.items[i].stamp}/>);
+            })}
+          </div>
+        </div>
+      );
+    }
   }
 }
 

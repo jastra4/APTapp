@@ -50,12 +50,18 @@ class Summary extends React.Component {
   }
   
 	render() {
-    console.log('this.props.loading ', this.props.loading);
     if (this.props.loading === true) {
       return (
         <div>
           <div className="summaryHeader">{`Market Summary`}</div>
           <div>loading...</div>
+        </div>
+      );
+    } else if (this.state.supply === 0) {
+      return (
+        <div>
+          <div className="summaryHeader">{`Market Summary`}</div>
+          <div>No Data</div>
         </div>
       );
     } else {

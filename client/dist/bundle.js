@@ -21839,7 +21839,6 @@ const dumpsReducer = (state = defaultState, action) => {
 const loadingReducer = (state = false, action) => {
   switch (action.type) {
     case 'LOADING':
-      console.log('LOADING true');
       return action.payload;
     default:
       return state;
@@ -33271,7 +33270,6 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    console.log('this.props.loading ', this.props.loading);
     if (this.props.loading === true) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -33285,6 +33283,21 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           'div',
           null,
           'loading...'
+        )
+      );
+    } else if (this.state.supply === 0) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'summaryHeader' },
+          `Market Summary`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          'No Data'
         )
       );
     } else {
@@ -33322,7 +33335,6 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state ', state);
   return { dumps: state.dumps, loading: state.loading };
 };
 
@@ -33523,32 +33535,47 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     this.state = {};
   }
 
-  // could be good place to change loading status back to false
   componentWillReceiveProps(nextProps) {
-    console.log('ItemList props ', this.props);
     this.props.loadingStatus(false);
   }
 
   render() {
-    let results = Object.values(this.props.items);
-    results = results.slice(0, results.length);
-    let obj = { results: results };
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'dailyListHeader' },
-        'Daily Breakdown'
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    if (this.props.items.length === 0) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        results.map((dump, i) => {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Item__["a" /* default */], { dump: dump, key: i, stamp: this.props.items[i].stamp });
-        })
-      )
-    );
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'dailyListHeader' },
+          'Daily Breakdown'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          'No Data'
+        )
+      );
+    } else {
+      let results = Object.values(this.props.items);
+      results = results.slice(0, results.length);
+      let obj = { results: results };
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'dailyListHeader' },
+          'Daily Breakdown'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          results.map((dump, i) => {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Item__["a" /* default */], { dump: dump, key: i, stamp: this.props.items[i].stamp });
+          })
+        )
+      );
+    }
   }
 }
 

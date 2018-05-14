@@ -50,20 +50,30 @@ class Summary extends React.Component {
   }
   
 	render() {
-		return(
-			<div>
-        <div className="summaryHeader">{`Market Summary`}</div>
-        <div>{`Lowest price was ${this.state.lowPrice}`}</div>
-        <div>{`Highest price was ${this.state.highPrice}`}</div>
-        <div>{`Running ${this.props.dumps.length} day average is ${this.state.average}`}</div>
-        <div>{`Average daily supply of this item is ${this.state.supply}`}</div>
-		  </div>
-		);
+    console.log('this.props.loading ', this.props.loading);
+    if (this.props.loading === true) {
+      return (
+        <div>
+          <div className="summaryHeader">{`Market Summary`}</div>
+          <div>loading...</div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="summaryHeader">{`Market Summary`}</div>
+          <div>{`Lowest price was ${this.state.lowPrice}`}</div>
+          <div>{`Highest price was ${this.state.highPrice}`}</div>
+          <div>{`Running ${this.props.dumps.length} day average is ${this.state.average}`}</div>
+          <div>{`Average daily supply of this item is ${this.state.supply}`}</div>
+        </div>
+      );
+    }
 	}
 }
 
 const mapStateToProps = (state) => {
-  return ( { dumps: state.dumps } );
+  return ( { dumps: state.dumps, loading: state.loading } );
 };
 
 const SummaryConnected = connect(mapStateToProps)(Summary);

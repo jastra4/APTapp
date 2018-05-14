@@ -11,6 +11,10 @@ const dumpsReducer = (state = defaultState, action) => {
       return (
         []
       );
+    // case 'LOADING':
+    //   return (
+    //     action.payload
+    //   );
     default:
       return state;
   }

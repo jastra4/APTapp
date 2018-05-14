@@ -8,4 +8,9 @@ export const clearDumpTotals = (dumpTotals) => ({
     payload: dumpTotals,
 });
 
+// export const loadingStatus = (status) => ({
+//     type: 'LOADING',
+//     payload: status,
+// });
+
 // export default setDumpTotals;

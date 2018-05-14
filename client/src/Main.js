@@ -21,14 +21,12 @@ class Main extends React.Component {
         </h2>
         <SearchConnected />
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
-        
         <div className="main">
           <SummaryConnected />
           <GraphConnected />
           <ItemListConnected />
         </div>
         <svg className="bar-chart" ></svg>
-        
       </div>
     )
   }
@@ -39,6 +37,3 @@ ReactDOM.render((
     <Main />
   </Provider>
 ), document.getElementById('root'));
-
-// <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
-// style="float:left; padding-left:10%; padding-top:2%"

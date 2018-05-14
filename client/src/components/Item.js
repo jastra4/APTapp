@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setDumpTotals, clearDumpTotals} from '../../src/actions/dumpActions';
-// import clearDumpTotals from '../../src/actions/dumpActions';
 
 class Item extends React.Component {
   constructor(props) {
@@ -13,9 +12,14 @@ class Item extends React.Component {
       avgAuctionSize: 0,
       totalSupply: 0,
     };
+  }
 
-    this.testAction = this.testAction.bind(this);
-    this.getMarketColor = this.getMarketColor.bind(this);
+  componentDidMount() {
+    this.getMarketColor(this.props.dump, this.props.stamp);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getMarketColor(nextProps.dump, nextProps.stamp);
   }
 
   getMarketColor(data, timeStamp) {
@@ -53,27 +57,6 @@ class Item extends React.Component {
         totalSupply: this.state.totalSupply,
         name: timeStamp,
       });
-    });
-
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.getMarketColor(nextProps.dump, nextProps.stamp);
-  }
-
-  componentDidMount() {
-    this.getMarketColor(this.props.dump, this.props.stamp);
-  }
-
-  testAction() {
-    console.log('testAction ran');
-    this.props.clearDumpTotals({
-      auctions: 0,
-      maxBuyout: 0,
-      minBuyout: 0,
-      avgBuyout: 0,
-      totalSupply: 0,
-      name: {date: null},
     });
   }
 

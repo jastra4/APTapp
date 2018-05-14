@@ -44,8 +44,6 @@ const dumpSchema = mongoose.Schema({
 const dateFormat = require('dateformat');
 
 const insertBatch = (data, stamp) => {
-  // const dumpId = JSON.stringify(dateFormat(new Date(), 'dddd, H:MM TT'));
-  // const dumpId = JSON.stringify(dateFormat(new Date(), 'm/d/yy H:MM TT Z'));
   const dumpId = JSON.stringify(dateFormat(new Date(), "isoDateTime"));
   mongoose.connection.db.listCollections({name: dumpId})
     .next(function(err, doc) {
@@ -93,9 +91,9 @@ var selectAll = function(item, callback) {
 // Delete
 /************************************************************/
 
+// This function was going to be run by a worker to keep the database within its size limits.
+// However, deleting files does not remove their footprint. The database would still need to be manually compacted every day.
 const deleteBatch = function() {
-  // This function was going to keep the database within it's size limits.
-  // However, deleted files keep their foot print so the database would need to be manually compacted which also requires downtime.
   console.log('this should delete the oldest data dump');
 };
 

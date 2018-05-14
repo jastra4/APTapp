@@ -1,16 +1,14 @@
 import React from 'react';
-import axios from 'axios';
-import $ from 'jquery';
 import { connect } from 'react-redux';
-import setItemList from '../../src/actions/itemsActions';
-import ItemList from './ItemList';
 
 class Graph extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
+  }
 
-    this.createGraph = this.createGraph.bind(this);
-    this.updateGraph = this.updateGraph.bind(this);
+  componentDidMount() {
+    this.createGraph();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,10 +21,6 @@ class Graph extends React.Component {
     });
 
     this.updateGraph(dumpDates, priceData);
-  }
-
-  componentDidMount() {
-    this.createGraph();
   }
 
   updateGraph(dataDump, priceData) {

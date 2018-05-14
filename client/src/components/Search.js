@@ -43,14 +43,7 @@ class Search extends React.Component {
 			.then((res) => {
         console.log('res ', res.data);
         // clear dump totals in store
-        this.props.clearDumpTotals({
-          // auctions: 0,
-          // maxBuyout: 0,
-          // minBuyout: 0,
-          // avgBuyout: 0,
-          // totalSupply: 0,
-          // name: { date: null },
-        });
+        this.props.clearDumpTotals({});
 
 				this.props.loadItems(res.data);
 			})

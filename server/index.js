@@ -35,8 +35,29 @@ app.get('/updateDB', (req, res) => {
     });				
 })
 
+const catalog = {
+  "Aethril": 124101,
+  "Astral Glory": 151565,
+  "Astral Healing Potion": 152615,
+  "Avalanche Elixir": 127839,
+  "Darkmoon Daggermaw": 124669,
+  "Dreamleaf": 124102,
+  "Felwort": 124106,
+  "Fjarnskaggl": 124104,
+  "Foxflower": 124103,
+  "Leytorrent Potion": 127846,
+  "Starlight Rose": 124105,
+  "Lavish Suramar Feast": 133579,
+  "Unbending Potion": 127845,
+  "Yseralline Seed": 128304,
+}
+
 app.get('/queryDB', (req, res) => {
-	const { item } = req.query;
+  let { item } = req.query;
+  if (catalog[item] !== undefined) {
+    item = catalog[item];
+  }
+
 	dbMethod.selectAll(item, (data) => {
 
     // SORT (assumes the stamp prop to be an iso date)

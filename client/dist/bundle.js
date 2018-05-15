@@ -21863,59 +21863,78 @@ const loadingReducer = (state = false, action) => {
 
 
 class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
 
-		this.queryDB = this.queryDB.bind(this);
-	}
+    this.queryDB = this.queryDB.bind(this);
+  }
 
-	queryDB(e) {
-		this.props.loadingStatus(true);
+  queryDB(e) {
+    this.props.loadingStatus(true);
 
-		e.preventDefault();
-		let input = __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val();
-		__WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
-		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
-			console.log('res ', res.data);
-			this.props.clearDumpTotals({}); // clear dump totals in store
-			this.props.loadItems(res.data);
-		}).catch(res => {
-			console.log('error ', res);
-		});
-	}
+    e.preventDefault();
+    let input = __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val();
+    __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
+    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
+      console.log('res ', res.data);
+      this.props.clearDumpTotals({}); // clear dump totals in store
+      this.props.loadItems(res.data);
+    }).catch(res => {
+      console.log('error ', res);
+    });
+  }
 
-	render() {
-		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-			'div',
-			null,
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'p',
-				{ className: 'intro' },
-				'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'p',
-				{ className: 'disclaimer' },
-				'* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
-			),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				'form',
-				{ onSubmit: this.queryDB },
-				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'search', id: 'queryDB', placeholder: 'search by item ID (ex. 124669)' })
-			)
-		);
-	}
+  render() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'p',
+        { className: 'intro' },
+        'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'p',
+        { className: 'disclaimer' },
+        '* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'form',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'search', placeholder: 'Use the drop down or any item ID' }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'datalist',
+          { id: 'items' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Aethril' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Glory' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Healing Potion' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Avalanche Elixir' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Darkmoon Daggermaw' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Dreamleaf' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Felwort' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Fjarnskaggl' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Foxflower' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Leytorrent Potion' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Starlight Rose' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
+      )
+    );
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
-	loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__["a" /* default */])(itemList)),
-	clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals)),
-	loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
+  loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__["a" /* default */])(itemList)),
+  clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals)),
+  loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
 });
 
 const mapStateToProps = state => {
-	return { items: state.items };
+  return { items: state.items };
 };
 
 const SearchConnected = Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(Search);

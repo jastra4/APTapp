@@ -2260,11 +2260,6 @@ const clearDumpTotals = dumpTotals => ({
 /* harmony export (immutable) */ __webpack_exports__["a"] = clearDumpTotals;
 
 
-// export const loadingStatus = (status) => ({
-//     type: 'LOADING',
-//     payload: status,
-// });
-
 // export default setDumpTotals;
 
 /***/ }),
@@ -21820,10 +21815,6 @@ const dumpsReducer = (state = defaultState, action) => {
       return [...state, action.payload];
     case 'CLEAR':
       return [];
-    // case 'LOADING':
-    //   return (
-    //     action.payload
-    //   );
     default:
       return state;
   }
@@ -21901,7 +21892,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
 				{ className: 'intro' },
-				'Use this app to help you calculate a competitive price to buy or sell items on the World of Warcraft auction house. It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
+				'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
 			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'p',
@@ -33369,17 +33360,14 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let priceData = [];
 
     nextProps.dumps.forEach((dump, i, arr) => {
-      priceData.push(dump.avgBuyout);
+      // priceData.push(dump.avgBuyout);
+      priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
 
-    dumpDates.push({ date: "15-May-18" });
-    dumpDates.push({ date: "16-May-18" });
-    dumpDates.push({ date: "17-May-18" });
-    dumpDates.push({ date: "18-May-18" });
-    //dumpDates.push({ date: "19-May-18" });
-
-    this.updateGraph(dumpDates, priceData);
+    if (dumpDates.length > 0 && priceData.length > 0) {
+      this.updateGraph(dumpDates, priceData);
+    }
   }
 
   updateGraph(dataDump, priceData) {

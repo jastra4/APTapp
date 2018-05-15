@@ -18,8 +18,8 @@ class ItemList extends React.Component {
       return (
         <div>
           <div className="dailyListHeader">Daily Breakdown</div>
-          <div>No Data</div>
-        </div>
+          <div>No Data</div>     
+        </div>        
       );
     } else {
       let results = Object.values(this.props.items);

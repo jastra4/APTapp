@@ -34,7 +34,7 @@ class Search extends React.Component {
 	render() {
 		return(
 		  <div>
-        <p className="intro">Use this app to help you calculate a competitive price to buy or sell items on the World of Warcraft auction house. It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.</p>
+        <p className="intro">Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.</p>
         <p className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</p>
 	    	<form onSubmit={this.queryDB}>
 			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124669)"/>

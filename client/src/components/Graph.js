@@ -16,17 +16,14 @@ class Graph extends React.Component {
     let priceData = [];
 
     nextProps.dumps.forEach((dump, i, arr) => {
-      priceData.push(dump.avgBuyout);
+      // priceData.push(dump.avgBuyout);
+      priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
 
-    dumpDates.push({ date: "15-May-18" });
-    dumpDates.push({ date: "16-May-18" });
-    dumpDates.push({ date: "17-May-18" });
-    dumpDates.push({ date: "18-May-18" });
-    //dumpDates.push({ date: "19-May-18" });
-
-    this.updateGraph(dumpDates, priceData);
+    if (dumpDates.length > 0 && priceData.length > 0) {
+      this.updateGraph(dumpDates, priceData);
+    }
   }
 
   updateGraph(dataDump, priceData) {

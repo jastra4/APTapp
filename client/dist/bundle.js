@@ -2317,11 +2317,11 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'main' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart' })
@@ -21865,7 +21865,9 @@ const loadingReducer = (state = false, action) => {
 class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      itemName: ''
+    };
 
     this.queryDB = this.queryDB.bind(this);
   }
@@ -21877,7 +21879,8 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let input = __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val();
     __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
-      console.log('res ', res.data);
+      this.setState({ itemName: input });
+      console.log('res ', res.data, ' for ', input);
       this.props.clearDumpTotals({}); // clear dump totals in store
       this.props.loadItems(res.data);
     }).catch(res => {
@@ -21913,15 +21916,20 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Darkmoon Daggermaw' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Dreamleaf' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Felwort' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Fjarnskaggl' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Foxflower' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Leytorrent Potion' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Starlight Rose' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'itemName' },
+        this.state.itemName
       )
     );
   }
@@ -33337,7 +33345,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
-          `Average daily supply of this item is ${this.state.supply}`
+          `Average daily supply is ${this.state.supply}`
         )
       );
     }
@@ -33375,6 +33383,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('graph props ', this.props);
     let dumpDates = [];
     let priceData = [];
 
@@ -33383,7 +33392,8 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
-
+    console.log('dumpDates ', dumpDates);
+    console.log('priceData ', priceData);
     if (dumpDates.length > 0 && priceData.length > 0) {
       this.updateGraph(dumpDates, priceData);
     }
@@ -33461,6 +33471,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     // define svg element boundaries
     var svgWidth = 500;
+    //var svgWidth = (window.innerWidth/3.5);
     var svgHeight = 300;
     var barPadding = 5;
     var barWidth = svgWidth / priceData.length;
@@ -33502,13 +33513,13 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
 
     // add x axis label
-    svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Date");
+    svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Date (updated daily at 11:00 UTC)");
 
     // add y axis label
-    svg.append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Gold");
+    svg.append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Price (in wow gold)");
 
     // add title
-    svg.append("text").attr("x", svgWidth / 2).attr("y", -10).style("text-anchor", "middle").text("Average Daily Price");
+    svg.append("text").attr("x", svgWidth / 2).attr("y", -20).style("text-anchor", "middle").text("Historical Daily Price Averages");
   }
 
   render() {

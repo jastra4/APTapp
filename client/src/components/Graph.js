@@ -12,6 +12,7 @@ class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('graph props ', this.props);
     let dumpDates = [];
     let priceData = [];
 
@@ -20,7 +21,8 @@ class Graph extends React.Component {
       priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
-
+    console.log('dumpDates ', dumpDates);
+    console.log('priceData ', priceData);
     if (dumpDates.length > 0 && priceData.length > 0) {
       this.updateGraph(dumpDates, priceData);
     }
@@ -113,6 +115,7 @@ class Graph extends React.Component {
 
     // define svg element boundaries
     var svgWidth = 500;
+    //var svgWidth = (window.innerWidth/3.5);
     var svgHeight = 300;
     var barPadding = 5;
     var barWidth = (svgWidth / priceData.length);
@@ -185,7 +188,7 @@ class Graph extends React.Component {
       .attr("x", svgWidth / 2)
       .attr("y", svgHeight + 75)
       .style("text-anchor", "middle")
-      .text("Date");
+      .text("Date (updated daily at 11:00 UTC)");
 
     // add y axis label
     svg.append("text")
@@ -194,14 +197,14 @@ class Graph extends React.Component {
       .attr("x", 0 - (svgHeight / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Gold");
+      .text("Price (in wow gold)");
 
     // add title
     svg.append("text")
       .attr("x", svgWidth / 2)
-      .attr("y", -10)
+      .attr("y", -20)
       .style("text-anchor", "middle")
-      .text("Average Daily Price");
+      .text("Historical Daily Price Averages");
   }
 
   render() {

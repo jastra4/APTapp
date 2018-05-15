@@ -9,7 +9,9 @@ import { clearDumpTotals } from '../../src/actions/dumpActions';
 class Search extends React.Component {
 	constructor (props) {
 		super(props);
-		this.state = {};
+		this.state = {
+      itemName: '',
+    };
 
 		this.queryDB = this.queryDB.bind(this);
 	}
@@ -22,7 +24,8 @@ class Search extends React.Component {
 		$('#queryDB').val('');
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
-        console.log('res ', res.data);
+        this.setState({itemName: input});
+        console.log('res ', res.data, ' for ', input);
         this.props.clearDumpTotals({}); // clear dump totals in store
         this.props.loadItems(res.data);
 			})
@@ -47,11 +50,11 @@ class Search extends React.Component {
             <option value="Darkmoon Daggermaw"></option>
             <option value="Dreamleaf"></option>
             <option value="Felwort"></option>
+            <option value="Lavish Suramar Feast"></option>
             <option value="Fjarnskaggl"></option>
             <option value="Foxflower"></option>
             <option value="Leytorrent Potion"></option>
             <option value="Starlight Rose"></option>
-            <option value="Lavish Suramar Feast"></option>
             <option value="Unbending Potion"></option>
             <option value="Yseralline Seed"></option>
           </datalist>
@@ -60,7 +63,8 @@ class Search extends React.Component {
         
         {/* <form onSubmit={this.queryDB}>
 			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124669)"/>
-	    	</form> */}
+        </form> */}
+        <div className="itemName">{this.state.itemName}</div>
 		  </div>
 		);
 	}

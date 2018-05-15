@@ -71,7 +71,7 @@ class Summary extends React.Component {
           <div>{`Lowest price was ${this.state.lowPrice}`}</div>
           <div>{`Highest price was ${this.state.highPrice}`}</div>
           <div>{`Running ${this.props.dumps.length} day average is ${this.state.average}`}</div>
-          <div>{`Average daily supply of this item is ${this.state.supply}`}</div>
+          <div>{`Average daily supply is ${this.state.supply}`}</div>
         </div>
       );
     }

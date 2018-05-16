@@ -21916,11 +21916,17 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Darkmoon Daggermaw' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Dreamleaf' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Felwort' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of Ten Thousand Scars' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Countless Armies' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Seventh Demon' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Whispered Pact' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Fjarnskaggl' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Foxflower' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Leytorrent Potion' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Potion of Prolonged Power' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Starlight Rose' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Skystep Potion' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
         ),
@@ -33583,7 +33589,7 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       let obj = { results: results };
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'itemList' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'dailyListHeader' },

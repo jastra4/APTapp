@@ -83,6 +83,11 @@
   font-weight:bold;
   font-size:1.2em;
 }
+
+.itemList {
+  margin-bottom:5%;
+}
+
 .search {
   /*margin: auto;*/
   width: 20%;

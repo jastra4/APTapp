@@ -26,7 +26,7 @@ class ItemList extends React.Component {
       results = results.slice(0, results.length);
       let obj = {results: results};
       return (
-        <div> 
+        <div className="itemList"> 
           <div className="dailyListHeader">Daily Breakdown</div>
           <div>
             {results.map((dump, i) => {

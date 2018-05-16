@@ -50,20 +50,22 @@ class Search extends React.Component {
             <option value="Darkmoon Daggermaw"></option>
             <option value="Dreamleaf"></option>
             <option value="Felwort"></option>
-            <option value="Lavish Suramar Feast"></option>
+            <option value="Flask of Ten Thousand Scars"></option>
+            <option value="Flask of the Countless Armies"></option>
+            <option value="Flask of the Seventh Demon"></option>
+            <option value="Flask of the Whispered Pact"></option>
             <option value="Fjarnskaggl"></option>
             <option value="Foxflower"></option>
+            <option value="Lavish Suramar Feast"></option>
             <option value="Leytorrent Potion"></option>
+            <option value="Potion of Prolonged Power"></option>
             <option value="Starlight Rose"></option>
+            <option value="Skystep Potion"></option>
             <option value="Unbending Potion"></option>
             <option value="Yseralline Seed"></option>
           </datalist>
           <input type="submit" onClick={this.queryDB}></input>
         </form>
-        
-        {/* <form onSubmit={this.queryDB}>
-			    <input className="search" id="queryDB" placeholder="search by item ID (ex. 124669)"/>
-        </form> */}
         <div className="itemName">{this.state.itemName}</div>
 		  </div>
 		);

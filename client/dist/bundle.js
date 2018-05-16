@@ -2317,14 +2317,14 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'main' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart' })
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null)
     );
   }
 }
@@ -33389,17 +33389,14 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('graph props ', this.props);
     let dumpDates = [];
     let priceData = [];
 
     nextProps.dumps.forEach((dump, i, arr) => {
-      // priceData.push(dump.avgBuyout);
       priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
-    console.log('dumpDates ', dumpDates);
-    console.log('priceData ', priceData);
+
     if (dumpDates.length > 0 && priceData.length > 0) {
       this.updateGraph(dumpDates, priceData);
     }
@@ -33446,6 +33443,51 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     // modify x axis
     d3.select('#x_axis').call(xAxis);
+
+    // ================== //
+    // ***** AVG-LINE ***** //
+    // ================== //
+
+    var total = 0;
+
+    priceData.forEach(price => {
+      total += price;
+    });
+
+    var average = total / priceData.length;
+
+    var lineData = [];
+    dataDump.forEach((d, i) => {
+      console.log('average ', average);
+      lineData.push({ price: average, d: d.date }); // priceData[i]
+    });
+
+    // set the ranges
+    var x = d3.scaleTime().range([0, svgWidth]).domain(d3.extent(dataDump, function (d) {
+      console.log('domain X d.date ', d.date);
+      return d.date;
+    }));
+
+    var y = d3.scaleLinear().range([svgHeight, 0]).domain([0, d3.max(priceData, function (d) {
+      console.log('domain Y d ', d);
+      return d;
+    })]);
+
+    // define the line
+    var valueline = d3.line().x(function (d) {
+      console.log('X ', d.d);
+      return x(d.d);
+    }).y(function (d) {
+      console.log('Y ', d.price);
+      return y(d.price);
+    });
+
+    // Add the valueline path.
+    svg.append("path").data([lineData]).attr("class", "line").attr("d", valueline);
+    // svg.append("g")
+    //   //.attr("transform", "translate(0, 0)")
+    //   .attr("id", "avg_line")
+    //   .call(valueline);
 
     // ================ //
     // ***** BARS ***** //
@@ -33540,6 +33582,15 @@ const mapStateToProps = state => {
 const GraphConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Graph);
 
 /* harmony default export */ __webpack_exports__["a"] = (GraphConnected);
+
+{/* <path class="line" d="M500,85
+                       
+  L200,80                    
+  L100,80
+  L250,80                     
+  L100,80
+  L83,80                        
+  L0,80"></path> */}
 
 /***/ }),
 /* 110 */

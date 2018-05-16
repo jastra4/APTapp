@@ -30,6 +30,12 @@
   fill: #115D8C;
 }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;

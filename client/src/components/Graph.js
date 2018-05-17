@@ -1,6 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// TODO:
+// 1. fix the line appearing behind the bars when run for the first time
+// 2. fix the x-axis line dissapearing
+// 3. adjust x-axis formatting
+// 4. make graph fit various window/screen sizes
+// 5. more styling
+
 class Graph extends React.Component {
   constructor(props) {
     super(props);
@@ -77,9 +84,10 @@ class Graph extends React.Component {
       .call(xAxis);
 
     // ================== //
-    // ***** AVG-LINE ***** //
+    // ****** LINE ****** //
     // ================== //
 
+    // find average price
     var total = 0;
     priceData.forEach((price) => {
       total += price;
@@ -91,7 +99,7 @@ class Graph extends React.Component {
       lineData.push({ price: average, d: d.date }) // priceData[i]
     });
 
-    // set the ranges
+    // set x and y ranges
     var x = d3.scaleTime()
       .range([0, svgWidth])
       .domain(d3.extent(dataDump, function (d) {
@@ -113,17 +121,13 @@ class Graph extends React.Component {
         return y(d.price); 
       });
 
-    // Add the valueline path.
-    var test = svg.selectAll("path")
+    // remove the old line
+    var oldLine = svg.selectAll("path")
       .data([lineData]);
+    oldLine.exit().remove();
 
-    test.exit().remove();
-    //test.enter().append("path").merge(test).attr("d", valueline);
+    // add the new line
     svg.append("path") 
-      // using .select instead of .append
-      // this deals with average lines from past searches
-      // but on the first search the y axis dissapears
-      // also the line is still behind the bars
       .data([lineData])
       .attr("class", "line")
       .attr("d", valueline);
@@ -166,7 +170,6 @@ class Graph extends React.Component {
 
     // define svg element boundaries
     var svgWidth = 500;
-    //var svgWidth = (window.innerWidth/3.5);
     var svgHeight = 300;
     var barPadding = 5;
     var barWidth = (svgWidth / priceData.length);
@@ -217,23 +220,6 @@ class Graph extends React.Component {
       .attr("dy", ".15em")
       .attr("transform", "rotate(-65)");
 
-    // create bars
-    // var barChart = svg.selectAll("rect")
-    //   .data(priceData)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("y", function (d) {
-    //     return svgHeight - yBarScale(d);
-    //   })
-    //   .attr("height", function (d) {
-    //     return yBarScale(d);
-    //   })
-    //   .attr("width", barWidth - barPadding)
-    //   .attr("transform", function (d, i) {
-    //     var translate = [barWidth * i, 0];
-    //     return "translate(" + translate + ")";
-    //   });
-
     // add x axis label
     svg.append("text")
       .attr("x", svgWidth / 2)
@@ -244,7 +230,7 @@ class Graph extends React.Component {
     // add y axis label
     svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -45)
+      .attr("y", -50)
       .attr("x", 0 - (svgHeight / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
@@ -256,12 +242,6 @@ class Graph extends React.Component {
       .attr("y", -20)
       .style("text-anchor", "middle")
       .text("Historical Daily Price Averages");
-
-    // create average line - see create bars
-    svg.append("path")
-      .data([])
-      .attr("class", "line")
-      //.attr("d", 0);
   }
 
   render() {
@@ -278,13 +258,3 @@ const mapStateToProps = (state) => {
 const GraphConnected = connect(mapStateToProps)(Graph);
 
 export default GraphConnected;
-
-
-{/* <path class="line" d="M500,85
-                      
-L200,80                    
-L100,80
-L250,80                     
-L100,80
-L83,80                        
-L0,80"></path> */}

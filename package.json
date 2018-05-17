@@ -1,5 +1,5 @@
 {
-  "name": "aptapp",
+  "name": "Wowmiser",
   "version": "1.0.0",
   "description": "auction house arbitrage finder",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jastra4/APTapp.git"
+    "url": "git+https://github.com/jastra4/Wowmiser.git"
   },
   "author": "Joseph Strandmo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jastra4/APTapp/issues"
+    "url": "https://github.com/jastra4/Wowmiser/issues"
   },
-  "homepage": "https://github.com/jastra4/APTapp#readme",
+  "homepage": "https://github.com/jastra4/Wowmiser#readme",
   "dependencies": {
     "axios": "^0.17.1",
     "babel-core": "^6.26.0",

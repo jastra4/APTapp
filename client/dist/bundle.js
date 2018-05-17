@@ -2308,7 +2308,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h2',
         { className: 'header' },
-        'BestBid',
+        'Wowmiser',
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'subHeader' },
@@ -33378,6 +33378,13 @@ const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["conne
 
 
 
+// TODO:
+// 1. fix the line appearing behind the bars when run for the first time
+// 2. fix the x-axis line dissapearing
+// 3. adjust x-axis formatting
+// 4. make graph fit various window/screen sizes
+// 5. more styling
+
 class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
@@ -33445,9 +33452,10 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     d3.select('#x_axis').call(xAxis);
 
     // ================== //
-    // ***** AVG-LINE ***** //
+    // ****** LINE ****** //
     // ================== //
 
+    // find average price
     var total = 0;
     priceData.forEach(price => {
       total += price;
@@ -33459,7 +33467,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       lineData.push({ price: average, d: d.date }); // priceData[i]
     });
 
-    // set the ranges
+    // set x and y ranges
     var x = d3.scaleTime().range([0, svgWidth]).domain(d3.extent(dataDump, function (d) {
       return d.date;
     }));
@@ -33475,17 +33483,12 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       return y(d.price);
     });
 
-    // Add the valueline path.
-    var test = svg.selectAll("path").data([lineData]);
+    // remove the old line
+    var oldLine = svg.selectAll("path").data([lineData]);
+    oldLine.exit().remove();
 
-    test.exit().remove();
-    //test.enter().append("path").merge(test).attr("d", valueline);
-    svg.append("path")
-    // using .select instead of .append
-    // this deals with average lines from past searches
-    // but on the first search the y axis dissapears
-    // also the line is still behind the bars
-    .data([lineData]).attr("class", "line").attr("d", valueline);
+    // add the new line
+    svg.append("path").data([lineData]).attr("class", "line").attr("d", valueline);
 
     // ================ //
     // ***** BARS ***** //
@@ -33517,7 +33520,6 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     // define svg element boundaries
     var svgWidth = 500;
-    //var svgWidth = (window.innerWidth/3.5);
     var svgHeight = 300;
     var barPadding = 5;
     var barWidth = svgWidth / priceData.length;
@@ -33548,35 +33550,14 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     // add x axis to svg element
     svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").attr("id", "x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
-    // create bars
-    // var barChart = svg.selectAll("rect")
-    //   .data(priceData)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("y", function (d) {
-    //     return svgHeight - yBarScale(d);
-    //   })
-    //   .attr("height", function (d) {
-    //     return yBarScale(d);
-    //   })
-    //   .attr("width", barWidth - barPadding)
-    //   .attr("transform", function (d, i) {
-    //     var translate = [barWidth * i, 0];
-    //     return "translate(" + translate + ")";
-    //   });
-
     // add x axis label
     svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Date (updated daily at 11:00 UTC)");
 
     // add y axis label
-    svg.append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Price (in wow gold)");
+    svg.append("text").attr("transform", "rotate(-90)").attr("y", -50).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Price (in wow gold)");
 
     // add title
     svg.append("text").attr("x", svgWidth / 2).attr("y", -20).style("text-anchor", "middle").text("Historical Daily Price Averages");
-
-    // create average line - see create bars
-    svg.append("path").data([]).attr("class", "line");
-    //.attr("d", 0);
   }
 
   render() {
@@ -33591,15 +33572,6 @@ const mapStateToProps = state => {
 const GraphConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Graph);
 
 /* harmony default export */ __webpack_exports__["a"] = (GraphConnected);
-
-{/* <path class="line" d="M500,85
-                       
-  L200,80                    
-  L100,80
-  L250,80                     
-  L100,80
-  L83,80                        
-  L0,80"></path> */}
 
 /***/ }),
 /* 110 */

@@ -16,7 +16,7 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <h2 className="header">BestBid
+        <h2 className="header">Wowmiser
           <div className="subHeader">A World of Warcraft app</div>
         </h2>
         <SearchConnected />

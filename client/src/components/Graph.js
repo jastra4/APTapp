@@ -81,16 +81,13 @@ class Graph extends React.Component {
     // ================== //
 
     var total = 0;
-
     priceData.forEach((price) => {
       total += price;
     })
-
     var average = total/priceData.length;
 
     var lineData = [];
     dataDump.forEach((d, i) => {
-      console.log('average ', average);
       lineData.push({ price: average, d: d.date }) // priceData[i]
     });
 
@@ -98,38 +95,38 @@ class Graph extends React.Component {
     var x = d3.scaleTime()
       .range([0, svgWidth])
       .domain(d3.extent(dataDump, function (d) {
-        console.log('domain X d.date ', d.date);
         return d.date; 
       }));
 
     var y = d3.scaleLinear()
       .range([svgHeight, 0])
       .domain([0, d3.max(priceData, function (d) { 
-        console.log('domain Y d ', d);
         return d; 
       })]);
 
     // define the line
     var valueline = d3.line()
       .x(function (d) { 
-        console.log('X ', d.d);
         return x(d.d);
       })
       .y(function (d) { 
-        console.log('Y ', d.price);
         return y(d.price); 
       });
 
-
     // Add the valueline path.
-    svg.append("path")
+    var test = svg.selectAll("path")
+      .data([lineData]);
+
+    test.exit().remove();
+    //test.enter().append("path").merge(test).attr("d", valueline);
+    svg.append("path") 
+      // using .select instead of .append
+      // this deals with average lines from past searches
+      // but on the first search the y axis dissapears
+      // also the line is still behind the bars
       .data([lineData])
       .attr("class", "line")
       .attr("d", valueline);
-    // svg.append("g")
-    //   //.attr("transform", "translate(0, 0)")
-    //   .attr("id", "avg_line")
-    //   .call(valueline);
 
     // ================ //
     // ***** BARS ***** //
@@ -221,21 +218,21 @@ class Graph extends React.Component {
       .attr("transform", "rotate(-65)");
 
     // create bars
-    var barChart = svg.selectAll("rect")
-      .data(priceData)
-      .enter()
-      .append("rect")
-      .attr("y", function (d) {
-        return svgHeight - yBarScale(d);
-      })
-      .attr("height", function (d) {
-        return yBarScale(d);
-      })
-      .attr("width", barWidth - barPadding)
-      .attr("transform", function (d, i) {
-        var translate = [barWidth * i, 0];
-        return "translate(" + translate + ")";
-      });
+    // var barChart = svg.selectAll("rect")
+    //   .data(priceData)
+    //   .enter()
+    //   .append("rect")
+    //   .attr("y", function (d) {
+    //     return svgHeight - yBarScale(d);
+    //   })
+    //   .attr("height", function (d) {
+    //     return yBarScale(d);
+    //   })
+    //   .attr("width", barWidth - barPadding)
+    //   .attr("transform", function (d, i) {
+    //     var translate = [barWidth * i, 0];
+    //     return "translate(" + translate + ")";
+    //   });
 
     // add x axis label
     svg.append("text")
@@ -259,6 +256,12 @@ class Graph extends React.Component {
       .attr("y", -20)
       .style("text-anchor", "middle")
       .text("Historical Daily Price Averages");
+
+    // create average line - see create bars
+    svg.append("path")
+      .data([])
+      .attr("class", "line")
+      //.attr("d", 0);
   }
 
   render() {

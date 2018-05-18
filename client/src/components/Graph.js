@@ -8,8 +8,6 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    alert('test 1')
-    
     this.createGraph();
   }
 
@@ -194,7 +192,6 @@ class Graph extends React.Component {
     var chartDiv = document.getElementById("myGraph");
     var svgWidth = (chartDiv.clientWidth);
     var svgHeight = chartDiv.clientHeight;
-    alert('test 2');
     
     // apply svg element dimensions
     var svg = d3.select('svg')

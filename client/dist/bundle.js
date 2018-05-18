@@ -2317,14 +2317,18 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'main' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
+        { className: 'test' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null)
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'test' }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'test' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
+      )
     );
   }
 }
@@ -33411,9 +33415,9 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   updateGraph(dataDump, priceData) {
     // set svg element dimensions
-    var chartDiv = document.getElementById("test");
-    var svgWidth = chartDiv.clientWidth; // 500
-    var svgHeight = chartDiv.clientHeight; // 300
+    var chartDiv = document.getElementById("myGraph");
+    var svgWidth = chartDiv.clientWidth;
+    var svgHeight = chartDiv.clientHeight;
     var barPadding = svgWidth * 0.01;
     var barWidth = svgWidth * 0.9 / priceData.length;
     var svg = d3.select('svg');
@@ -33431,100 +33435,6 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     // modify y axis
     d3.select('#y_axis').call(y_axis);
 
-    // ================== //
-    // ***** X-AXIS ***** //
-    // ================== //
-    // var parseTime = d3.timeParse("%d-%b-%y");
-    // dataDump.forEach(function (d) {
-    //   d.date = parseTime(d.date);
-    // });
-
-    // // define x axis scale
-    // let xAxisScale = d3.scaleTime()
-    //   .domain(d3.extent(dataDump, function (d) { return d.date; }))
-    //   .range([0, (svgWidth - barWidth) * 0.885]);
-
-    // // create x axis
-    // let xAxis = d3
-    //   .axisBottom()
-    //   .scale(xAxisScale)
-    //   .tickValues(dataDump.map(function (d) { return d.date }))
-    //   .tickFormat(d3.timeFormat("%b-%d"));
-
-    // // modify x axis
-    // d3.select('#x_axis')
-    //   .call(xAxis)
-    //   .selectAll("text")
-    //   .style("text-anchor", "end")
-    //   .attr("dx", "-.8em")
-    //   .attr("dy", ".15em")
-    //   .attr("transform", "rotate(-65)");
-
-    // // ================== //
-    // // ****** LINE ****** //
-    // // ================== //
-
-    // // find average price
-    // var total = 0;
-    // priceData.forEach((price) => {
-    //   total += price;
-    // })
-    // var average = total/priceData.length;
-
-    // var lineData = [];
-    // dataDump.forEach((d, i) => {
-    //   lineData.push({ price: average, d: d.date });
-    // });
-
-    // var lineData2 = [];
-    // for (let i = 0, j = dataDump.length - 1; i < dataDump.length; i++, j--) {
-    //   lineData.push({ price: priceData[i], d: dataDump[j].date});
-    // }
-
-    // // set x and y ranges
-    // var x = d3.scaleTime()
-    //   .range([0, svgWidth * 0.9])
-    //   .domain(d3.extent(dataDump, function (d) {
-    //     return d.date; 
-    //   }));
-
-    // var y = d3.scaleLinear()
-    //   .range([svgHeight * 0.8, 0])
-    //   .domain([0, d3.max(priceData, function (d) { 
-    //     return d; 
-    //   })]);
-
-    // // define the line
-    // var valueline = d3.line()
-    //   .x(function (d) { 
-    //     console.log('x d.d ', d.d)
-    //     return x(d.d);
-    //   })
-    //   .y(function (d) { 
-    //     return y(d.price); 
-    //   });
-
-    // // remove the old line
-    // var oldLine = svg.selectAll("path")
-    //   .data([lineData]);
-    // // d3.select('#valueLine').exit().remove();
-    // oldLine.exit().remove();
-
-    // // add the new line
-    // svg.append("path") 
-    //   .data([lineData])
-    //   .attr("class", "line")
-    //   .attr("id", "valueLine")
-    //   .attr("d", valueline)
-    //   .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
-
-    // svg.append("path")
-    //   .data([lineData2])
-    //   .attr("class", "line")
-    //   .attr("id", "valueLine")
-    //   .attr("d", valueline)
-    //   .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
-
     // // ================ //
     // // ***** BARS ***** //
     // // ================ //
@@ -33532,60 +33442,55 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     // set scale for bars
     var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight * 0.7]);
 
-    // // set scale for x axis
-    // var xScale = d3.scaleTime()
-    //   .domain(d3.extent(dataDump, function (d) { return d.date; }))
-    //   .range([0, svgWidth * 0.8]);
-
     // create bars
     var barChart = svg.selectAll("rect").data(priceData);
 
-    var sum = 0;
-
     barChart.exit().remove();
+
+    var barX = 0;
     barChart.enter().append("rect").merge(barChart).attr("y", function (d) {
       return svgHeight - yBarScale(d);
     }).attr("height", function (d) {
       return yBarScale(d);
     }).attr("width", barWidth - barPadding - 5).attr("transform", function (d, i) {
 
-      let testDump = [];
+      let dataDates = [];
       for (let i = dataDump.length - 1; i >= 0; i--) {
-        testDump.push(dataDump[i]);
+        dataDates.push(dataDump[i]);
       }
 
-      let testLength = (svgWidth - barWidth) * 0.885;
+      let xAxisWidth = (svgWidth - barWidth) * 0.885;
 
       let parseTime = d3.timeParse("%d-%b-%y");
-      let last = parseTime(testDump[0].date);
-      let first = parseTime(testDump[testDump.length - 1].date);
-      let total = last.getTime() - first.getTime();
+      let lastDate = parseTime(dataDates[0].date);
+      let firstDate = parseTime(dataDates[dataDates.length - 1].date);
+      let dateSpread = lastDate.getTime() - firstDate.getTime();
       let x = 0;
 
       if (i !== 0) {
-        let date1 = parseTime(testDump[i - 1].date);
-        let date2 = parseTime(testDump[i].date);;
+        let date1 = parseTime(dataDates[i - 1].date);
+        let date2 = parseTime(dataDates[i].date);;
         let diff = date1.getTime() - date2.getTime();
-        x = diff / total * testLength;
-        sum += x;
+        let spread = diff / dateSpread * xAxisWidth;
+        barX += spread;
       }
-      console.log('x = ', sum);
-      var translate = [sum + (barWidth - barPadding), -svgHeight * 0.2];
-      // var translate = [(barWidth * i) + (svgWidth * 0.1), -svgHeight * 0.2];
+      var translate = [barX + (barWidth - barPadding), -svgHeight * 0.2];
       return "translate(" + translate + ")";
     });
 
-    // *** REMAKING X AXIS *** //
+    // ================== //
+    // ***** X-AXIS ***** //
+    // ================== //
+
     var parseTime = d3.timeParse("%d-%b-%y");
     dataDump.forEach(function (d) {
       d.date = parseTime(d.date);
     });
 
     // define x axis scale
-    // let xAxisScale = d3.scaleTime()
     let xAxisScale = d3.scaleTime().domain(d3.extent(dataDump, function (d) {
       return d.date;
-    })).range([0, (svgWidth - barWidth) * 0.885]); // (svgWidth - barWidth) * 0.885]
+    })).range([0, (svgWidth - barWidth) * 0.885]);
 
     // create x axis
     let xAxis = d3.axisBottom().scale(xAxisScale).tickValues(dataDump.map(function (d) {
@@ -33602,19 +33507,13 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       total += price;
     });
     var average = total / priceData.length;
-    console.log('average ', average);
     var lineData = [];
     dataDump.forEach((d, i) => {
       lineData.push({ price: average, d: d.date });
     });
 
-    // var lineData2 = [];
-    // for (let i = 0, j = dataDump.length - 1; i < dataDump.length; i++ , j--) {
-    //   lineData.push({ price: priceData[i], d: dataDump[j].date });
-    // }
-
     // set x and y ranges
-    var x = d3.scaleTime().range([0, svgWidth * 0.9]).domain(d3.extent(dataDump, function (d) {
+    var x = d3.scaleTime().range([0, svgWidth * 0.88]).domain(d3.extent(dataDump, function (d) {
       return d.date;
     }));
 
@@ -33624,7 +33523,6 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     // define the line
     var valueline = d3.line().x(function (d) {
-      console.log('x d.d ', d.d);
       return x(d.d);
     }).y(function (d) {
       return y(d.price);
@@ -33632,63 +33530,25 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     // remove the old line
     var oldLine = svg.selectAll("path").data([lineData]);
-    // d3.select('#valueLine').exit().remove();
     oldLine.exit().remove();
 
     // add the new line
     svg.append("path").data([lineData]).attr("class", "line").attr("id", "valueLine").attr("d", valueline).attr("transform", "translate(" + svgWidth * 0.1 + ", " + 40 + ")");
 
-    // svg.append("path")
-    //   .data([lineData2])
-    //   .attr("class", "line")
-    //   .attr("id", "valueLine")
-    //   .attr("d", valueline)
-    //   .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
-
-    // ================ //
-    // ***** ***** //
-    // ================ //
-
     // modify x axis
-    d3.select('#x_axis').call(xAxis).selectAll("text").style("text-anchor", "end")
-    // .attr("transform", function (d, i) {
-    //   var translate = [0 + (svgWidth * 0.1 * i), 0];
-    //   return "translate(" + translate + ")";
-    // });
-    .attr("dx", ".8em").attr("dy", "2em").attr("transform", "rotate(-65)");
-
-    // // set scale for x axis
-    // var xScale = d3.scaleTime()
-    //   .domain(d3.extent(dataDump, function (d) { return d.date; }))
-    //   .range([0, svgWidth * 0.8]);
-
-    // // define x axis
-    // var x_axis = d3.axisBottom(xScale)
-    //   .ticks(dataDump.length)
-    //   .tickFormat(d3.timeFormat("%d-%b-%y"))
-
-    // svg.append("g")
-    //   .attr("transform", "translate(" + svgWidth * 0.1 + ", " + (svgHeight * 0.8) + ")")
-    //   .attr("id", "x_axis")
-    //   .call(x_axis)
-    //   .selectAll("text")
-    //   .style("text-anchor", "end")
-    //   .attr("dx", "-.8em")
-    //   .attr("dy", ".15em")
-    //   .attr("transform", "rotate(-65)");
+    d3.select('#x_axis').call(xAxis).selectAll("text").style("text-anchor", "end").attr("dx", ".8em").attr("dy", "2em").attr("transform", "rotate(-65)");
   }
 
   createGraph(dataDump = [], priceData = []) {
     var parseTime = d3.timeParse("%d-%b-%y");
     dataDump.forEach(function (d) {
       d.date = parseTime(d.date);
-      // d.close = +d.close; // not parsing hours and minutes
     });
 
     // set svg element dimensions
-    var chartDiv = document.getElementById("test");
-    var svgWidth = chartDiv.clientWidth; // 500
-    var svgHeight = chartDiv.clientHeight; // 300
+    var chartDiv = document.getElementById("myGraph");
+    var svgWidth = chartDiv.clientWidth;
+    var svgHeight = chartDiv.clientHeight;
 
     // apply svg element dimensions
     var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
@@ -33703,7 +33563,6 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     svg.append("g").attr("transform", "translate(" + svgWidth * 0.1 + ", " + svgHeight * 0.1 + ")").attr("id", "y_axis").call(y_axis);
 
     // set scale for x axis
-    // var xScale = d3.scaleTime()
     var xScale = d3.scaleTime().domain(d3.extent(dataDump, function (d) {
       return d.date;
     })).range([0, svgWidth * 0.8]);

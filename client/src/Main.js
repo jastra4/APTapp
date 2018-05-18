@@ -21,12 +21,17 @@ class Main extends React.Component {
         </h2>
         <SearchConnected />
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
-        <div className="main">
+
+        <svg className="bar-chart" id="myGraph"></svg>
+        <GraphConnected />  
+
+        <div className="test">
           <SummaryConnected />
+        </div>
+        <div className="test">
           <ItemListConnected />
         </div>
-        <svg className="bar-chart" id="test"></svg>
-        <GraphConnected />        
+      
       </div>
     )
   }

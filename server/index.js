@@ -35,6 +35,8 @@ app.get('/updateDB', (req, res) => {
     });				
 })
 
+// send request to blizzard api
+
 const catalog = {
   "Aethril": 124101,
   "Astral Glory": 151565,

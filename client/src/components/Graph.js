@@ -48,7 +48,7 @@ class Graph extends React.Component {
     // define y axis scale
     var yAxisScale = d3.scaleLinear()
       .domain([0, d3.max(priceData)])
-      .range([svgHeight * 0.8, 0]);
+      .range([svgHeight * 0.7, 0]);
 
     // create y axis
     var y_axis = d3.axisLeft()
@@ -61,18 +61,165 @@ class Graph extends React.Component {
     // ================== //
     // ***** X-AXIS ***** //
     // ================== //
+    // var parseTime = d3.timeParse("%d-%b-%y");
+    // dataDump.forEach(function (d) {
+    //   d.date = parseTime(d.date);
+    // });
+
+    // // define x axis scale
+    // let xAxisScale = d3.scaleTime()
+    //   .domain(d3.extent(dataDump, function (d) { return d.date; }))
+    //   .range([0, (svgWidth - barWidth) * 0.885]);
+
+    // // create x axis
+    // let xAxis = d3
+    //   .axisBottom()
+    //   .scale(xAxisScale)
+    //   .tickValues(dataDump.map(function (d) { return d.date }))
+    //   .tickFormat(d3.timeFormat("%b-%d"));
+
+    // // modify x axis
+    // d3.select('#x_axis')
+    //   .call(xAxis)
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", ".15em")
+    //   .attr("transform", "rotate(-65)");
+
+    // // ================== //
+    // // ****** LINE ****** //
+    // // ================== //
+
+    // // find average price
+    // var total = 0;
+    // priceData.forEach((price) => {
+    //   total += price;
+    // })
+    // var average = total/priceData.length;
+
+    // var lineData = [];
+    // dataDump.forEach((d, i) => {
+    //   lineData.push({ price: average, d: d.date });
+    // });
+
+    // var lineData2 = [];
+    // for (let i = 0, j = dataDump.length - 1; i < dataDump.length; i++, j--) {
+    //   lineData.push({ price: priceData[i], d: dataDump[j].date});
+    // }
+
+    // // set x and y ranges
+    // var x = d3.scaleTime()
+    //   .range([0, svgWidth * 0.9])
+    //   .domain(d3.extent(dataDump, function (d) {
+    //     return d.date; 
+    //   }));
+
+    // var y = d3.scaleLinear()
+    //   .range([svgHeight * 0.8, 0])
+    //   .domain([0, d3.max(priceData, function (d) { 
+    //     return d; 
+    //   })]);
+
+    // // define the line
+    // var valueline = d3.line()
+    //   .x(function (d) { 
+    //     console.log('x d.d ', d.d)
+    //     return x(d.d);
+    //   })
+    //   .y(function (d) { 
+    //     return y(d.price); 
+    //   });
+
+    // // remove the old line
+    // var oldLine = svg.selectAll("path")
+    //   .data([lineData]);
+    // // d3.select('#valueLine').exit().remove();
+    // oldLine.exit().remove();
+
+    // // add the new line
+    // svg.append("path") 
+    //   .data([lineData])
+    //   .attr("class", "line")
+    //   .attr("id", "valueLine")
+    //   .attr("d", valueline)
+    //   .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
+
+    // svg.append("path")
+    //   .data([lineData2])
+    //   .attr("class", "line")
+    //   .attr("id", "valueLine")
+    //   .attr("d", valueline)
+    //   .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
+
+    // // ================ //
+    // // ***** BARS ***** //
+    // // ================ //
+
+    // set scale for bars
+    var yBarScale = d3.scaleLinear()
+      .domain([0, d3.max(priceData)])
+      .range([0, svgHeight * 0.7]);
+
+    // // set scale for x axis
+    // var xScale = d3.scaleTime()
+    //   .domain(d3.extent(dataDump, function (d) { return d.date; }))
+    //   .range([0, svgWidth * 0.8]);
+
+    // create bars
+    var barChart = svg.selectAll("rect")
+      .data(priceData)
+    
+    var sum = 0;
+
+    barChart.exit().remove();
+    barChart.enter().append("rect").merge(barChart)
+      .attr("y", function (d) {
+        return svgHeight - yBarScale(d);
+      })
+      .attr("height", function (d) {
+        return yBarScale(d);
+      })
+      .attr("width", barWidth - barPadding-5)
+      .attr("transform", function (d, i) {
+
+        let testDump = [];
+        for (let i = dataDump.length - 1; i >= 0; i--) {
+          testDump.push(dataDump[i]);
+        }
+
+        let testLength = (svgWidth - barWidth) * 0.885;
+        
+        let parseTime = d3.timeParse("%d-%b-%y");
+        let last = parseTime(testDump[0].date);
+        let first = parseTime(testDump[testDump.length - 1].date);
+        let total = last.getTime() - first.getTime();
+        let x = 0;
+
+        if (i !== 0) {
+          let date1 = parseTime(testDump[i - 1].date);
+          let date2 = parseTime(testDump[i].date);;
+          let diff = date1.getTime() - date2.getTime();
+          x = diff / total * testLength;
+          sum += x;
+        }
+        console.log('x = ', sum);
+        var translate = [sum + (barWidth - barPadding), -svgHeight * 0.2];
+        // var translate = [(barWidth * i) + (svgWidth * 0.1), -svgHeight * 0.2];
+        return "translate(" + translate + ")";
+      });
+
+// *** REMAKING X AXIS *** //
     var parseTime = d3.timeParse("%d-%b-%y");
     dataDump.forEach(function (d) {
       d.date = parseTime(d.date);
     });
 
     // define x axis scale
-    let xAxisScale = d3
-      .scaleTime()
-      .range([0, (svgWidth - barWidth) * 0.885])
-      .domain(d3.extent(dataDump, function (d) { 
-        return d.date; 
-      }));
+    // let xAxisScale = d3.scaleTime()
+    let xAxisScale = d3.scaleTime()
+      .domain(d3.extent(dataDump, function (d) { return d.date; }))
+      .range([0, (svgWidth - barWidth) * 0.885]); // (svgWidth - barWidth) * 0.885]
 
     // create x axis
     let xAxis = d3
@@ -80,15 +227,6 @@ class Graph extends React.Component {
       .scale(xAxisScale)
       .tickValues(dataDump.map(function (d) { return d.date }))
       .tickFormat(d3.timeFormat("%b-%d"));
-
-    // modify x axis
-    d3.select('#x_axis')
-      .call(xAxis)
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-65)");
 
     // ================== //
     // ****** LINE ****** //
@@ -99,75 +237,98 @@ class Graph extends React.Component {
     priceData.forEach((price) => {
       total += price;
     })
-    var average = total/priceData.length;
-
+    var average = total / priceData.length;
+    console.log('average ', average);
     var lineData = [];
     dataDump.forEach((d, i) => {
-      lineData.push({ price: average, d: d.date }) // priceData[i]
+      lineData.push({ price: average, d: d.date });
     });
+
+    // var lineData2 = [];
+    // for (let i = 0, j = dataDump.length - 1; i < dataDump.length; i++ , j--) {
+    //   lineData.push({ price: priceData[i], d: dataDump[j].date });
+    // }
 
     // set x and y ranges
     var x = d3.scaleTime()
       .range([0, svgWidth * 0.9])
       .domain(d3.extent(dataDump, function (d) {
-        return d.date; 
+        return d.date;
       }));
 
     var y = d3.scaleLinear()
-      .range([svgHeight * 0.8, 0])
-      .domain([0, d3.max(priceData, function (d) { 
-        return d; 
+      .range([svgHeight * 0.7, 0])
+      .domain([0, d3.max(priceData, function (d) {
+        return d;
       })]);
 
     // define the line
     var valueline = d3.line()
-      .x(function (d) { 
+      .x(function (d) {
         console.log('x d.d ', d.d)
         return x(d.d);
       })
-      .y(function (d) { 
-        return y(d.price); 
+      .y(function (d) {
+        return y(d.price);
       });
 
     // remove the old line
     var oldLine = svg.selectAll("path")
       .data([lineData]);
+    // d3.select('#valueLine').exit().remove();
     oldLine.exit().remove();
 
     // add the new line
-    svg.append("path") 
+    svg.append("path")
       .data([lineData])
       .attr("class", "line")
+      .attr("id", "valueLine")
       .attr("d", valueline)
-      .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
+      .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 40 + ")");
+
+    // svg.append("path")
+    //   .data([lineData2])
+    //   .attr("class", "line")
+    //   .attr("id", "valueLine")
+    //   .attr("d", valueline)
+    //   .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
 
     // ================ //
-    // ***** BARS ***** //
+    // ***** ***** //
     // ================ //
 
-    // set scale for bars
-    var yBarScale = d3.scaleLinear()
-      .domain([0, d3.max(priceData)])
-      .range([0, svgHeight * 0.8]);
+    // modify x axis
+    d3.select('#x_axis')
+      .call(xAxis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      // .attr("transform", function (d, i) {
+      //   var translate = [0 + (svgWidth * 0.1 * i), 0];
+      //   return "translate(" + translate + ")";
+      // });
+      .attr("dx", ".8em")
+      .attr("dy", "2em")
+      .attr("transform", "rotate(-65)");
 
-    // create bars
-    var barChart = svg.selectAll("rect")
-      .data(priceData)
+    // // set scale for x axis
+    // var xScale = d3.scaleTime()
+    //   .domain(d3.extent(dataDump, function (d) { return d.date; }))
+    //   .range([0, svgWidth * 0.8]);
 
-    barChart.exit().remove();
-    barChart.enter().append("rect").merge(barChart)
-      .attr("y", function (d) {
-        return svgHeight - yBarScale(d);
-      })
-      .attr("height", function (d) {
-        return yBarScale(d);
-      })
-      .attr("width", barWidth - barPadding)
-      .attr("transform", function (d, i) {
-        var translate = [(barWidth * i) + (svgWidth * 0.1), -svgHeight * 0.2];
-        return "translate(" + translate + ")";
-      });
+    // // define x axis
+    // var x_axis = d3.axisBottom(xScale)
+    //   .ticks(dataDump.length)
+    //   .tickFormat(d3.timeFormat("%d-%b-%y"))
 
+    // svg.append("g")
+    //   .attr("transform", "translate(" + svgWidth * 0.1 + ", " + (svgHeight * 0.8) + ")")
+    //   .attr("id", "x_axis")
+    //   .call(x_axis)
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", ".15em")
+    //   .attr("transform", "rotate(-65)");
   }
 
   createGraph(dataDump = [], priceData = []) {
@@ -190,7 +351,7 @@ class Graph extends React.Component {
     // set scale for y axis
     var yAxisScale = d3.scaleLinear()
       .domain([0, d3.max(priceData)])
-      .range([svgHeight * 0.8, 0]);
+      .range([svgHeight * 0.7, 0]);
 
     // define y axis
     var y_axis = d3.axisLeft()
@@ -203,6 +364,7 @@ class Graph extends React.Component {
       .call(y_axis);
 
     // set scale for x axis
+    // var xScale = d3.scaleTime()
     var xScale = d3.scaleTime()
       .domain(d3.extent(dataDump, function (d) { return d.date; }))
       .range([0, svgWidth * 0.8]);
@@ -214,7 +376,7 @@ class Graph extends React.Component {
 
     // add x axis to svg element
     svg.append("g")
-      .attr("transform", "translate(" + svgWidth * 0.1 +", " + (svgHeight * 0.8) + ")")
+      .attr("transform", "translate(" + svgWidth * 0.1 + ", " + (svgHeight * 0.8) + ")")
       .attr("id", "x_axis")
       .call(x_axis)
       .selectAll("text")

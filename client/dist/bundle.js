@@ -2323,7 +2323,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'test' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null)
     );
   }
@@ -33410,10 +33410,12 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   updateGraph(dataDump, priceData) {
-    var svgWidth = 500;
-    var svgHeight = 300;
-    var barPadding = 5;
-    var barWidth = svgWidth / priceData.length;
+    // set svg element dimensions
+    var chartDiv = document.getElementById("test");
+    var svgWidth = chartDiv.clientWidth; // 500
+    var svgHeight = chartDiv.clientHeight; // 300
+    var barPadding = svgWidth * 0.01;
+    var barWidth = svgWidth * 0.9 / priceData.length;
     var svg = d3.select('svg');
 
     // ================== //
@@ -33421,7 +33423,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     // ================== //
 
     // define y axis scale
-    var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight, 0]);
+    var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight * 0.8, 0]);
 
     // create y axis
     var y_axis = d3.axisLeft().scale(yAxisScale);
@@ -33438,18 +33440,17 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
 
     // define x axis scale
-    let xAxisScale = d3.scaleTime().range([0, svgWidth - barWidth]).domain(d3.extent(dataDump, function (d) {
+    let xAxisScale = d3.scaleTime().range([0, (svgWidth - barWidth) * 0.885]).domain(d3.extent(dataDump, function (d) {
       return d.date;
     }));
 
     // create x axis
     let xAxis = d3.axisBottom().scale(xAxisScale).tickValues(dataDump.map(function (d) {
       return d.date;
-    }));
-    //.tickFormat(d3.timeFormat("%d-%b-%y"));
+    })).tickFormat(d3.timeFormat("%b-%d"));
 
     // modify x axis
-    d3.select('#x_axis').call(xAxis);
+    d3.select('#x_axis').call(xAxis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
     // ================== //
     // ****** LINE ****** //
@@ -33468,16 +33469,17 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
 
     // set x and y ranges
-    var x = d3.scaleTime().range([0, svgWidth]).domain(d3.extent(dataDump, function (d) {
+    var x = d3.scaleTime().range([0, svgWidth * 0.9]).domain(d3.extent(dataDump, function (d) {
       return d.date;
     }));
 
-    var y = d3.scaleLinear().range([svgHeight, 0]).domain([0, d3.max(priceData, function (d) {
+    var y = d3.scaleLinear().range([svgHeight * 0.8, 0]).domain([0, d3.max(priceData, function (d) {
       return d;
     })]);
 
     // define the line
     var valueline = d3.line().x(function (d) {
+      console.log('x d.d ', d.d);
       return x(d.d);
     }).y(function (d) {
       return y(d.price);
@@ -33488,14 +33490,14 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     oldLine.exit().remove();
 
     // add the new line
-    svg.append("path").data([lineData]).attr("class", "line").attr("d", valueline);
+    svg.append("path").data([lineData]).attr("class", "line").attr("d", valueline).attr("transform", "translate(" + svgWidth * 0.1 + ", " + 0 + ")");
 
     // ================ //
     // ***** BARS ***** //
     // ================ //
 
-    // define scale for bars
-    var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
+    // set scale for bars
+    var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight * 0.8]);
 
     // create bars
     var barChart = svg.selectAll("rect").data(priceData);
@@ -33506,7 +33508,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }).attr("height", function (d) {
       return yBarScale(d);
     }).attr("width", barWidth - barPadding).attr("transform", function (d, i) {
-      var translate = [barWidth * i, 0];
+      var translate = [barWidth * i + svgWidth * 0.1, -svgHeight * 0.2];
       return "translate(" + translate + ")";
     });
   }
@@ -33518,46 +33520,42 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       // d.close = +d.close; // not parsing hours and minutes
     });
 
-    // define svg element boundaries
-    var svgWidth = 500;
-    var svgHeight = 300;
-    var barPadding = 5;
-    var barWidth = svgWidth / priceData.length;
+    // set svg element dimensions
+    var chartDiv = document.getElementById("test");
+    var svgWidth = chartDiv.clientWidth; // 500
+    var svgHeight = chartDiv.clientHeight; // 300
 
-    // create svg element
+    // apply svg element dimensions
     var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
 
-    // define scale for bars
-    var yBarScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([0, svgHeight]);
+    // set scale for y axis
+    var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight * 0.8, 0]);
 
-    // define scale for y axis
-    var yAxisScale = d3.scaleLinear().domain([0, d3.max(priceData)]).range([svgHeight, 0]);
-
-    // create y axis
+    // define y axis
     var y_axis = d3.axisLeft().scale(yAxisScale);
 
     // add y axis to svg element
-    svg.append("g").attr("transform", "translate(0, 0)").attr("id", "y_axis").call(y_axis);
+    svg.append("g").attr("transform", "translate(" + svgWidth * 0.1 + ", " + svgHeight * 0.1 + ")").attr("id", "y_axis").call(y_axis);
 
-    // define x axis
+    // set scale for x axis
     var xScale = d3.scaleTime().domain(d3.extent(dataDump, function (d) {
       return d.date;
-    })).range([0, svgWidth]);
+    })).range([0, svgWidth * 0.8]);
 
-    // create x axis
+    // define x axis
     var x_axis = d3.axisBottom(xScale).ticks(dataDump.length).tickFormat(d3.timeFormat("%d-%b-%y"));
 
     // add x axis to svg element
-    svg.append("g").attr("transform", "translate(0, " + svgHeight + ")").attr("id", "x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
+    svg.append("g").attr("transform", "translate(" + svgWidth * 0.1 + ", " + svgHeight * 0.8 + ")").attr("id", "x_axis").call(x_axis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-65)");
 
     // add x axis label
-    svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight + 75).style("text-anchor", "middle").text("Date (updated daily at 11:00 UTC)");
+    svg.append("text").attr("x", svgWidth / 2).attr("y", svgHeight * 0.98).style("text-anchor", "middle").text("Date (updated daily at 11:00 UTC)");
 
     // add y axis label
-    svg.append("text").attr("transform", "rotate(-90)").attr("y", -50).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Price (in wow gold)");
+    svg.append("text").attr("transform", "rotate(-90)").attr("y", svgWidth * 0).attr("x", 0 - svgHeight / 2).attr("dy", "1em").style("text-anchor", "middle").text("Price (in wow gold)");
 
     // add title
-    svg.append("text").attr("x", svgWidth / 2).attr("y", -20).style("text-anchor", "middle").text("Historical Daily Price Averages");
+    svg.append("text").attr("x", svgWidth * 0.5).attr("y", svgHeight * 0.05).style("text-anchor", "middle").text("Historical Daily Price Averages");
   }
 
   render() {

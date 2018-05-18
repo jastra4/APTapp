@@ -33,10 +33,12 @@ class Graph extends React.Component {
   }
 
   updateGraph(dataDump, priceData) {
-    var svgWidth = 500;
-    var svgHeight = 300;
-    var barPadding = 5;
-    var barWidth = (svgWidth / priceData.length);
+    // set svg element dimensions
+    var chartDiv = document.getElementById("test");
+    var svgWidth = (chartDiv.clientWidth); // 500
+    var svgHeight = chartDiv.clientHeight; // 300
+    var barPadding = svgWidth * 0.01;
+    var barWidth = ((svgWidth * 0.9)/ priceData.length);
     var svg = d3.select('svg')
 
     // ================== //
@@ -46,7 +48,7 @@ class Graph extends React.Component {
     // define y axis scale
     var yAxisScale = d3.scaleLinear()
       .domain([0, d3.max(priceData)])
-      .range([svgHeight, 0]);
+      .range([svgHeight * 0.8, 0]);
 
     // create y axis
     var y_axis = d3.axisLeft()
@@ -67,7 +69,7 @@ class Graph extends React.Component {
     // define x axis scale
     let xAxisScale = d3
       .scaleTime()
-      .range([0, (svgWidth - barWidth)])
+      .range([0, (svgWidth - barWidth) * 0.885])
       .domain(d3.extent(dataDump, function (d) { 
         return d.date; 
       }));
@@ -77,11 +79,16 @@ class Graph extends React.Component {
       .axisBottom()
       .scale(xAxisScale)
       .tickValues(dataDump.map(function (d) { return d.date }))
-      //.tickFormat(d3.timeFormat("%d-%b-%y"));
+      .tickFormat(d3.timeFormat("%b-%d"));
 
     // modify x axis
     d3.select('#x_axis')
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
 
     // ================== //
     // ****** LINE ****** //
@@ -101,13 +108,13 @@ class Graph extends React.Component {
 
     // set x and y ranges
     var x = d3.scaleTime()
-      .range([0, svgWidth])
+      .range([0, svgWidth * 0.9])
       .domain(d3.extent(dataDump, function (d) {
         return d.date; 
       }));
 
     var y = d3.scaleLinear()
-      .range([svgHeight, 0])
+      .range([svgHeight * 0.8, 0])
       .domain([0, d3.max(priceData, function (d) { 
         return d; 
       })]);
@@ -115,6 +122,7 @@ class Graph extends React.Component {
     // define the line
     var valueline = d3.line()
       .x(function (d) { 
+        console.log('x d.d ', d.d)
         return x(d.d);
       })
       .y(function (d) { 
@@ -130,16 +138,17 @@ class Graph extends React.Component {
     svg.append("path") 
       .data([lineData])
       .attr("class", "line")
-      .attr("d", valueline);
+      .attr("d", valueline)
+      .attr("transform", "translate(" + (svgWidth * 0.1) + ", " + 0 + ")");
 
     // ================ //
     // ***** BARS ***** //
     // ================ //
 
-    // define scale for bars
+    // set scale for bars
     var yBarScale = d3.scaleLinear()
       .domain([0, d3.max(priceData)])
-      .range([0, svgHeight]);
+      .range([0, svgHeight * 0.8]);
 
     // create bars
     var barChart = svg.selectAll("rect")
@@ -155,7 +164,7 @@ class Graph extends React.Component {
       })
       .attr("width", barWidth - barPadding)
       .attr("transform", function (d, i) {
-        var translate = [barWidth * i, 0];
+        var translate = [(barWidth * i) + (svgWidth * 0.1), -svgHeight * 0.2];
         return "translate(" + translate + ")";
       });
 
@@ -167,51 +176,45 @@ class Graph extends React.Component {
       d.date = parseTime(d.date);
       // d.close = +d.close; // not parsing hours and minutes
     });
+    
+    // set svg element dimensions
+    var chartDiv = document.getElementById("test");
+    var svgWidth = (chartDiv.clientWidth); // 500
+    var svgHeight = chartDiv.clientHeight; // 300
 
-    // define svg element boundaries
-    var svgWidth = 500;
-    var svgHeight = 300;
-    var barPadding = 5;
-    var barWidth = (svgWidth / priceData.length);
-
-    // create svg element
+    // apply svg element dimensions
     var svg = d3.select('svg')
       .attr("width", svgWidth)
       .attr("height", svgHeight);
 
-    // define scale for bars
-    var yBarScale = d3.scaleLinear()
-      .domain([0, d3.max(priceData)])
-      .range([0, svgHeight]);
-
-    // define scale for y axis
+    // set scale for y axis
     var yAxisScale = d3.scaleLinear()
       .domain([0, d3.max(priceData)])
-      .range([svgHeight, 0]);
+      .range([svgHeight * 0.8, 0]);
 
-    // create y axis
+    // define y axis
     var y_axis = d3.axisLeft()
       .scale(yAxisScale);
 
     // add y axis to svg element
     svg.append("g")
-      .attr("transform", "translate(0, 0)")
+      .attr("transform", "translate(" + svgWidth * 0.1 + ", " + svgHeight * 0.1 +")")
       .attr("id", "y_axis")
       .call(y_axis);
 
-    // define x axis
+    // set scale for x axis
     var xScale = d3.scaleTime()
       .domain(d3.extent(dataDump, function (d) { return d.date; }))
-      .range([0, svgWidth]);
+      .range([0, svgWidth * 0.8]);
 
-    // create x axis
+    // define x axis
     var x_axis = d3.axisBottom(xScale)
       .ticks(dataDump.length)
       .tickFormat(d3.timeFormat("%d-%b-%y"))
 
     // add x axis to svg element
     svg.append("g")
-      .attr("transform", "translate(0, " + (svgHeight) + ")")
+      .attr("transform", "translate(" + svgWidth * 0.1 +", " + (svgHeight * 0.8) + ")")
       .attr("id", "x_axis")
       .call(x_axis)
       .selectAll("text")
@@ -223,14 +226,14 @@ class Graph extends React.Component {
     // add x axis label
     svg.append("text")
       .attr("x", svgWidth / 2)
-      .attr("y", svgHeight + 75)
+      .attr("y", svgHeight * 0.98)
       .style("text-anchor", "middle")
       .text("Date (updated daily at 11:00 UTC)");
 
     // add y axis label
     svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -50)
+      .attr("y", svgWidth * 0)
       .attr("x", 0 - (svgHeight / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
@@ -238,8 +241,8 @@ class Graph extends React.Component {
 
     // add title
     svg.append("text")
-      .attr("x", svgWidth / 2)
-      .attr("y", -20)
+      .attr("x", svgWidth * 0.5)
+      .attr("y", svgHeight * 0.05)
       .style("text-anchor", "middle")
       .text("Historical Daily Price Averages");
   }

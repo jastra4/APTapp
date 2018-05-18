@@ -25,7 +25,7 @@ class Main extends React.Component {
           <SummaryConnected />
           <ItemListConnected />
         </div>
-        <svg className="bar-chart" ></svg>
+        <svg className="bar-chart" id="test"></svg>
         <GraphConnected />        
       </div>
     )

@@ -33382,13 +33382,6 @@ const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["conne
 
 
 
-// TODO:
-// 1. fix the line appearing behind the bars when run for the first time
-// 2. fix the x-axis line dissapearing
-// 3. adjust x-axis formatting
-// 4. make graph fit various window/screen sizes
-// 5. more styling
-
 class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
@@ -33396,6 +33389,8 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentDidMount() {
+    alert('test 1');
+
     this.createGraph();
   }
 
@@ -33549,6 +33544,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     var chartDiv = document.getElementById("myGraph");
     var svgWidth = chartDiv.clientWidth;
     var svgHeight = chartDiv.clientHeight;
+    alert('test 2');
 
     // apply svg element dimensions
     var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);

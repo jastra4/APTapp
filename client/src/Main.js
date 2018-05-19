@@ -16,7 +16,7 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <div>test2</div>
+        <div>test2.1</div>
         {/* <h2 className="header">Wowmiser
           <div className="subHeader">A World of Warcraft app</div>
         </h2> */}

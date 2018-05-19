@@ -28,9 +28,9 @@ class Main extends React.Component {
         {/* <div className="test">
           <SummaryConnected />
         </div> */}
-        <div className="test">
+        {/* <div className="test">
           <ItemListConnected />
-        </div>
+        </div> */}
       
       </div>
     )

@@ -2315,12 +2315,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           'A World of Warcraft app'
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'test' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
-      )
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' })
     );
   }
 }
@@ -33657,7 +33652,7 @@ const mapDispatchToProps = dispatch => ({
 
 const ItemListConnected = Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(ItemList);
 
-/* harmony default export */ __webpack_exports__["a"] = (ItemListConnected);
+/* unused harmony default export */ var _unused_webpack_default_export = (ItemListConnected);
 
 /***/ }),
 /* 111 */

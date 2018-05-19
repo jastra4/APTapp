@@ -16,7 +16,8 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <h2 className="header">Wowmiser
+        <h2 >Wowmiser 
+          {/* className="header" */}
           {/* <div className="subHeader">A World of Warcraft app</div> */}
         </h2>
         {/* <SearchConnected /> */}

@@ -2318,7 +2318,6 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'test' },
@@ -33389,8 +33388,6 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentDidMount() {
-    alert('test 1');
-
     this.createGraph();
   }
 
@@ -33469,7 +33466,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         let spread = diff / dateSpread * xAxisWidth;
         barX += spread;
       }
-      var translate = [barX + (barWidth - barPadding), -svgHeight * 0.2];
+      var translate = [barX + (barWidth - 0), -svgHeight * 0.2];
       return "translate(" + translate + ")";
     });
 
@@ -33544,7 +33541,6 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     var chartDiv = document.getElementById("myGraph");
     var svgWidth = chartDiv.clientWidth;
     var svgHeight = chartDiv.clientHeight;
-    alert('test 2');
 
     // apply svg element dimensions
     var svg = d3.select('svg').attr("width", svgWidth).attr("height", svgHeight);
@@ -33590,7 +33586,7 @@ const mapStateToProps = state => {
 
 const GraphConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Graph);
 
-/* harmony default export */ __webpack_exports__["a"] = (GraphConnected);
+/* unused harmony default export */ var _unused_webpack_default_export = (GraphConnected);
 
 /***/ }),
 /* 110 */

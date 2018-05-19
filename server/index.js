@@ -10,6 +10,29 @@ const rp = require('request-promise');
 const dateFormat = require('dateformat');
 
 /************************************************************/
+// Cronjob
+/************************************************************/
+
+// const schedule = require('node-schedule');
+
+// schedule.scheduleJob('0 * * * *', function () {
+//   app.get('/updateDB', (req, res) => {
+//     blizzard.wow.auction({ realm: 'Thrall', origin: 'US' })
+//       .then(response => {
+//         rp(response.data.files[0].url).then((results) => {
+//           insertBatch(results)
+//         }).catch((err) => {
+//           console.log('updateDB error: ', err);
+//         })
+//       })
+//       .catch((err) => {
+//         console.log('failed to reach blizz ', err);
+//         res.sendStatus(500)
+//       });
+//   })
+// });
+
+/************************************************************/
 // Startup Process
 /************************************************************/
 
@@ -19,6 +42,11 @@ app.use(express.static(__dirname + '/../client/dist'));
 /************************************************************/
 // Routes
 /************************************************************/
+
+app.post('/cronTest', (req, res) => {
+  console.log('cron test triggered');
+  res.send('cron job ran successfully');
+})
 
 app.get('/updateDB', (req, res) => {
   blizzard.wow.auction({ realm: 'Thrall', origin: 'US' })
@@ -35,7 +63,20 @@ app.get('/updateDB', (req, res) => {
     });				
 })
 
-// send request to blizzard api
+app.post('/updateDB', (req, res) => {
+  blizzard.wow.auction({ realm: 'Thrall', origin: 'US' })
+    .then(response => {
+      rp(response.data.files[0].url).then((results) => {
+        insertBatch(results)
+      }).catch((err) => {
+        console.log('updateDB error: ', err);
+      })
+    })
+    .catch((err) => {
+      console.log('failed to reach blizz ', err);
+      res.sendStatus(500)
+    });
+})
 
 const catalog = {
   "Aethril": 124101,

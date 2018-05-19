@@ -16,22 +16,21 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <div>test2.1</div>
-        {/* <h2 className="header">Wowmiser
+        <h2 className="header">Wowmiser
           <div className="subHeader">A World of Warcraft app</div>
-        </h2> */}
-        {/* <SearchConnected /> */}
-        {/* <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" /> */}
+        </h2>
+        <SearchConnected />
+        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
 
-        {/* <svg className="bar-chart" id="myGraph"></svg> */}
-        {/* <GraphConnected />   */}
+        <svg className="bar-chart" id="myGraph"></svg>
+        <GraphConnected />  
 
-        {/* <div className="test">
+        <div className="test">
           <SummaryConnected />
-        </div> */}
-        {/* <div className="test">
+        </div>
+        <div className="test">
           <ItemListConnected />
-        </div> */}
+        </div>
       
       </div>
     )

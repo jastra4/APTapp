@@ -2306,9 +2306,28 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h2',
+        { className: 'header' },
+        'Wowmiser',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'subHeader' },
+          'A World of Warcraft app'
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
-        'test2.1'
+        { className: 'test' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null)
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'test' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
       )
     );
   }
@@ -21938,7 +21957,7 @@ const mapStateToProps = state => {
 
 const SearchConnected = Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(Search);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (SearchConnected);
+/* harmony default export */ __webpack_exports__["a"] = (SearchConnected);
 
 /***/ }),
 /* 87 */
@@ -33349,7 +33368,7 @@ const mapStateToProps = state => {
 
 const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Summary);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (SummaryConnected);
+/* harmony default export */ __webpack_exports__["a"] = (SummaryConnected);
 
 /***/ }),
 /* 109 */
@@ -33568,7 +33587,7 @@ const mapStateToProps = state => {
 
 const GraphConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Graph);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (GraphConnected);
+/* harmony default export */ __webpack_exports__["a"] = (GraphConnected);
 
 /***/ }),
 /* 110 */
@@ -33646,7 +33665,7 @@ const mapDispatchToProps = dispatch => ({
 
 const ItemListConnected = Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(ItemList);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (ItemListConnected);
+/* harmony default export */ __webpack_exports__["a"] = (ItemListConnected);
 
 /***/ }),
 /* 111 */

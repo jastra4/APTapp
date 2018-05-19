@@ -22,7 +22,7 @@ class Main extends React.Component {
         <SearchConnected />
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
 
-        <svg className="bar-chart" id="myGraph"></svg>
+        {/* <svg className="bar-chart" id="myGraph"></svg> */}
         {/* <GraphConnected />   */}
 
         <div className="test">

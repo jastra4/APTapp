@@ -2317,7 +2317,6 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'test' },

@@ -2319,11 +2319,6 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'test' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'test' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
       )
     );
@@ -33365,7 +33360,7 @@ const mapStateToProps = state => {
 
 const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Summary);
 
-/* harmony default export */ __webpack_exports__["a"] = (SummaryConnected);
+/* unused harmony default export */ var _unused_webpack_default_export = (SummaryConnected);
 
 /***/ }),
 /* 109 */

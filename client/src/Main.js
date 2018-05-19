@@ -16,10 +16,10 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <h2 >Wowmiser 
-          {/* className="header" */}
-          {/* <div className="subHeader">A World of Warcraft app</div> */}
-        </h2>
+        <div>test2</div>
+        {/* <h2 className="header">Wowmiser
+          <div className="subHeader">A World of Warcraft app</div>
+        </h2> */}
         {/* <SearchConnected /> */}
         {/* <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" /> */}
 

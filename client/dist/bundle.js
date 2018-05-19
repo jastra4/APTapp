@@ -2306,9 +2306,9 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h2',
+        'div',
         null,
-        'Wowmiser'
+        'test2'
       )
     );
   }

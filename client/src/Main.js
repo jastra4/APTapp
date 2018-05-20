@@ -16,9 +16,9 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <h2 className="header">Wowmiser
+        <div className="header">Wowmiser
           <div className="subHeader">A World of Warcraft app</div>
-        </h2>
+        </div>
         <SearchConnected />
         <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
 

@@ -2306,7 +2306,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h2',
+        'div',
         { className: 'header' },
         'Wowmiser',
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -21897,12 +21897,12 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'p',
+        'div',
         { className: 'intro' },
         'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'p',
+        'div',
         { className: 'disclaimer' },
         '* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
       ),
@@ -33402,11 +33402,12 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     });
 
     if (dumpDates.length > 0 && priceData.length > 0) {
-      this.updateGraph(dumpDates, priceData);
+      let reversedDates = dumpDates.reverse();
+      this.updateGraph(dumpDates, priceData, reversedDates);
     }
   }
 
-  updateGraph(dataDump, priceData) {
+  updateGraph(dataDump, priceData, reversedDates) {
     // set svg element dimensions
     var chartDiv = document.getElementById("myGraph");
     var svgWidth = chartDiv.clientWidth;
@@ -33447,22 +33448,22 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       return yBarScale(d);
     }).attr("width", barWidth - barPadding - 5).attr("transform", function (d, i) {
 
-      let dataDates = [];
-      for (let i = dataDump.length - 1; i >= 0; i--) {
-        dataDates.push(dataDump[i]);
-      }
+      // let dataDates = [];
+      // for (let i = dataDump.length - 1; i >= 0; i--) {
+      //   dataDates.push(dataDump[i]);
+      // }
 
       let xAxisWidth = (svgWidth - barWidth) * 0.885;
 
       let parseTime = d3.timeParse("%d-%b-%y");
-      let lastDate = parseTime(dataDates[0].date);
-      let firstDate = parseTime(dataDates[dataDates.length - 1].date);
+      let lastDate = parseTime(reversedDates[0].date);
+      let firstDate = parseTime(reversedDates[reversedDates.length - 1].date);
       let dateSpread = lastDate.getTime() - firstDate.getTime();
       let x = 0;
 
       if (i !== 0) {
-        let date1 = parseTime(dataDates[i - 1].date);
-        let date2 = parseTime(dataDates[i].date);;
+        let date1 = parseTime(reversedDates[i - 1].date);
+        let date2 = parseTime(reversedDates[i].date);;
         let diff = date1.getTime() - date2.getTime();
         let spread = diff / dateSpread * xAxisWidth;
         barX += spread;

@@ -78,13 +78,7 @@ class Graph extends React.Component {
       .attr("width", barWidth - barPadding-5)
       .attr("transform", function (d, i) {
 
-        // let dataDates = [];
-        // for (let i = dataDump.length - 1; i >= 0; i--) {
-        //   dataDates.push(dataDump[i]);
-        // }
-
         let xAxisWidth = (svgWidth - barWidth) * 0.885;
-        
         let parseTime = d3.timeParse("%d-%b-%y");
         let lastDate = parseTime(reversedDates[0].date);
         let firstDate = parseTime(reversedDates[reversedDates.length - 1].date);
@@ -98,7 +92,7 @@ class Graph extends React.Component {
           let spread = diff / dateSpread * xAxisWidth;
           barX += spread;
         }
-        var translate = [barX + (barWidth - 0), -svgHeight * 0.2];
+        var translate = [barX + (barWidth + 5), -svgHeight * 0.2];
         return "translate(" + translate + ")";
       });
 

@@ -16,11 +16,12 @@ class Main extends React.Component {
   render () {
     return (
       <div>
+        <img src="https://i.imgur.com/jIa2Ebd.jpg" id="background" alt="" />
+        
         <div className="header">Wowmiser
           <div className="subHeader">A World of Warcraft app</div>
         </div>
         <SearchConnected />
-        <img src="https://i.imgur.com/L0eXr2h.jpg" id="background" alt="" />
 
         <svg className="bar-chart" id="myGraph"></svg>
         <GraphConnected />  

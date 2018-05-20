@@ -32,43 +32,81 @@ class Search extends React.Component {
 			.catch((res) => {
 				console.log('error ', res);
 			});
-	}
+  }
+  
 
 	render() {
-		return(
-		  <div>
-        <div className="intro">Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.</div>
-        <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
-	    	
-        <form>
-          <input list="items" id="queryDB" className="search" placeholder="Use the drop down or any item ID"></input>
-          <datalist id="items">
-            <option value="Aethril"></option>
-            <option value="Astral Glory"></option>
-            <option value="Astral Healing Potion"></option>
-            <option value="Avalanche Elixir"></option>
-            <option value="Darkmoon Daggermaw"></option>
-            <option value="Dreamleaf"></option>
-            <option value="Felwort"></option>
-            <option value="Flask of Ten Thousand Scars"></option>
-            <option value="Flask of the Countless Armies"></option>
-            <option value="Flask of the Seventh Demon"></option>
-            <option value="Flask of the Whispered Pact"></option>
-            <option value="Fjarnskaggl"></option>
-            <option value="Foxflower"></option>
-            <option value="Lavish Suramar Feast"></option>
-            <option value="Leytorrent Potion"></option>
-            <option value="Potion of Prolonged Power"></option>
-            <option value="Starlight Rose"></option>
-            <option value="Skystep Potion"></option>
-            <option value="Unbending Potion"></option>
-            <option value="Yseralline Seed"></option>
-          </datalist>
-          <input type="submit" onClick={this.queryDB}></input>
-        </form>
-        <div className="itemName">{this.state.itemName}</div>
-		  </div>
-		);
+    if (this.props.loading === true) {
+      return (
+        <div>
+          <div className="intro">Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.</div>
+          <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
+
+          <form>
+            <input list="items" id="queryDB" className="search" placeholder="Item name (ex Dreamleaf)"></input>
+            <datalist id="items">
+              <option value="Aethril"></option>
+              <option value="Astral Glory"></option>
+              <option value="Astral Healing Potion"></option>
+              <option value="Avalanche Elixir"></option>
+              <option value="Darkmoon Daggermaw"></option>
+              <option value="Dreamleaf"></option>
+              <option value="Felwort"></option>
+              <option value="Flask of Ten Thousand Scars"></option>
+              <option value="Flask of the Countless Armies"></option>
+              <option value="Flask of the Seventh Demon"></option>
+              <option value="Flask of the Whispered Pact"></option>
+              <option value="Fjarnskaggl"></option>
+              <option value="Foxflower"></option>
+              <option value="Lavish Suramar Feast"></option>
+              <option value="Leytorrent Potion"></option>
+              <option value="Potion of Prolonged Power"></option>
+              <option value="Starlight Rose"></option>
+              <option value="Skystep Potion"></option>
+              <option value="Unbending Potion"></option>
+              <option value="Yseralline Seed"></option>
+            </datalist>
+            <input type="submit" onClick={this.queryDB}></input>
+          </form>
+          <div className="itemName">loading...</div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="intro">Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.</div>
+          <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
+          
+          <form>
+            <input list="items" id="queryDB" className="search" placeholder="Item name (ex Dreamleaf)"></input>
+            <datalist id="items">
+              <option value="Aethril"></option>
+              <option value="Astral Glory"></option>
+              <option value="Astral Healing Potion"></option>
+              <option value="Avalanche Elixir"></option>
+              <option value="Darkmoon Daggermaw"></option>
+              <option value="Dreamleaf"></option>
+              <option value="Felwort"></option>
+              <option value="Flask of Ten Thousand Scars"></option>
+              <option value="Flask of the Countless Armies"></option>
+              <option value="Flask of the Seventh Demon"></option>
+              <option value="Flask of the Whispered Pact"></option>
+              <option value="Fjarnskaggl"></option>
+              <option value="Foxflower"></option>
+              <option value="Lavish Suramar Feast"></option>
+              <option value="Leytorrent Potion"></option>
+              <option value="Potion of Prolonged Power"></option>
+              <option value="Starlight Rose"></option>
+              <option value="Skystep Potion"></option>
+              <option value="Unbending Potion"></option>
+              <option value="Yseralline Seed"></option>
+            </datalist>
+            <input type="submit" onClick={this.queryDB}></input>
+          </form>
+          <div className="itemName">{this.state.itemName}</div>
+        </div>
+      );
+    }
 	}
 }
 
@@ -81,7 +119,7 @@ const mapDispatchToProps = dispatch => (
 );
 
 const mapStateToProps = (state) => {
-  return ( {items: state.items} );
+  return ({ items: state.items, loading: state.loading} );
 };
 
 const SearchConnected = connect(mapStateToProps, mapDispatchToProps)(Search);

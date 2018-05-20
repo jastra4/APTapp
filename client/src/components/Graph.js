@@ -21,11 +21,12 @@ class Graph extends React.Component {
     });
 
     if (dumpDates.length > 0 && priceData.length > 0) {
-      this.updateGraph(dumpDates, priceData);
+      let reversedDates = dumpDates.reverse();
+      this.updateGraph(dumpDates, priceData, reversedDates);
     }
   }
 
-  updateGraph(dataDump, priceData) {
+  updateGraph(dataDump, priceData, reversedDates) {
     // set svg element dimensions
     var chartDiv = document.getElementById("myGraph");
     var svgWidth = (chartDiv.clientWidth);
@@ -77,22 +78,22 @@ class Graph extends React.Component {
       .attr("width", barWidth - barPadding-5)
       .attr("transform", function (d, i) {
 
-        let dataDates = [];
-        for (let i = dataDump.length - 1; i >= 0; i--) {
-          dataDates.push(dataDump[i]);
-        }
+        // let dataDates = [];
+        // for (let i = dataDump.length - 1; i >= 0; i--) {
+        //   dataDates.push(dataDump[i]);
+        // }
 
         let xAxisWidth = (svgWidth - barWidth) * 0.885;
         
         let parseTime = d3.timeParse("%d-%b-%y");
-        let lastDate = parseTime(dataDates[0].date);
-        let firstDate = parseTime(dataDates[dataDates.length - 1].date);
+        let lastDate = parseTime(reversedDates[0].date);
+        let firstDate = parseTime(reversedDates[reversedDates.length - 1].date);
         let dateSpread = lastDate.getTime() - firstDate.getTime();
         let x = 0;
 
         if (i !== 0) {
-          let date1 = parseTime(dataDates[i - 1].date);
-          let date2 = parseTime(dataDates[i].date);;
+          let date1 = parseTime(reversedDates[i - 1].date);
+          let date2 = parseTime(reversedDates[i].date);;
           let diff = date1.getTime() - date2.getTime();
           let spread = diff / dateSpread * xAxisWidth;
           barX += spread;

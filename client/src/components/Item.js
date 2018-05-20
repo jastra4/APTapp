@@ -62,7 +62,7 @@ class Item extends React.Component {
 
   render () {
 		return (
-      <div>
+      <div className="day">
         <div className="dailyHeader">{`${this.props.stamp.date}`}</div>
         <div>{`Min price: ${this.state.minBuyout}`}</div>
         <div>{`Max price: ${this.state.maxBuyout}`}</div>

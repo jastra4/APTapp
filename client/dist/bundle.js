@@ -2305,6 +2305,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/jIa2Ebd.jpg', id: 'background', alt: '' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'header' },
@@ -2316,7 +2317,6 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/L0eXr2h.jpg', id: 'background', alt: '' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -21893,55 +21893,107 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    if (this.props.loading === true) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'intro' },
-        'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'disclaimer' },
-        '* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'form',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'search', placeholder: 'Use the drop down or any item ID' }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'datalist',
-          { id: 'items' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Aethril' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Glory' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Healing Potion' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Avalanche Elixir' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Darkmoon Daggermaw' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Dreamleaf' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Felwort' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of Ten Thousand Scars' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Countless Armies' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Seventh Demon' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Whispered Pact' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Fjarnskaggl' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Foxflower' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Leytorrent Potion' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Potion of Prolonged Power' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Starlight Rose' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Skystep Potion' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
+          'div',
+          { className: 'intro' },
+          'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'disclaimer' },
+          '* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'form',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'search', placeholder: 'Item name (ex Dreamleaf)' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'datalist',
+            { id: 'items' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Aethril' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Glory' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Healing Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Avalanche Elixir' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Darkmoon Daggermaw' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Dreamleaf' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Felwort' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of Ten Thousand Scars' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Countless Armies' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Seventh Demon' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Whispered Pact' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Fjarnskaggl' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Foxflower' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Leytorrent Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Potion of Prolonged Power' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Starlight Rose' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Skystep Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'itemName' },
+          'loading...'
+        )
+      );
+    } else {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'itemName' },
-        this.state.itemName
-      )
-    );
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'intro' },
+          'Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'disclaimer' },
+          '* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'form',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'search', placeholder: 'Item name (ex Dreamleaf)' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'datalist',
+            { id: 'items' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Aethril' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Glory' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Astral Healing Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Avalanche Elixir' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Darkmoon Daggermaw' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Dreamleaf' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Felwort' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of Ten Thousand Scars' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Countless Armies' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Seventh Demon' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Flask of the Whispered Pact' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Fjarnskaggl' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Foxflower' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Lavish Suramar Feast' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Leytorrent Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Potion of Prolonged Power' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Starlight Rose' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Skystep Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'itemName' },
+          this.state.itemName
+        )
+      );
+    }
   }
 }
 
@@ -21952,7 +22004,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  return { items: state.items };
+  return { items: state.items, loading: state.loading };
 };
 
 const SearchConnected = Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(Search);
@@ -33298,22 +33350,8 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    if (this.props.loading === true) {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'summaryHeader' },
-          `Market Summary`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          'loading...'
-        )
-      );
-    } else if (this.state.supply === 0) {
+    // if (this.state.supply === 0) {
+    if (this.props.dumps.length === 0) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -33448,13 +33486,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       return yBarScale(d);
     }).attr("width", barWidth - barPadding - 5).attr("transform", function (d, i) {
 
-      // let dataDates = [];
-      // for (let i = dataDump.length - 1; i >= 0; i--) {
-      //   dataDates.push(dataDump[i]);
-      // }
-
       let xAxisWidth = (svgWidth - barWidth) * 0.885;
-
       let parseTime = d3.timeParse("%d-%b-%y");
       let lastDate = parseTime(reversedDates[0].date);
       let firstDate = parseTime(reversedDates[reversedDates.length - 1].date);
@@ -33468,7 +33500,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         let spread = diff / dateSpread * xAxisWidth;
         barX += spread;
       }
-      var translate = [barX + (barWidth - 0), -svgHeight * 0.2];
+      var translate = [barX + (barWidth + 5), -svgHeight * 0.2];
       return "translate(" + translate + ")";
     });
 
@@ -33743,7 +33775,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      null,
+      { className: 'day' },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'dailyHeader' },

@@ -15,11 +15,51 @@ class Item extends React.Component {
   }
 
   componentDidMount() {
-    this.getMarketColor(this.props.dump, this.props.stamp);
+    if (this.props.dump.results !== null) {
+      this.getMarketColor(this.props.dump, this.props.stamp);
+    } else {
+      this.setState({
+        minBuyout: 0,
+        maxBuyout: 0,
+        avgBuyout: 0,
+        avgAuctionSize: 0,
+        totalSupply: 0,
+      }, () => {
+        this.props.loadDumpTotals({
+          minBuyout: this.state.minBuyout,
+          maxBuyout: this.state.maxBuyout,
+          avgBuyout: this.state.avgBuyout,
+          auctions: 0,
+          totalSupply: this.state.totalSupply,
+          name: this.props.stamp,
+        });
+      })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getMarketColor(nextProps.dump, nextProps.stamp);
+    if (nextProps !== undefined) {
+      if (nextProps.dump.results !== null) {
+        this.getMarketColor(nextProps.dump, nextProps.stamp);
+      } else {
+        this.setState({
+          minBuyout: 0,
+          maxBuyout: 0,
+          avgBuyout: 0,
+          avgAuctionSize: 0,
+          totalSupply: 0,
+        }, () => {
+          this.props.loadDumpTotals({
+            minBuyout: this.state.minBuyout,
+            maxBuyout: this.state.maxBuyout,
+            avgBuyout: this.state.avgBuyout,
+            auctions: 0,
+            totalSupply: this.state.totalSupply,
+            name: nextProps.stamp,
+          });
+        })
+      }
+    }
   }
 
   getMarketColor(data, timeStamp) {
@@ -61,16 +101,29 @@ class Item extends React.Component {
   }
 
   render () {
-		return (
-      <div className="day">
-        <div className="dailyHeader">{`${this.props.stamp.date}`}</div>
-        <div>{`Min price: ${this.state.minBuyout}`}</div>
-        <div>{`Max price: ${this.state.maxBuyout}`}</div>
-        <div>{`Average price: ${this.state.avgBuyout}`}</div>
-        <div>{`Auctions: ${this.props.dump.results.length}`}</div>
-        <div>{`Supply: ${this.state.totalSupply}`}</div>
-      </div>
-		);
+    if (this.props.dump.results === null) {
+      return (
+        <div className="dailySummary">
+          <div className="header4">{`${this.props.stamp.date}`}</div>
+          <div>{`Min price: ${this.state.minBuyout}`}</div>
+          <div>{`Max price: ${this.state.maxBuyout}`}</div>
+          <div>{`Average price: ${this.state.avgBuyout}`}</div>
+          <div>{`Auctions: ${0}`}</div>
+          <div>{`Supply: ${this.state.totalSupply}`}</div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="dailySummary">
+          <div className="header4">{`${this.props.stamp.date}`}</div>
+          <div>{`Min price: ${this.state.minBuyout}`}</div>
+          <div>{`Max price: ${this.state.maxBuyout}`}</div>
+          <div>{`Average price: ${this.state.avgBuyout}`}</div>
+          <div>{`Auctions: ${this.props.dump.results.length}`}</div>
+          <div>{`Supply: ${this.state.totalSupply}`}</div>
+        </div>
+      );
+    }
   }
 }
 

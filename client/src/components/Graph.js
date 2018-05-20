@@ -75,6 +75,7 @@ class Graph extends React.Component {
       .attr("height", function (d) {
         return yBarScale(d);
       })
+      .attr("class", "bar")
       .attr("width", barWidth - barPadding-5)
       .attr("transform", function (d, i) {
 
@@ -83,6 +84,7 @@ class Graph extends React.Component {
         let lastDate = parseTime(reversedDates[0].date);
         let firstDate = parseTime(reversedDates[reversedDates.length - 1].date);
         let dateSpread = lastDate.getTime() - firstDate.getTime();
+        
         let x = 0;
 
         if (i !== 0) {
@@ -92,7 +94,7 @@ class Graph extends React.Component {
           let spread = diff / dateSpread * xAxisWidth;
           barX += spread;
         }
-        var translate = [barX + (barWidth + 5), -svgHeight * 0.2];
+        var translate = [barX + (barWidth + 7), -svgHeight * 0.2];
         return "translate(" + translate + ")";
       });
 
@@ -255,7 +257,9 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <div></div>
+      <div>
+        <svg className="bar-chart" id="myGraph"></svg>
+      </div>
     );
   }
 }

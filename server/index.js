@@ -78,6 +78,7 @@ app.post('/updateDB', (req, res) => {
     });
 })
 
+// move to aws rds
 const catalog = {
   "Aethril": 124101,
   "Astral Glory": 151565,
@@ -108,23 +109,25 @@ app.get('/queryDB', (req, res) => {
   }
 
 	dbMethod.selectAll(item, (data) => {
-
-    // SORT (assumes the stamp prop to be an iso date)
-    data.sort(function (a, b) {
-      if (a.stamp > b.stamp) {
-        return -1;
-      } else if (b.stamp > a.stamp) {
-        return 1;
-      } else if (a.stamp === b.stamp) {
-        return 0;
-      }
-    });
-    // FORMAT
-    data.forEach((isoDate, i, data) => {
-      data[i].stamp = { date: dateFormat(JSON.parse(isoDate.stamp), 'dd-mmm-yy') };
-    });
-
-		res.send(data);
+    // if (data[0].results === null) {
+    //   res.sendStatus(400);
+    // } else {
+      // SORT (assumes the stamp prop to be an iso date)
+      data.sort(function (a, b) {
+        if (a.stamp > b.stamp) {
+          return -1;
+        } else if (b.stamp > a.stamp) {
+          return 1;
+        } else if (a.stamp === b.stamp) {
+          return 0;
+        }
+      });
+      // FORMAT
+      data.forEach((isoDate, i, data) => {
+        data[i].stamp = { date: dateFormat(JSON.parse(isoDate.stamp), 'dd-mmm-yy') };
+      });
+      res.send(data);   
+    //}
 	});
 })
 

@@ -16,23 +16,14 @@ class Main extends React.Component {
   render () {
     return (
       <div>
-        <img src="https://i.imgur.com/jIa2Ebd.jpg" id="background" alt="" />
-        
-        <div className="header">Wowmiser
-          <div className="subHeader">A World of Warcraft app</div>
+        <img src="https://i.imgur.com/jIa2Ebd.jpg" id="background"/>
+        <div className="header1">Wowmiser
+          <div className="header2">A World of Warcraft app</div>
         </div>
         <SearchConnected />
-
-        <svg className="bar-chart" id="myGraph"></svg>
         <GraphConnected />  
-
-        <div className="test">
-          <SummaryConnected />
-        </div>
-        <div className="test">
-          <ItemListConnected />
-        </div>
-      
+        <SummaryConnected />
+        <ItemListConnected />
       </div>
     )
   }

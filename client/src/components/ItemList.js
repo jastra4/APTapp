@@ -16,18 +16,17 @@ class ItemList extends React.Component {
   render () {
     if (this.props.items.length === 0) {
       return (
-        <div>
-          <div className="dailyListHeader">Daily Breakdown</div>
+        <div className="dailySummaryList">
+          <div className="header3">Daily Breakdown</div>
           <div>No Data</div>     
         </div>        
       );
     } else {
       let results = Object.values(this.props.items);
       results = results.slice(0, results.length);
-      let obj = {results: results};
       return (
-        <div className="itemList"> 
-          <div className="dailyListHeader">Daily Breakdown</div>
+        <div className="dailySummaryList">
+          <div className="header3">Daily Breakdown</div>
           <div>
             {results.map((dump, i) => {
               return (<ItemConnected dump={dump} key={i} stamp={this.props.items[i].stamp}/>);
@@ -44,9 +43,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-  {
-    loadingStatus: (status) => dispatch(loadingStatus(status)),
-  }
+  { loadingStatus: (status) => dispatch(loadingStatus(status)) }
 );
 
 const ItemListConnected = connect(mapStateToProps, mapDispatchToProps)(ItemList);

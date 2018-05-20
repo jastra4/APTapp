@@ -70,7 +70,14 @@ var selectAll = function(item, callback) {
         let col = mongoose.model(doc.name, dumpSchema);
         col.find({"item": item}, (err, results) => {
           if (err) {
-            console.log('err: ', err);
+            let hist = {};
+            hist.results = null;
+            hist.stamp = doc.name;
+            list.push(hist);
+            j++;
+            if (j === docs.length - 1) {
+              callback(list);
+            }  
           } else {
             let hist = {};
             hist.results = results;

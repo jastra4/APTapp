@@ -2305,30 +2305,21 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/jIa2Ebd.jpg', id: 'background', alt: '' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://i.imgur.com/jIa2Ebd.jpg', id: 'background' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'header' },
+        { className: 'header1' },
         'Wowmiser',
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'subHeader' },
+          { className: 'header2' },
           'A World of Warcraft app'
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search__["a" /* default */], null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_Graph__["a" /* default */], null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'test' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null)
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'test' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
-      )
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Summary__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_ItemList__["a" /* default */], null)
     );
   }
 }
@@ -21884,11 +21875,21 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
       this.setState({ itemName: input });
-      console.log('res ', res.data, ' for ', input);
+      console.log('res ', res.data);
       this.props.clearDumpTotals({}); // clear dump totals in store
       this.props.loadItems(res.data);
     }).catch(res => {
-      console.log('error ', res);
+      this.setState({ itemName: 'item not found' });
+      this.props.clearDumpTotals({});
+      this.props.loadDumpTotals({
+        minBuyout: 0,
+        maxBuyout: 0,
+        avgBuyout: 0,
+        auctions: 0,
+        totalSupply: 0,
+        name: { date: "10-May-18" }
+      });
+      this.props.loadItems([]);
     });
   }
 
@@ -21910,7 +21911,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'form',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'search', placeholder: 'Item name (ex Dreamleaf)' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'searchBar', placeholder: 'Item name (ex Dreamleaf, Felwort, etc)' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'datalist',
             { id: 'items' },
@@ -21935,11 +21936,15 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
           ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'button',
+            { type: 'submit', onClick: this.queryDB },
+            'Search'
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'itemName' },
+          { className: 'searchedItem' },
           'loading...'
         )
       );
@@ -21960,7 +21965,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'form',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'search', placeholder: 'Item name (ex Dreamleaf)' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'searchBar', placeholder: 'Item name (ex Dreamleaf, Felwort, etc)' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'datalist',
             { id: 'items' },
@@ -21985,11 +21990,15 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Unbending Potion' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('option', { value: 'Yseralline Seed' })
           ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', onClick: this.queryDB })
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'button',
+            { type: 'submit', onClick: this.queryDB },
+            'Search'
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'itemName' },
+          { className: 'searchedItem' },
           this.state.itemName
         )
       );
@@ -22000,6 +22009,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 const mapDispatchToProps = dispatch => ({
   loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__["a" /* default */])(itemList)),
   clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals)),
+  loadDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["b" /* setDumpTotals */])(dumpTotals)),
   loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
 });
 
@@ -33338,7 +33348,6 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       if (dailySummary.avgBuyout > marketSummary.highPrice) {
         marketSummary.highPrice = dailySummary.avgBuyout;
       }
-
       marketSummary.supply += dailySummary.totalSupply;
       marketSummary.avgPrice += dailySummary.avgBuyout;
     });
@@ -33350,15 +33359,14 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    // if (this.state.supply === 0) {
     if (this.props.dumps.length === 0) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'marketSummary' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'summaryHeader' },
-          `Market Summary`
+          { className: 'header3' },
+          'Market Summary'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -33369,11 +33377,11 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     } else {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'marketSummary' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'summaryHeader' },
-          `Market Summary`
+          { className: 'header3' },
+          'Market Summary'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -33484,13 +33492,14 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       return svgHeight - yBarScale(d);
     }).attr("height", function (d) {
       return yBarScale(d);
-    }).attr("width", barWidth - barPadding - 5).attr("transform", function (d, i) {
+    }).attr("class", "bar").attr("width", barWidth - barPadding - 5).attr("transform", function (d, i) {
 
       let xAxisWidth = (svgWidth - barWidth) * 0.885;
       let parseTime = d3.timeParse("%d-%b-%y");
       let lastDate = parseTime(reversedDates[0].date);
       let firstDate = parseTime(reversedDates[reversedDates.length - 1].date);
       let dateSpread = lastDate.getTime() - firstDate.getTime();
+
       let x = 0;
 
       if (i !== 0) {
@@ -33500,7 +33509,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         let spread = diff / dateSpread * xAxisWidth;
         barX += spread;
       }
-      var translate = [barX + (barWidth + 5), -svgHeight * 0.2];
+      var translate = [barX + (barWidth + 7), -svgHeight * 0.2];
       return "translate(" + translate + ")";
     });
 
@@ -33610,7 +33619,11 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('svg', { className: 'bar-chart', id: 'myGraph' })
+    );
   }
 }
 
@@ -33652,10 +33665,10 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     if (this.props.items.length === 0) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'dailySummaryList' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'dailyListHeader' },
+          { className: 'header3' },
           'Daily Breakdown'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33667,13 +33680,12 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     } else {
       let results = Object.values(this.props.items);
       results = results.slice(0, results.length);
-      let obj = { results: results };
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'itemList' },
+        { className: 'dailySummaryList' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'dailyListHeader' },
+          { className: 'header3' },
           'Daily Breakdown'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33692,9 +33704,7 @@ const mapStateToProps = state => {
   return { items: state.items };
 };
 
-const mapDispatchToProps = dispatch => ({
-  loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__src_actions_loadingActions__["a" /* default */])(status))
-});
+const mapDispatchToProps = dispatch => ({ loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__src_actions_loadingActions__["a" /* default */])(status)) });
 
 const ItemListConnected = Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(ItemList);
 
@@ -33727,11 +33737,51 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentDidMount() {
-    this.getMarketColor(this.props.dump, this.props.stamp);
+    if (this.props.dump.results !== null) {
+      this.getMarketColor(this.props.dump, this.props.stamp);
+    } else {
+      this.setState({
+        minBuyout: 0,
+        maxBuyout: 0,
+        avgBuyout: 0,
+        avgAuctionSize: 0,
+        totalSupply: 0
+      }, () => {
+        this.props.loadDumpTotals({
+          minBuyout: this.state.minBuyout,
+          maxBuyout: this.state.maxBuyout,
+          avgBuyout: this.state.avgBuyout,
+          auctions: 0,
+          totalSupply: this.state.totalSupply,
+          name: this.props.stamp
+        });
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getMarketColor(nextProps.dump, nextProps.stamp);
+    if (nextProps !== undefined) {
+      if (nextProps.dump.results !== null) {
+        this.getMarketColor(nextProps.dump, nextProps.stamp);
+      } else {
+        this.setState({
+          minBuyout: 0,
+          maxBuyout: 0,
+          avgBuyout: 0,
+          avgAuctionSize: 0,
+          totalSupply: 0
+        }, () => {
+          this.props.loadDumpTotals({
+            minBuyout: this.state.minBuyout,
+            maxBuyout: this.state.maxBuyout,
+            avgBuyout: this.state.avgBuyout,
+            auctions: 0,
+            totalSupply: this.state.totalSupply,
+            name: nextProps.stamp
+          });
+        });
+      }
+    }
   }
 
   getMarketColor(data, timeStamp) {
@@ -33773,40 +33823,77 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      { className: 'day' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    if (this.props.dump.results === null) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'dailyHeader' },
-        `${this.props.stamp.date}`
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        { className: 'dailySummary' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'header4' },
+          `${this.props.stamp.date}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Min price: ${this.state.minBuyout}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Max price: ${this.state.maxBuyout}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Average price: ${this.state.avgBuyout}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Auctions: ${0}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Supply: ${this.state.totalSupply}`
+        )
+      );
+    } else {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
-        `Min price: ${this.state.minBuyout}`
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        `Max price: ${this.state.maxBuyout}`
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        `Average price: ${this.state.avgBuyout}`
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        `Auctions: ${this.props.dump.results.length}`
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        `Supply: ${this.state.totalSupply}`
-      )
-    );
+        { className: 'dailySummary' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'header4' },
+          `${this.props.stamp.date}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Min price: ${this.state.minBuyout}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Max price: ${this.state.maxBuyout}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Average price: ${this.state.avgBuyout}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Auctions: ${this.props.dump.results.length}`
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          `Supply: ${this.state.totalSupply}`
+        )
+      );
+    }
   }
 }
 

@@ -38,7 +38,6 @@ class Summary extends React.Component {
       if (dailySummary.avgBuyout > marketSummary.highPrice) {
         marketSummary.highPrice = dailySummary.avgBuyout;
       }
-
       marketSummary.supply += dailySummary.totalSupply;
       marketSummary.avgPrice += dailySummary.avgBuyout;  
     })
@@ -50,18 +49,17 @@ class Summary extends React.Component {
   }
   
 	render() {
-    // if (this.state.supply === 0) {
     if (this.props.dumps.length === 0) {
       return (
-        <div>
-          <div className="summaryHeader">{`Market Summary`}</div>
+        <div className="marketSummary">
+          <div className="header3">Market Summary</div>
           <div>No Data</div>
         </div>
       );
     } else {
       return (
-        <div>
-          <div className="summaryHeader">{`Market Summary`}</div>
+        <div className="marketSummary">
+          <div className="header3">Market Summary</div>
           <div>{`Lowest price was ${this.state.lowPrice}`}</div>
           <div>{`Highest price was ${this.state.highPrice}`}</div>
           <div>{`Running ${this.props.dumps.length} day average is ${this.state.average}`}</div>

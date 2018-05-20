@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/itemsActions';
 import loadingStatus from '../../src/actions/loadingActions';
-import { clearDumpTotals } from '../../src/actions/dumpActions';
+import { clearDumpTotals, setDumpTotals } from '../../src/actions/dumpActions';
 
 class Search extends React.Component {
 	constructor (props) {
@@ -25,12 +25,22 @@ class Search extends React.Component {
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
         this.setState({itemName: input});
-        console.log('res ', res.data, ' for ', input);
+        console.log('res ', res.data);
         this.props.clearDumpTotals({}); // clear dump totals in store
         this.props.loadItems(res.data);
 			})
 			.catch((res) => {
-				console.log('error ', res);
+        this.setState({ itemName: 'item not found' });
+        this.props.clearDumpTotals({});
+        this.props.loadDumpTotals({
+          minBuyout: 0,
+          maxBuyout: 0,
+          avgBuyout: 0,
+          auctions: 0,
+          totalSupply: 0,
+          name: {date: "10-May-18"},
+        });
+        this.props.loadItems([]);
 			});
   }
   
@@ -43,7 +53,7 @@ class Search extends React.Component {
           <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
 
           <form>
-            <input list="items" id="queryDB" className="search" placeholder="Item name (ex Dreamleaf)"></input>
+            <input list="items" id="queryDB" className="searchBar" placeholder="Item name (ex Dreamleaf, Felwort, etc)"></input>
             <datalist id="items">
               <option value="Aethril"></option>
               <option value="Astral Glory"></option>
@@ -66,9 +76,9 @@ class Search extends React.Component {
               <option value="Unbending Potion"></option>
               <option value="Yseralline Seed"></option>
             </datalist>
-            <input type="submit" onClick={this.queryDB}></input>
+            <button type="submit" onClick={this.queryDB}>Search</button>
           </form>
-          <div className="itemName">loading...</div>
+          <div className="searchedItem">loading...</div>
         </div>
       );
     } else {
@@ -78,7 +88,7 @@ class Search extends React.Component {
           <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
           
           <form>
-            <input list="items" id="queryDB" className="search" placeholder="Item name (ex Dreamleaf)"></input>
+            <input list="items" id="queryDB" className="searchBar" placeholder="Item name (ex Dreamleaf, Felwort, etc)"></input>
             <datalist id="items">
               <option value="Aethril"></option>
               <option value="Astral Glory"></option>
@@ -101,9 +111,9 @@ class Search extends React.Component {
               <option value="Unbending Potion"></option>
               <option value="Yseralline Seed"></option>
             </datalist>
-            <input type="submit" onClick={this.queryDB}></input>
+            <button type="submit" onClick={this.queryDB}>Search</button>
           </form>
-          <div className="itemName">{this.state.itemName}</div>
+          <div className="searchedItem">{this.state.itemName}</div>
         </div>
       );
     }
@@ -114,6 +124,7 @@ const mapDispatchToProps = dispatch => (
   { 
     loadItems: itemList => dispatch(setItemList(itemList)),
     clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
+    loadDumpTotals: dumpTotals => dispatch(setDumpTotals(dumpTotals)),
     loadingStatus: (status) => dispatch(loadingStatus(status)),
   }
 );

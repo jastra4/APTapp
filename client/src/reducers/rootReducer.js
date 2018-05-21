@@ -4,9 +4,9 @@ import dumpsReducer from './dumpsReducer';
 import loadingReducer from './loadingReducer';
 
 const rootReducer = combineReducers({
-	items: itemsReducer,
-	dumps: dumpsReducer,
-	loading: loadingReducer,
+	items: itemsReducer, // results
+	dumps: dumpsReducer, // summaries
+	loading: loadingReducer, // status
 });
 
 export default rootReducer;

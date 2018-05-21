@@ -1,8 +1,9 @@
 const defaultState = [];
 
+// summaryReducer
 const dumpsReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case 'DUMP':
+    case 'UPDATE': // update
       return (
       	[...state,
       	action.payload]

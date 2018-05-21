@@ -2246,21 +2246,22 @@ const loadingStatus = status => ({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const setDumpTotals = dumpTotals => ({
-   type: 'DUMP',
-   payload: dumpTotals
+
+// update dailySummaries
+const updateMarketSummary = dailySummary => ({
+    type: 'UPDATE',
+    payload: dailySummary
 });
-/* harmony export (immutable) */ __webpack_exports__["b"] = setDumpTotals;
+/* harmony export (immutable) */ __webpack_exports__["b"] = updateMarketSummary;
 
 
+// clear dailySummaries
 const clearDumpTotals = dumpTotals => ({
-   type: 'CLEAR',
-   payload: dumpTotals
+    type: 'CLEAR',
+    payload: dumpTotals
 });
 /* harmony export (immutable) */ __webpack_exports__["a"] = clearDumpTotals;
 
-
-// export default setDumpTotals;
 
 /***/ }),
 /* 36 */
@@ -21769,9 +21770,9 @@ const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPA
 
 
 const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"])({
-	items: __WEBPACK_IMPORTED_MODULE_1__itemsReducer__["a" /* default */],
-	dumps: __WEBPACK_IMPORTED_MODULE_2__dumpsReducer__["a" /* default */],
-	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* default */]
+	items: __WEBPACK_IMPORTED_MODULE_1__itemsReducer__["a" /* default */], // results
+	dumps: __WEBPACK_IMPORTED_MODULE_2__dumpsReducer__["a" /* default */], // summaries
+	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* default */] // status
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (rootReducer);
@@ -21804,9 +21805,11 @@ const itemsReducer = (state = [], action) => {
 "use strict";
 const defaultState = [];
 
+// summaryReducer
 const dumpsReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case 'DUMP':
+    case 'UPDATE':
+      // update
       return [...state, action.payload];
     case 'CLEAR':
       return [];
@@ -21874,22 +21877,23 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let input = __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val();
     __WEBPACK_IMPORTED_MODULE_2_jquery___default()('#queryDB').val('');
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
-      this.setState({ itemName: input });
       console.log('res ', res.data);
-      this.props.clearDumpTotals({}); // clear dump totals in store
+      this.setState({ itemName: input });
+      this.props.clearDumpTotals(); // clear dump totals in store
       this.props.loadItems(res.data);
     }).catch(res => {
-      this.setState({ itemName: 'item not found' });
-      this.props.clearDumpTotals({});
-      this.props.loadDumpTotals({
-        minBuyout: 0,
-        maxBuyout: 0,
-        avgBuyout: 0,
-        auctions: 0,
-        totalSupply: 0,
-        name: { date: "10-May-18" }
-      });
-      this.props.loadItems([]);
+      console.log('Error: ', res);
+      // this.setState({ itemName: 'item not found' });
+      // this.props.clearDumpTotals({});
+      // this.props.loadDumpTotals({
+      //   minBuyout: 0,
+      //   maxBuyout: 0,
+      //   avgBuyout: 0,
+      //   auctions: 0,
+      //   totalSupply: 0,
+      //   name: {date: "10-May-18"},
+      // });
+      // this.props.loadItems([]);
     });
   }
 
@@ -22009,7 +22013,6 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 const mapDispatchToProps = dispatch => ({
   loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__["a" /* default */])(itemList)),
   clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals)),
-  loadDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["b" /* setDumpTotals */])(dumpTotals)),
   loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
 });
 
@@ -33686,7 +33689,7 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'header3' },
-          'Daily Breakdown'
+          'Daily Overview'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -33747,7 +33750,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         avgAuctionSize: 0,
         totalSupply: 0
       }, () => {
-        this.props.loadDumpTotals({
+        this.props.updateMarketSummary({
           minBuyout: this.state.minBuyout,
           maxBuyout: this.state.maxBuyout,
           avgBuyout: this.state.avgBuyout,
@@ -33771,7 +33774,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           avgAuctionSize: 0,
           totalSupply: 0
         }, () => {
-          this.props.loadDumpTotals({
+          this.props.updateMarketSummary({
             minBuyout: this.state.minBuyout,
             maxBuyout: this.state.maxBuyout,
             avgBuyout: this.state.avgBuyout,
@@ -33811,7 +33814,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       avgAuctionSize: Math.floor(totalSupply / (data.length || 1)),
       totalSupply: totalSupply
     }, () => {
-      this.props.loadDumpTotals({
+      this.props.updateMarketSummary({
         minBuyout: this.state.minBuyout,
         maxBuyout: this.state.maxBuyout,
         avgBuyout: this.state.avgBuyout,
@@ -33897,7 +33900,8 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({ loadDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["b" /* setDumpTotals */])(dumpTotals)),
+const mapDispatchToProps = dispatch => ({
+  updateMarketSummary: dailySummary => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["b" /* updateMarketSummary */])(dailySummary)),
   clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals))
 });
 

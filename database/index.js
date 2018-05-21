@@ -71,6 +71,7 @@ var selectAll = function(item, callback) {
         col.find({"item": item}, (err, results) => {
           if (err) {
             let hist = {};
+            // could change null to []
             hist.results = null;
             hist.stamp = doc.name;
             list.push(hist);

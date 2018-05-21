@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/itemsActions';
 import loadingStatus from '../../src/actions/loadingActions';
-import { clearDumpTotals, setDumpTotals } from '../../src/actions/dumpActions';
+import { clearDumpTotals } from '../../src/actions/dumpActions';
 
 class Search extends React.Component {
 	constructor (props) {
@@ -24,23 +24,24 @@ class Search extends React.Component {
 		$('#queryDB').val('');
 		axios.get(`/queryDB?item=${input}`)
 			.then((res) => {
-        this.setState({itemName: input});
         console.log('res ', res.data);
-        this.props.clearDumpTotals({}); // clear dump totals in store
+        this.setState({itemName: input});
+        this.props.clearDumpTotals(); // clear dump totals in store
         this.props.loadItems(res.data);
 			})
 			.catch((res) => {
-        this.setState({ itemName: 'item not found' });
-        this.props.clearDumpTotals({});
-        this.props.loadDumpTotals({
-          minBuyout: 0,
-          maxBuyout: 0,
-          avgBuyout: 0,
-          auctions: 0,
-          totalSupply: 0,
-          name: {date: "10-May-18"},
-        });
-        this.props.loadItems([]);
+        console.log('Error: ', res);
+        // this.setState({ itemName: 'item not found' });
+        // this.props.clearDumpTotals({});
+        // this.props.loadDumpTotals({
+        //   minBuyout: 0,
+        //   maxBuyout: 0,
+        //   avgBuyout: 0,
+        //   auctions: 0,
+        //   totalSupply: 0,
+        //   name: {date: "10-May-18"},
+        // });
+        // this.props.loadItems([]);
 			});
   }
   
@@ -124,7 +125,6 @@ const mapDispatchToProps = dispatch => (
   { 
     loadItems: itemList => dispatch(setItemList(itemList)),
     clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
-    loadDumpTotals: dumpTotals => dispatch(setDumpTotals(dumpTotals)),
     loadingStatus: (status) => dispatch(loadingStatus(status)),
   }
 );

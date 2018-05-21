@@ -109,9 +109,6 @@ app.get('/queryDB', (req, res) => {
   }
 
 	dbMethod.selectAll(item, (data) => {
-    // if (data[0].results === null) {
-    //   res.sendStatus(400);
-    // } else {
       // SORT (assumes the stamp prop to be an iso date)
       data.sort(function (a, b) {
         if (a.stamp > b.stamp) {

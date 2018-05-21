@@ -1,11 +1,12 @@
-export const setDumpTotals = (dumpTotals) => ({
-   type: 'DUMP',
-   payload: dumpTotals,
+
+// update dailySummaries
+export const updateMarketSummary = (dailySummary) => ({
+    type: 'UPDATE',
+    payload: dailySummary,
 });
 
+// clear dailySummaries
 export const clearDumpTotals = (dumpTotals) => ({
     type: 'CLEAR',
     payload: dumpTotals,
 });
-
-// export default setDumpTotals;

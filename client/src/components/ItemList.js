@@ -26,7 +26,7 @@ class ItemList extends React.Component {
       results = results.slice(0, results.length);
       return (
         <div className="dailySummaryList">
-          <div className="header3">Daily Breakdown</div>
+          <div className="header3">Daily Overview</div>
           <div>
             {results.map((dump, i) => {
               return (<ItemConnected dump={dump} key={i} stamp={this.props.items[i].stamp}/>);

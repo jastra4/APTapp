@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setDumpTotals, clearDumpTotals} from '../../src/actions/dumpActions';
+import { updateMarketSummary, clearDumpTotals} from '../../src/actions/dumpActions';
 
 class Item extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class Item extends React.Component {
         avgAuctionSize: 0,
         totalSupply: 0,
       }, () => {
-        this.props.loadDumpTotals({
+        this.props.updateMarketSummary({
           minBuyout: this.state.minBuyout,
           maxBuyout: this.state.maxBuyout,
           avgBuyout: this.state.avgBuyout,
@@ -49,7 +49,7 @@ class Item extends React.Component {
           avgAuctionSize: 0,
           totalSupply: 0,
         }, () => {
-          this.props.loadDumpTotals({
+          this.props.updateMarketSummary({
             minBuyout: this.state.minBuyout,
             maxBuyout: this.state.maxBuyout,
             avgBuyout: this.state.avgBuyout,
@@ -89,7 +89,7 @@ class Item extends React.Component {
       avgAuctionSize: Math.floor(totalSupply / (data.length || 1)),
       totalSupply: totalSupply,
     }, () => {
-      this.props.loadDumpTotals({
+      this.props.updateMarketSummary({
         minBuyout: this.state.minBuyout,
         maxBuyout: this.state.maxBuyout,
         avgBuyout: this.state.avgBuyout,
@@ -128,7 +128,8 @@ class Item extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => (
-  { loadDumpTotals: dumpTotals => dispatch(setDumpTotals(dumpTotals)),
+  {
+    updateMarketSummary: dailySummary => dispatch(updateMarketSummary(dailySummary)),
     clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
   }
 );

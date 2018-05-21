@@ -1,4 +1,4 @@
-const loadingReducer = (state = false, action) => {
+export const loadingReducer = (state = false, action) => {
   switch (action.type) {
     case 'LOADING':
       return (
@@ -8,5 +8,3 @@ const loadingReducer = (state = false, action) => {
       return state;
   }
 };
-
-export default loadingReducer;

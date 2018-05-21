@@ -94,7 +94,7 @@ class Graph extends React.Component {
           let spread = diff / dateSpread * xAxisWidth;
           barX += spread;
         }
-        var translate = [barX + (barWidth + 7), -svgHeight * 0.2];
+        var translate = [barX + (svgWidth * 0.1) + 1, -svgHeight * 0.2];
         return "translate(" + translate + ")";
       });
 

@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
-import loadResults from '../../src/actions/searchActions';
-import loadingStatus from '../../src/actions/loadingActions';
+import { loadResults } from '../../src/actions/searchActions';
+import { loadingStatus } from '../../src/actions/loadingActions';
 import { clearMarketSummary } from '../../src/actions/summaryActions';
 
 class Search extends React.Component {
@@ -43,7 +43,7 @@ class Search extends React.Component {
           <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
 
           <form>
-            <input list="items" id="queryDB" className="searchBar" placeholder="Item name (ex Dreamleaf, Felwort, etc)"></input>
+            <input list="items" id="queryDB" className="searchBar" placeholder="Item name (ex Dreamleaf or Felwort)"></input>
             <datalist id="items">
               <option value="Aethril"></option>
               <option value="Astral Glory"></option>
@@ -78,7 +78,7 @@ class Search extends React.Component {
           <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
           
           <form>
-            <input list="items" id="queryDB" className="searchBar" placeholder="Item name (ex Dreamleaf, Felwort, etc)"></input>
+            <input list="items" id="queryDB" className="searchBar" placeholder="Item name (ex Dreamleaf or Felwort)"></input>
             <datalist id="items">
               <option value="Aethril"></option>
               <option value="Astral Glory"></option>

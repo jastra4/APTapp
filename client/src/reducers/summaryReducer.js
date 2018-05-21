@@ -1,6 +1,4 @@
-const defaultState = [];
-
-const summaryReducer = (state = defaultState, action) => {
+export const summaryReducer = (state = [], action) => {
   switch (action.type) {
     case 'UPDATE':
       return (
@@ -13,5 +11,3 @@ const summaryReducer = (state = defaultState, action) => {
       return state;
   }
 };
-
-export default summaryReducer;

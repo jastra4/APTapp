@@ -2238,8 +2238,8 @@ const loadingStatus = status => ({
     type: 'LOADING',
     payload: status
 });
+/* harmony export (immutable) */ __webpack_exports__["a"] = loadingStatus;
 
-/* harmony default export */ __webpack_exports__["a"] = (loadingStatus);
 
 /***/ }),
 /* 35 */
@@ -21747,7 +21747,7 @@ module.exports = invariant;
 
 
 
-const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPACK_IMPORTED_MODULE_1__src_reducers_rootReducer__["a" /* default */]);
+const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPACK_IMPORTED_MODULE_1__src_reducers_rootReducer__["a" /* rootReducer */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Store);
 
@@ -21757,7 +21757,7 @@ const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPA
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__itemsReducer__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__searchReducer__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__summaryReducer__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loadingReducer__ = __webpack_require__(85);
 
@@ -21766,12 +21766,12 @@ const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPA
 
 
 const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"])({
-	searchResults: __WEBPACK_IMPORTED_MODULE_1__itemsReducer__["a" /* default */],
-	dailySummaries: __WEBPACK_IMPORTED_MODULE_2__summaryReducer__["a" /* default */],
-	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* default */]
+	searchResults: __WEBPACK_IMPORTED_MODULE_1__searchReducer__["a" /* searchReducer */],
+	dailySummaries: __WEBPACK_IMPORTED_MODULE_2__summaryReducer__["a" /* summaryReducer */],
+	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* loadingReducer */]
 });
+/* harmony export (immutable) */ __webpack_exports__["a"] = rootReducer;
 
-/* harmony default export */ __webpack_exports__["a"] = (rootReducer);
 
 /***/ }),
 /* 83 */
@@ -21786,17 +21786,15 @@ const searchReducer = (state = [], action) => {
       return state;
   }
 };
+/* harmony export (immutable) */ __webpack_exports__["a"] = searchReducer;
 
-/* harmony default export */ __webpack_exports__["a"] = (searchReducer);
 
 /***/ }),
 /* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const defaultState = [];
-
-const summaryReducer = (state = defaultState, action) => {
+const summaryReducer = (state = [], action) => {
   switch (action.type) {
     case 'UPDATE':
       return [...state, action.payload];
@@ -21806,8 +21804,8 @@ const summaryReducer = (state = defaultState, action) => {
       return state;
   }
 };
+/* harmony export (immutable) */ __webpack_exports__["a"] = summaryReducer;
 
-/* harmony default export */ __webpack_exports__["a"] = (summaryReducer);
 
 /***/ }),
 /* 85 */
@@ -21822,8 +21820,8 @@ const loadingReducer = (state = false, action) => {
       return state;
   }
 };
+/* harmony export (immutable) */ __webpack_exports__["a"] = loadingReducer;
 
-/* harmony default export */ __webpack_exports__["a"] = (loadingReducer);
 
 /***/ }),
 /* 86 */
@@ -21893,7 +21891,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'form',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'searchBar', placeholder: 'Item name (ex Dreamleaf, Felwort, etc)' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'searchBar', placeholder: 'Item name (ex Dreamleaf or Felwort)' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'datalist',
             { id: 'items' },
@@ -21947,7 +21945,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'form',
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'searchBar', placeholder: 'Item name (ex Dreamleaf, Felwort, etc)' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { list: 'items', id: 'queryDB', className: 'searchBar', placeholder: 'Item name (ex Dreamleaf or Felwort)' }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'datalist',
             { id: 'items' },
@@ -21989,9 +21987,9 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_searchActions__["a" /* default */])(itemList)),
+  loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_searchActions__["a" /* loadResults */])(itemList)),
   clearMarketSummary: () => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_summaryActions__["a" /* clearMarketSummary */])()),
-  loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
+  loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* loadingStatus */])(status))
 });
 
 const mapStateToProps = state => {
@@ -33272,8 +33270,8 @@ const loadResults = items => ({
    type: 'ITEM_LIST',
    payload: items
 });
+/* harmony export (immutable) */ __webpack_exports__["a"] = loadResults;
 
-/* harmony default export */ __webpack_exports__["a"] = (loadResults);
 
 /***/ }),
 /* 108 */
@@ -33485,7 +33483,8 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         let spread = diff / dateSpread * xAxisWidth;
         barX += spread;
       }
-      var translate = [barX + (barWidth + 7), -svgHeight * 0.2];
+      console.log('barWidth ', svgWidth * 0.1);
+      var translate = [barX + svgWidth * 0.1 + 1, -svgHeight * 0.2]; // 7 -> 11 barWidth + barPadding)
       return "translate(" + translate + ")";
     });
 
@@ -33645,7 +33644,7 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'header3' },
-          'Daily Breakdown'
+          'Daily Overview'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -33678,7 +33677,7 @@ const mapStateToProps = state => {
   return { allResults: state.searchResults };
 };
 
-const mapDispatchToProps = dispatch => ({ loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__src_actions_loadingActions__["a" /* default */])(status)) });
+const mapDispatchToProps = dispatch => ({ loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__src_actions_loadingActions__["a" /* loadingStatus */])(status)) });
 
 const ItemListConnected = Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(ItemList);
 

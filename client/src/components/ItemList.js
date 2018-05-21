@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemConnected from './Item';
 import { connect } from 'react-redux';
-import loadingStatus from '../../src/actions/loadingActions';
+import { loadingStatus } from '../../src/actions/loadingActions';
 
 class ItemList extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class ItemList extends React.Component {
     if (this.props.allResults.length === 0) {
       return (
         <div className="dailySummaryList">
-          <div className="header3">Daily Breakdown</div>
+          <div className="header3">Daily Overview</div>
           <div>No Data</div>     
         </div>        
       );

@@ -1,4 +1,4 @@
-const searchReducer = (state = [], action) => {
+export const searchReducer = (state = [], action) => {
   switch (action.type) {
     case 'ITEM_LIST':
       return action.payload;
@@ -6,5 +6,3 @@ const searchReducer = (state = [], action) => {
       return state;
   }
 };
-
-export default searchReducer;

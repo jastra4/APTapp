@@ -14,7 +14,7 @@ class ItemList extends React.Component {
   }
 
   render () {
-    if (this.props.items.length === 0) {
+    if (this.props.allResults.length === 0) {
       return (
         <div className="dailySummaryList">
           <div className="header3">Daily Breakdown</div>
@@ -22,14 +22,12 @@ class ItemList extends React.Component {
         </div>        
       );
     } else {
-      let results = Object.values(this.props.items);
-      results = results.slice(0, results.length);
       return (
         <div className="dailySummaryList">
           <div className="header3">Daily Overview</div>
           <div>
-            {results.map((dump, i) => {
-              return (<ItemConnected dump={dump} key={i} stamp={this.props.items[i].stamp}/>);
+            {this.props.allResults.map((dailyData, i) => {
+              return (<ItemConnected dailyData={dailyData} key={i} />);
             })}
           </div>
         </div>
@@ -39,7 +37,7 @@ class ItemList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ( {items: state.items} );
+  return ({ allResults: state.items });
 };
 
 const mapDispatchToProps = dispatch => (

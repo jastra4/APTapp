@@ -6,7 +6,6 @@ export const updateMarketSummary = (dailySummary) => ({
 });
 
 // clear dailySummaries
-export const clearDumpTotals = (dumpTotals) => ({
+export const clearMarketSummary = () => ({
     type: 'CLEAR',
-    payload: dumpTotals,
 });

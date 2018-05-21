@@ -1,137 +1,84 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateMarketSummary, clearDumpTotals} from '../../src/actions/dumpActions';
+import { updateMarketSummary } from '../../src/actions/dumpActions';
 
 class Item extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      minBuyout: 0,
-      maxBuyout: 0,
-      avgBuyout: 0,
-      avgAuctionSize: 0,
-      totalSupply: 0,
+      minBuyout: null,
+      maxBuyout: null,
+      avgBuyout: null,
+      numAuctions: null,
+      totalSupply: null,
+      name: { date: null },
     };
   }
 
   componentDidMount() {
-    if (this.props.dump.results !== null) {
-      this.getMarketColor(this.props.dump, this.props.stamp);
-    } else {
-      this.setState({
-        minBuyout: 0,
-        maxBuyout: 0,
-        avgBuyout: 0,
-        avgAuctionSize: 0,
-        totalSupply: 0,
-      }, () => {
-        this.props.updateMarketSummary({
-          minBuyout: this.state.minBuyout,
-          maxBuyout: this.state.maxBuyout,
-          avgBuyout: this.state.avgBuyout,
-          auctions: 0,
-          totalSupply: this.state.totalSupply,
-          name: this.props.stamp,
-        });
-      })
-    }
+    this.getDailySummary(this.props.dailyData);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps !== undefined) {
-      if (nextProps.dump.results !== null) {
-        this.getMarketColor(nextProps.dump, nextProps.stamp);
-      } else {
-        this.setState({
-          minBuyout: 0,
-          maxBuyout: 0,
-          avgBuyout: 0,
-          avgAuctionSize: 0,
-          totalSupply: 0,
-        }, () => {
-          this.props.updateMarketSummary({
-            minBuyout: this.state.minBuyout,
-            maxBuyout: this.state.maxBuyout,
-            avgBuyout: this.state.avgBuyout,
-            auctions: 0,
-            totalSupply: this.state.totalSupply,
-            name: nextProps.stamp,
-          });
-        })
-      }
-    }
+    this.getDailySummary(nextProps.dailyData);
   }
 
-  getMarketColor(data, timeStamp) {
-    let minBuyout = 0;
-    let maxBuyout = 0;
-    let avgBuyout = 0;
-    let avgAuctionSize = 0;
-    let totalSupply = 0;
+  getDailySummary(dailyData) {
+    let results = dailyData.results;
+    let dateObj = dailyData.stamp;
 
-    data.results.forEach((item, i) => {
-      if ((item.buyout / item.quantity) > maxBuyout) {
-        maxBuyout = (item.buyout / item.quantity);
+    let summary = {
+      minBuyout: 0,
+      maxBuyout: 0,
+      avgBuyout: 0,
+      numAuctions: results.length,
+      totalSupply: 0,
+      name: dateObj,
+    };
+
+    results.forEach((item, i) => {
+      if ((item.buyout / item.quantity) > summary.maxBuyout) {
+        summary.maxBuyout = (item.buyout / item.quantity);
       }
-      if ((item.buyout / item.quantity) < minBuyout || minBuyout === 0) {
-        minBuyout = (item.buyout / item.quantity);
+      if ((item.buyout / item.quantity) < summary.minBuyout || summary.minBuyout === 0) {
+        summary.minBuyout = (item.buyout / item.quantity);
       }
-      avgBuyout += item.buyout;
-      totalSupply += item.quantity;
+      summary.avgBuyout += item.buyout;
+      summary.totalSupply += item.quantity;
     });
-    avgBuyout = avgBuyout / (totalSupply || 1);
-    avgAuctionSize = totalSupply / (data.length || 1);
+    summary.avgBuyout = summary.avgBuyout / (summary.totalSupply || 1);
+    summary.minBuyout = Math.floor((summary.minBuyout / 10000));
+    summary.maxBuyout = Math.floor((summary.maxBuyout / 10000));
+    summary.avgBuyout = Math.floor((summary.avgBuyout / 10000));
 
     this.setState({
-      minBuyout: Math.floor((minBuyout / 10000)),
-      maxBuyout: Math.floor((maxBuyout / 10000)),
-      avgBuyout: Math.floor((avgBuyout / 10000)),
-      avgAuctionSize: Math.floor(totalSupply / (data.length || 1)),
-      totalSupply: totalSupply,
+      minBuyout: summary.minBuyout,
+      maxBuyout: summary.maxBuyout,
+      avgBuyout: summary.avgBuyout,
+      numAuctions: summary.numAuctions,
+      totalSupply: summary.totalSupply,
+      name: summary.name,
     }, () => {
-      this.props.updateMarketSummary({
-        minBuyout: this.state.minBuyout,
-        maxBuyout: this.state.maxBuyout,
-        avgBuyout: this.state.avgBuyout,
-        auctions: data.results.length,
-        totalSupply: this.state.totalSupply,
-        name: timeStamp,
-      });
+      this.props.updateMarketSummary(summary);
     });
   }
 
   render () {
-    if (this.props.dump.results === null) {
-      return (
-        <div className="dailySummary">
-          <div className="header4">{`${this.props.stamp.date}`}</div>
-          <div>{`Min price: ${this.state.minBuyout}`}</div>
-          <div>{`Max price: ${this.state.maxBuyout}`}</div>
-          <div>{`Average price: ${this.state.avgBuyout}`}</div>
-          <div>{`Auctions: ${0}`}</div>
-          <div>{`Supply: ${this.state.totalSupply}`}</div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="dailySummary">
-          <div className="header4">{`${this.props.stamp.date}`}</div>
-          <div>{`Min price: ${this.state.minBuyout}`}</div>
-          <div>{`Max price: ${this.state.maxBuyout}`}</div>
-          <div>{`Average price: ${this.state.avgBuyout}`}</div>
-          <div>{`Auctions: ${this.props.dump.results.length}`}</div>
-          <div>{`Supply: ${this.state.totalSupply}`}</div>
-        </div>
-      );
-    }
+    return (
+      <div className="dailySummary">
+        <div className="header4">{`${this.state.name.date}`}</div>
+        <div>{`Min price: ${this.state.minBuyout}`}</div>
+        <div>{`Max price: ${this.state.maxBuyout}`}</div>
+        <div>{`Average price: ${this.state.avgBuyout}`}</div>
+        <div>{`Auctions: ${this.state.numAuctions}`}</div>
+        <div>{`Supply: ${this.state.totalSupply}`}</div>
+      </div>
+    );
   }
 }
 
 const mapDispatchToProps = dispatch => (
-  {
-    updateMarketSummary: dailySummary => dispatch(updateMarketSummary(dailySummary)),
-    clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
-  }
+  { updateMarketSummary: dailySummary => dispatch(updateMarketSummary(dailySummary)), }
 );
 
 const ItemConnected = connect(null, mapDispatchToProps)(Item);

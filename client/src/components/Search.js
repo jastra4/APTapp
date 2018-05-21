@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { connect } from 'react-redux';
 import setItemList from '../../src/actions/itemsActions';
 import loadingStatus from '../../src/actions/loadingActions';
-import { clearDumpTotals } from '../../src/actions/dumpActions';
+import { clearMarketSummary } from '../../src/actions/dumpActions';
 
 class Search extends React.Component {
 	constructor (props) {
@@ -26,22 +26,11 @@ class Search extends React.Component {
 			.then((res) => {
         console.log('res ', res.data);
         this.setState({itemName: input});
-        this.props.clearDumpTotals(); // clear dump totals in store
+        this.props.clearMarketSummary();
         this.props.loadItems(res.data);
 			})
 			.catch((res) => {
         console.log('Error: ', res);
-        // this.setState({ itemName: 'item not found' });
-        // this.props.clearDumpTotals({});
-        // this.props.loadDumpTotals({
-        //   minBuyout: 0,
-        //   maxBuyout: 0,
-        //   avgBuyout: 0,
-        //   auctions: 0,
-        //   totalSupply: 0,
-        //   name: {date: "10-May-18"},
-        // });
-        // this.props.loadItems([]);
 			});
   }
   
@@ -124,7 +113,7 @@ class Search extends React.Component {
 const mapDispatchToProps = dispatch => (
   { 
     loadItems: itemList => dispatch(setItemList(itemList)),
-    clearDumpTotals: dumpTotals => dispatch(clearDumpTotals(dumpTotals)),
+    clearMarketSummary: () => dispatch(clearMarketSummary()),
     loadingStatus: (status) => dispatch(loadingStatus(status)),
   }
 );

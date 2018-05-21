@@ -15,7 +15,7 @@ class Graph extends React.Component {
     let dumpDates = [];
     let priceData = [];
 
-    nextProps.dumps.forEach((dump, i, arr) => {
+    nextProps.dailySummaries.forEach((dump, i, arr) => {
       priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
@@ -265,7 +265,7 @@ class Graph extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ({ dumps: state.dumps });
+  return ({ dailySummaries: state.dailySummaries });
 };
 
 const GraphConnected = connect(mapStateToProps)(Graph);

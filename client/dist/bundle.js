@@ -2256,11 +2256,10 @@ const updateMarketSummary = dailySummary => ({
 
 
 // clear dailySummaries
-const clearDumpTotals = dumpTotals => ({
-    type: 'CLEAR',
-    payload: dumpTotals
+const clearMarketSummary = () => ({
+    type: 'CLEAR'
 });
-/* harmony export (immutable) */ __webpack_exports__["a"] = clearDumpTotals;
+/* harmony export (immutable) */ __webpack_exports__["a"] = clearMarketSummary;
 
 
 /***/ }),
@@ -21771,7 +21770,7 @@ const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPA
 
 const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"])({
 	items: __WEBPACK_IMPORTED_MODULE_1__itemsReducer__["a" /* default */], // results
-	dumps: __WEBPACK_IMPORTED_MODULE_2__dumpsReducer__["a" /* default */], // summaries
+	dailySummaries: __WEBPACK_IMPORTED_MODULE_2__dumpsReducer__["a" /* default */], // summaries
 	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* default */] // status
 });
 
@@ -21806,7 +21805,7 @@ const itemsReducer = (state = [], action) => {
 const defaultState = [];
 
 // summaryReducer
-const dumpsReducer = (state = defaultState, action) => {
+const summaryReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'UPDATE':
       // update
@@ -21818,7 +21817,7 @@ const dumpsReducer = (state = defaultState, action) => {
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (dumpsReducer);
+/* harmony default export */ __webpack_exports__["a"] = (summaryReducer);
 
 /***/ }),
 /* 85 */
@@ -21879,21 +21878,10 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/queryDB?item=${input}`).then(res => {
       console.log('res ', res.data);
       this.setState({ itemName: input });
-      this.props.clearDumpTotals(); // clear dump totals in store
+      this.props.clearMarketSummary();
       this.props.loadItems(res.data);
     }).catch(res => {
       console.log('Error: ', res);
-      // this.setState({ itemName: 'item not found' });
-      // this.props.clearDumpTotals({});
-      // this.props.loadDumpTotals({
-      //   minBuyout: 0,
-      //   maxBuyout: 0,
-      //   avgBuyout: 0,
-      //   auctions: 0,
-      //   totalSupply: 0,
-      //   name: {date: "10-May-18"},
-      // });
-      // this.props.loadItems([]);
     });
   }
 
@@ -22012,7 +22000,7 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 const mapDispatchToProps = dispatch => ({
   loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__["a" /* default */])(itemList)),
-  clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals)),
+  clearMarketSummary: () => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearMarketSummary */])()),
   loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
 });
 
@@ -33326,7 +33314,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let marketSummary = this.analyzeData(nextProps.dumps);
+    let marketSummary = this.analyzeData(nextProps.dailySummaries);
 
     this.setState({
       highPrice: marketSummary.highPrice,
@@ -33362,7 +33350,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    if (this.props.dumps.length === 0) {
+    if (this.props.dailySummaries.length === 0) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'marketSummary' },
@@ -33399,7 +33387,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
-          `Running ${this.props.dumps.length} day average is ${this.state.average}`
+          `Running ${this.props.dailySummaries.length} day average is ${this.state.average}`
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -33412,7 +33400,7 @@ class Summary extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapStateToProps = state => {
-  return { dumps: state.dumps, loading: state.loading };
+  return { dailySummaries: state.dailySummaries, loading: state.loading };
 };
 
 const SummaryConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Summary);
@@ -33445,7 +33433,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     let dumpDates = [];
     let priceData = [];
 
-    nextProps.dumps.forEach((dump, i, arr) => {
+    nextProps.dailySummaries.forEach((dump, i, arr) => {
       priceData.unshift(dump.avgBuyout);
       dumpDates.push(dump.name);
     });
@@ -33631,7 +33619,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapStateToProps = state => {
-  return { dumps: state.dumps };
+  return { dailySummaries: state.dailySummaries };
 };
 
 const GraphConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(mapStateToProps)(Graph);
@@ -33665,7 +33653,7 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 
   render() {
-    if (this.props.items.length === 0) {
+    if (this.props.allResults.length === 0) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'dailySummaryList' },
@@ -33681,8 +33669,6 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         )
       );
     } else {
-      let results = Object.values(this.props.items);
-      results = results.slice(0, results.length);
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'dailySummaryList' },
@@ -33694,8 +33680,8 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
-          results.map((dump, i) => {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Item__["a" /* default */], { dump: dump, key: i, stamp: this.props.items[i].stamp });
+          this.props.allResults.map((dailyData, i) => {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Item__["a" /* default */], { dailyData: dailyData, key: i });
           })
         )
       );
@@ -33704,7 +33690,7 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapStateToProps = state => {
-  return { items: state.items };
+  return { allResults: state.items };
 };
 
 const mapDispatchToProps = dispatch => ({ loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__src_actions_loadingActions__["a" /* default */])(status)) });
@@ -33731,179 +33717,102 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
     this.state = {
-      minBuyout: 0,
-      maxBuyout: 0,
-      avgBuyout: 0,
-      avgAuctionSize: 0,
-      totalSupply: 0
+      minBuyout: null,
+      maxBuyout: null,
+      avgBuyout: null,
+      numAuctions: null,
+      totalSupply: null,
+      name: { date: null }
     };
   }
 
   componentDidMount() {
-    if (this.props.dump.results !== null) {
-      this.getMarketColor(this.props.dump, this.props.stamp);
-    } else {
-      this.setState({
-        minBuyout: 0,
-        maxBuyout: 0,
-        avgBuyout: 0,
-        avgAuctionSize: 0,
-        totalSupply: 0
-      }, () => {
-        this.props.updateMarketSummary({
-          minBuyout: this.state.minBuyout,
-          maxBuyout: this.state.maxBuyout,
-          avgBuyout: this.state.avgBuyout,
-          auctions: 0,
-          totalSupply: this.state.totalSupply,
-          name: this.props.stamp
-        });
-      });
-    }
+    this.getDailySummary(this.props.dailyData);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps !== undefined) {
-      if (nextProps.dump.results !== null) {
-        this.getMarketColor(nextProps.dump, nextProps.stamp);
-      } else {
-        this.setState({
-          minBuyout: 0,
-          maxBuyout: 0,
-          avgBuyout: 0,
-          avgAuctionSize: 0,
-          totalSupply: 0
-        }, () => {
-          this.props.updateMarketSummary({
-            minBuyout: this.state.minBuyout,
-            maxBuyout: this.state.maxBuyout,
-            avgBuyout: this.state.avgBuyout,
-            auctions: 0,
-            totalSupply: this.state.totalSupply,
-            name: nextProps.stamp
-          });
-        });
-      }
-    }
+    this.getDailySummary(nextProps.dailyData);
   }
 
-  getMarketColor(data, timeStamp) {
-    let minBuyout = 0;
-    let maxBuyout = 0;
-    let avgBuyout = 0;
-    let avgAuctionSize = 0;
-    let totalSupply = 0;
+  getDailySummary(dailyData) {
+    let results = dailyData.results;
+    let dateObj = dailyData.stamp;
 
-    data.results.forEach((item, i) => {
-      if (item.buyout / item.quantity > maxBuyout) {
-        maxBuyout = item.buyout / item.quantity;
+    let summary = {
+      minBuyout: 0,
+      maxBuyout: 0,
+      avgBuyout: 0,
+      numAuctions: results.length,
+      totalSupply: 0,
+      name: dateObj
+    };
+
+    results.forEach((item, i) => {
+      if (item.buyout / item.quantity > summary.maxBuyout) {
+        summary.maxBuyout = item.buyout / item.quantity;
       }
-      if (item.buyout / item.quantity < minBuyout || minBuyout === 0) {
-        minBuyout = item.buyout / item.quantity;
+      if (item.buyout / item.quantity < summary.minBuyout || summary.minBuyout === 0) {
+        summary.minBuyout = item.buyout / item.quantity;
       }
-      avgBuyout += item.buyout;
-      totalSupply += item.quantity;
+      summary.avgBuyout += item.buyout;
+      summary.totalSupply += item.quantity;
     });
-    avgBuyout = avgBuyout / (totalSupply || 1);
-    avgAuctionSize = totalSupply / (data.length || 1);
+    summary.avgBuyout = summary.avgBuyout / (summary.totalSupply || 1);
+    summary.minBuyout = Math.floor(summary.minBuyout / 10000);
+    summary.maxBuyout = Math.floor(summary.maxBuyout / 10000);
+    summary.avgBuyout = Math.floor(summary.avgBuyout / 10000);
 
     this.setState({
-      minBuyout: Math.floor(minBuyout / 10000),
-      maxBuyout: Math.floor(maxBuyout / 10000),
-      avgBuyout: Math.floor(avgBuyout / 10000),
-      avgAuctionSize: Math.floor(totalSupply / (data.length || 1)),
-      totalSupply: totalSupply
+      minBuyout: summary.minBuyout,
+      maxBuyout: summary.maxBuyout,
+      avgBuyout: summary.avgBuyout,
+      numAuctions: summary.numAuctions,
+      totalSupply: summary.totalSupply,
+      name: summary.name
     }, () => {
-      this.props.updateMarketSummary({
-        minBuyout: this.state.minBuyout,
-        maxBuyout: this.state.maxBuyout,
-        avgBuyout: this.state.avgBuyout,
-        auctions: data.results.length,
-        totalSupply: this.state.totalSupply,
-        name: timeStamp
-      });
+      this.props.updateMarketSummary(summary);
     });
   }
 
   render() {
-    if (this.props.dump.results === null) {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      { className: 'dailySummary' },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'dailySummary' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'header4' },
-          `${this.props.stamp.date}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Min price: ${this.state.minBuyout}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Max price: ${this.state.maxBuyout}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Average price: ${this.state.avgBuyout}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Auctions: ${0}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Supply: ${this.state.totalSupply}`
-        )
-      );
-    } else {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        { className: 'header4' },
+        `${this.state.name.date}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'dailySummary' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'header4' },
-          `${this.props.stamp.date}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Min price: ${this.state.minBuyout}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Max price: ${this.state.maxBuyout}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Average price: ${this.state.avgBuyout}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Auctions: ${this.props.dump.results.length}`
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          `Supply: ${this.state.totalSupply}`
-        )
-      );
-    }
+        null,
+        `Min price: ${this.state.minBuyout}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Max price: ${this.state.maxBuyout}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Average price: ${this.state.avgBuyout}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Auctions: ${this.state.numAuctions}`
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        `Supply: ${this.state.totalSupply}`
+      )
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateMarketSummary: dailySummary => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["b" /* updateMarketSummary */])(dailySummary)),
-  clearDumpTotals: dumpTotals => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["a" /* clearDumpTotals */])(dumpTotals))
-});
+const mapDispatchToProps = dispatch => ({ updateMarketSummary: dailySummary => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["b" /* updateMarketSummary */])(dailySummary)) });
 
 const ItemConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(null, mapDispatchToProps)(Item);
 

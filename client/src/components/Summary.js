@@ -13,7 +13,7 @@ class Summary extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-    let marketSummary = this.analyzeData(nextProps.dumps)
+    let marketSummary = this.analyzeData(nextProps.dailySummaries)
     
     this.setState({
       highPrice: marketSummary.highPrice,
@@ -49,7 +49,7 @@ class Summary extends React.Component {
   }
   
 	render() {
-    if (this.props.dumps.length === 0) {
+    if (this.props.dailySummaries.length === 0) {
       return (
         <div className="marketSummary">
           <div className="header3">Market Summary</div>
@@ -62,7 +62,7 @@ class Summary extends React.Component {
           <div className="header3">Market Summary</div>
           <div>{`Lowest price was ${this.state.lowPrice}`}</div>
           <div>{`Highest price was ${this.state.highPrice}`}</div>
-          <div>{`Running ${this.props.dumps.length} day average is ${this.state.average}`}</div>
+          <div>{`Running ${this.props.dailySummaries.length} day average is ${this.state.average}`}</div>
           <div>{`Average daily supply is ${this.state.supply}`}</div>
         </div>
       );
@@ -71,7 +71,7 @@ class Summary extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ( { dumps: state.dumps, loading: state.loading } );
+  return ( { dailySummaries: state.dailySummaries, loading: state.loading } );
 };
 
 const SummaryConnected = connect(mapStateToProps)(Summary);

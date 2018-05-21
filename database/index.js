@@ -72,7 +72,7 @@ var selectAll = function(item, callback) {
           if (err) {
             let hist = {};
             // could change null to []
-            hist.results = null;
+            hist.results = [];
             hist.stamp = doc.name;
             list.push(hist);
             j++;

@@ -2,9 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
 import { connect } from 'react-redux';
-import setItemList from '../../src/actions/itemsActions';
+import loadResults from '../../src/actions/searchActions';
 import loadingStatus from '../../src/actions/loadingActions';
-import { clearMarketSummary } from '../../src/actions/dumpActions';
+import { clearMarketSummary } from '../../src/actions/summaryActions';
 
 class Search extends React.Component {
 	constructor (props) {
@@ -112,14 +112,14 @@ class Search extends React.Component {
 
 const mapDispatchToProps = dispatch => (
   { 
-    loadItems: itemList => dispatch(setItemList(itemList)),
+    loadItems: itemList => dispatch(loadResults(itemList)),
     clearMarketSummary: () => dispatch(clearMarketSummary()),
     loadingStatus: (status) => dispatch(loadingStatus(status)),
   }
 );
 
 const mapStateToProps = (state) => {
-  return ({ items: state.items, loading: state.loading} );
+  return ({ loading: state.loading, });
 };
 
 const SearchConnected = connect(mapStateToProps, mapDispatchToProps)(Search);

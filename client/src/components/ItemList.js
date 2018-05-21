@@ -37,7 +37,7 @@ class ItemList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ({ allResults: state.items });
+  return ({ allResults: state.searchResults });
 };
 
 const mapDispatchToProps = dispatch => (

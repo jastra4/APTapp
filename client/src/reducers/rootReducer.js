@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import itemsReducer from './itemsReducer';
-import summaryReducer from './dumpsReducer';
+import searchReducer from './searchReducer';
+import summaryReducer from './summaryReducer';
 import loadingReducer from './loadingReducer';
 
 const rootReducer = combineReducers({
-	items: itemsReducer, // results
+	searchResults: searchReducer,
 	dailySummaries: summaryReducer,
 	loading: loadingReducer,
 });

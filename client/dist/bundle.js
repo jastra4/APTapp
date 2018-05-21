@@ -2246,8 +2246,6 @@ const loadingStatus = status => ({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-// update dailySummaries
 const updateMarketSummary = dailySummary => ({
     type: 'UPDATE',
     payload: dailySummary
@@ -2255,7 +2253,6 @@ const updateMarketSummary = dailySummary => ({
 /* harmony export (immutable) */ __webpack_exports__["b"] = updateMarketSummary;
 
 
-// clear dailySummaries
 const clearMarketSummary = () => ({
     type: 'CLEAR'
 });
@@ -21761,7 +21758,7 @@ const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPA
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__itemsReducer__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dumpsReducer__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__summaryReducer__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loadingReducer__ = __webpack_require__(85);
 
 
@@ -21769,9 +21766,9 @@ const Store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPA
 
 
 const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"])({
-	items: __WEBPACK_IMPORTED_MODULE_1__itemsReducer__["a" /* default */], // results
-	dailySummaries: __WEBPACK_IMPORTED_MODULE_2__dumpsReducer__["a" /* default */], // summaries
-	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* default */] // status
+	searchResults: __WEBPACK_IMPORTED_MODULE_1__itemsReducer__["a" /* default */],
+	dailySummaries: __WEBPACK_IMPORTED_MODULE_2__summaryReducer__["a" /* default */],
+	loading: __WEBPACK_IMPORTED_MODULE_3__loadingReducer__["a" /* default */]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (rootReducer);
@@ -21781,21 +21778,16 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const itemsReducer = (state = [], action) => {
+const searchReducer = (state = [], action) => {
   switch (action.type) {
     case 'ITEM_LIST':
       return action.payload;
-    // case 'LOADING':
-    //   console.log('LOADING true');
-    //   return (
-    //     action.payload
-    //   );
     default:
       return state;
   }
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (itemsReducer);
+/* harmony default export */ __webpack_exports__["a"] = (searchReducer);
 
 /***/ }),
 /* 84 */
@@ -21804,11 +21796,9 @@ const itemsReducer = (state = [], action) => {
 "use strict";
 const defaultState = [];
 
-// summaryReducer
 const summaryReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'UPDATE':
-      // update
       return [...state, action.payload];
     case 'CLEAR':
       return [];
@@ -21848,9 +21838,9 @@ const loadingReducer = (state = false, action) => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_redux__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_actions_searchActions__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__src_actions_summaryActions__ = __webpack_require__(35);
 
 
 
@@ -21999,13 +21989,13 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_itemsActions__["a" /* default */])(itemList)),
-  clearMarketSummary: () => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_dumpActions__["a" /* clearMarketSummary */])()),
+  loadItems: itemList => dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__src_actions_searchActions__["a" /* default */])(itemList)),
+  clearMarketSummary: () => dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__src_actions_summaryActions__["a" /* clearMarketSummary */])()),
   loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__src_actions_loadingActions__["a" /* default */])(status))
 });
 
 const mapStateToProps = state => {
-  return { items: state.items, loading: state.loading };
+  return { loading: state.loading };
 };
 
 const SearchConnected = Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(Search);
@@ -33278,17 +33268,12 @@ return jQuery;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const setItemList = items => ({
+const loadResults = items => ({
    type: 'ITEM_LIST',
    payload: items
 });
 
-// export const loadingStatus = (status) => ({
-//     type: 'LOADING',
-//     payload: status,
-// });
-
-/* harmony default export */ __webpack_exports__["a"] = (setItemList);
+/* harmony default export */ __webpack_exports__["a"] = (loadResults);
 
 /***/ }),
 /* 108 */
@@ -33690,7 +33675,7 @@ class ItemList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 const mapStateToProps = state => {
-  return { allResults: state.items };
+  return { allResults: state.searchResults };
 };
 
 const mapDispatchToProps = dispatch => ({ loadingStatus: status => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__src_actions_loadingActions__["a" /* default */])(status)) });
@@ -33708,7 +33693,7 @@ const ItemListConnected = Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["conn
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_redux__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_actions_summaryActions__ = __webpack_require__(35);
 
 
 
@@ -33812,7 +33797,7 @@ class Item extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({ updateMarketSummary: dailySummary => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_dumpActions__["b" /* updateMarketSummary */])(dailySummary)) });
+const mapDispatchToProps = dispatch => ({ updateMarketSummary: dailySummary => dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__src_actions_summaryActions__["b" /* updateMarketSummary */])(dailySummary)) });
 
 const ItemConnected = Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["connect"])(null, mapDispatchToProps)(Item);
 

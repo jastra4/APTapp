@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateMarketSummary } from '../../src/actions/dumpActions';
+import { updateMarketSummary } from '../../src/actions/summaryActions';
 
 class Item extends React.Component {
   constructor(props) {

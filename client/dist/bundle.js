@@ -33483,8 +33483,7 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         let spread = diff / dateSpread * xAxisWidth;
         barX += spread;
       }
-      console.log('barWidth ', svgWidth * 0.1);
-      var translate = [barX + svgWidth * 0.1 + 1, -svgHeight * 0.2]; // 7 -> 11 barWidth + barPadding)
+      var translate = [barX + svgWidth * 0.1 + 1, -svgHeight * 0.2];
       return "translate(" + translate + ")";
     });
 

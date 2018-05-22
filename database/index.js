@@ -19,41 +19,42 @@ connection.connect(function (err) {
   }
   console.log('Connected to sql database.');
 
-  // let sql = "CREATE TABLE ITEMS ( I_ID INTEGER NOT NULL UNIQUE, I_NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(I_ID) )"
-  // connection.query(sql, (err, result) => {
-  //   if (err) {
-  //     console.log('ITEMS Table Error ', err);
-  //     connection.end();
-  //   } else {
-  //     console.log("ITEMS Table created");
-  //   }
-  // });
-
-  // enter all names as lowercase
-  // var update = "INSERT INTO ITEMS (I_ID, I_NAME) VALUES (123918, 'Leystone Ore')";
-  // connection.query(update, function (err, result) {
-  //   if (err) {
-  //     console.log('insert error ', err);
-  //     connection.end();
-  //   } else {
-  //     console.log("1 record inserted");
-  //   };
-  // });
-
+  let sql = "CREATE TABLE ITEMS ( I_ID INTEGER NOT NULL UNIQUE, I_NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(I_ID) )"
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log('ITEMS Table Error ', err);
+      connection.end();
+    } else {
+      console.log("ITEMS Table created");
+    }
+  });
   // connection.end();
 });
 
+var updateyMySQL = (itemName, itemID) => {
+  // console.log('itemName ', itemName);
+  // console.log('itemID ', itemID);
+  var update = "INSERT INTO ITEMS (I_ID, I_NAME) VALUES (" + itemID + "," + itemName + ")";
+  connection.query(update, function (err, result) {
+    if (err) {
+      console.log('insert error ', err);
+      // connection.end();
+    } else {
+      console.log("1 record inserted");
+    };
+  })  
+}
+
 var searchMySQL = (itemName, callback) => {
-  console.log('Search term: ', itemName);
   connection.query("SELECT * FROM ITEMS WHERE I_NAME LIKE '" + itemName + "'", function (err, result, fields) {
     if (err) {
       console.log('query error ', err);
       callback(null);
-      connection.end();
+      // connection.end();
     } else {
       // console.log(result);
       callback(result)
-      connection.end();
+      // connection.end();
     };
   });
 }
@@ -173,4 +174,5 @@ module.exports = {
   selectAll,
   deleteBatch,
   searchMySQL,
+  updateyMySQL
 }

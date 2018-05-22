@@ -78,42 +78,44 @@ app.post('/updateDB', (req, res) => {
     });
 })
 
-// move to aws rds
 const catalog = {
-  "Aethril": 124101,
-  "Astral Glory": 151565,
-  "Astral Healing Potion": 152615,
-  "Avalanche Elixir": 127839,
-  "Darkmoon Daggermaw": 124669,
-  "Dreamleaf": 124102,
-  "Felwort": 124106,
-  "Flask of Ten Thousand Scars": 127850,
-  "Flask of the Countless Armies": 127849,
-  "Flask of the Seventh Demon": 127848,
-  "Flask of the Whispered Pact": 127847,
-  "Fjarnskaggl": 124104,
-  "Foxflower": 124103,
-  "Leytorrent Potion": 127846,
-  "Potion of Prolonged Power": 142117,
-  "Starlight Rose": 124105,
-  "Skystep Potion": 127841,
-  "Lavish Suramar Feast": 133579,
-  "Unbending Potion": 127845,
-  "Yseralline Seed": 128304,
+  "aethril": 124101,
+  "astral glory": 151565,
+  "astral healing potion": 152615,
+  "avalanche elixir": 127839,
+  "darkmoon daggermaw": 124669,
+  "dreamleaf": 124102,
+  "felwort": 124106,
+  "flask of ten thousand scars": 127850,
+  "flask of the countless armies": 127849,
+  "flask of the seventh demon": 127848,
+  "flask of the whispered pact": 127847,
+  "fjarnskaggl": 124104,
+  "foxflower": 124103,
+  "lavish suramar feast": 133579,
+  "leytorrent potion": 127846,
+  "potion of prolonged power": 142117,
+  "starlight rose": 124105,
+  "skystep potion": 127841,
+  "unbending potion": 127845,
+  "yseralline seed": 128304,
 }
 
 app.get('/queryDB', (req, res) => {
-  // convert to lowercase
-  let { item } = req.query;
+  // updating process start
+  for (var prop in catalog) {
+    dbMethod.updateyMySQL(prop, catalog[prop]);
+  }
+  // updateing process end
 
-  // query mysql db
-  console.log('test lowercase ', item.toLowerCase());
-  dbMethod.searchMySQL('Leystone Ore', (result) => {
+  let item = req.query.item.toLowerCase();
+  dbMethod.searchMySQL(item.toLowerCase(), (result) => {
     if (result !== null) {
       // pass result to selectAll
-      console.log('Item ID: ', result[0].I_ID)
+      console.log('Item ID: ', result[0].I_ID);
     } else {
       // pass item to selectAll (in case they enter the item ID instead of the name)
+      console.log('Item ID: ', null);
     }
   });
 

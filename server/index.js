@@ -112,7 +112,7 @@ app.get('/queryDB', (req, res) => {
   dbMethod.searchMySQL(item, (result) => {
     if (result !== null) {
       // pass result to selectAll
-      console.log('Item ID: ', result[0].I_ID);
+      console.log('Item ID: ', result);
     } else {
       // pass item to selectAll (in case they enter the item ID instead of the name)
       console.log('Item ID: ', null);

@@ -46,6 +46,7 @@ var updateyMySQL = (itemName, itemID) => {
 }
 
 var searchMySQL = (itemName, callback) => {
+  console.log('searchMySQL search for ', itemName);
   connection.query("SELECT * FROM ITEMS WHERE I_NAME LIKE '" + itemName + "'", function (err, result, fields) {
     if (err) {
       console.log('query error ', err);

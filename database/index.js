@@ -1,25 +1,30 @@
 // to start in terminal with no authorization restrictions:
 // mongod --port 27017 --dbpath /data/db
 
-// var mysql = require('mysql');
+var mysql = require('mysql');
 
-// var connection = mysql.createConnection({
-//   host: process.env.RDS_HOSTNAME,
-//   user: process.env.RDS_USERNAME,
-//   password: process.env.RDS_PASSWORD,
-//   port: process.env.RDS_PORT
-// });
+console.log(process.env.RDS_HOSTNAME);
+console.log(process.env.RDS_USERNAME);
+console.log(process.env.RDS_PASSWORD);
+console.log(process.env.RDS_PORT);
 
-// connection.connect(function (err) {
-//   if (err) {
-//     console.error('Database connection failed: ' + err.stack);
-//     return;
-//   }
+var connection = mysql.createConnection({
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT
+});
 
-//   console.log('Connected to sql database.');
-// });
+connection.connect(function (err) {
+  if (err) {
+    console.error('Database connection failed: ' + err.stack);
+    return;
+  }
 
-// connection.end();
+  console.log('Connected to sql database.');
+});
+
+connection.end();
 
 /************************************************************/
 // Startup Process

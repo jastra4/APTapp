@@ -2298,6 +2298,11 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     this.state = {};
   }
 
+  componentWillUnmount() {
+    // send request to server to close mysql connection
+    // unless connetions are automatically closed when the app closes
+  }
+
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',

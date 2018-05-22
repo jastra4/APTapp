@@ -13,6 +13,11 @@ class Main extends React.Component {
     this.state = {};
   }
 
+  componentWillUnmount() {
+    // send request to server to close mysql connection
+    // unless connetions are automatically closed when the app closes
+  }
+
   render () {
     return (
       <div>

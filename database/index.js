@@ -1,18 +1,15 @@
-// to start in terminal with no authorization restrictions:
-// mongod --port 27017 --dbpath /data/db
+/************************************************************/
+// mySQL
+/************************************************************/
 
 var mysql = require('mysql');
-
-console.log(process.env.RDS_HOSTNAME);
-console.log(process.env.RDS_USERNAME);
-console.log(process.env.RDS_PASSWORD);
-console.log(process.env.RDS_PORT);
 
 var connection = mysql.createConnection({
   host: process.env.RDS_HOSTNAME,
   user: process.env.RDS_USERNAME,
   password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT
+  port: process.env.RDS_PORT,
+  database: "test",
 });
 
 connection.connect(function (err) {
@@ -20,15 +17,52 @@ connection.connect(function (err) {
     console.error('Database connection failed: ' + err.stack);
     return;
   }
-
   console.log('Connected to sql database.');
+
+  // let sql = "CREATE TABLE ITEMS ( I_ID INTEGER NOT NULL UNIQUE, I_NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(I_ID) )"
+  // connection.query(sql, (err, result) => {
+  //   if (err) {
+  //     console.log('ITEMS Table Error ', err);
+  //     connection.end();
+  //   } else {
+  //     console.log("ITEMS Table created");
+  //   }
+  // });
+
+  // enter all names as lowercase
+  // var update = "INSERT INTO ITEMS (I_ID, I_NAME) VALUES (123918, 'Leystone Ore')";
+  // connection.query(update, function (err, result) {
+  //   if (err) {
+  //     console.log('insert error ', err);
+  //     connection.end();
+  //   } else {
+  //     console.log("1 record inserted");
+  //   };
+  // });
+
+  // connection.end();
 });
 
-connection.end();
+var searchMySQL = (itemName, callback) => {
+  console.log('Search term: ', itemName);
+  connection.query("SELECT * FROM ITEMS WHERE I_NAME LIKE '" + itemName + "'", function (err, result, fields) {
+    if (err) {
+      console.log('query error ', err);
+      callback(null);
+      connection.end();
+    } else {
+      // console.log(result);
+      callback(result)
+      connection.end();
+    };
+  });
+}
 
 /************************************************************/
 // Startup Process
 /************************************************************/
+// to start in terminal with no authorization restrictions:
+// mongod --port 27017 --dbpath /data/db
 
 const mongoose = require('mongoose');
 mongoose.Promise = require("bluebird");
@@ -137,5 +171,6 @@ const deleteBatch = function() {
 module.exports = {
   insertBatch,
   selectAll,
-  deleteBatch
+  deleteBatch,
+  searchMySQL,
 }

@@ -103,7 +103,21 @@ const catalog = {
 }
 
 app.get('/queryDB', (req, res) => {
+  // convert to lowercase
   let { item } = req.query;
+
+  // query mysql db
+  console.log('test lowercase ', item.toLowerCase());
+  dbMethod.searchMySQL('Leystone Ore', (result) => {
+    if (result !== null) {
+      // pass result to selectAll
+      console.log('Item ID: ', result[0].I_ID)
+    } else {
+      // pass item to selectAll (in case they enter the item ID instead of the name)
+    }
+  });
+
+  // this will be deleted
   if (catalog[item] !== undefined) {
     item = catalog[item];
   }

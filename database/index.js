@@ -19,15 +19,15 @@ connection.connect(function (err) {
   }
   console.log('Connected to sql database.');
 
-  let sql = "CREATE TABLE ITEMS ( I_ID INTEGER NOT NULL UNIQUE, I_NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(I_ID) )"
-  connection.query(sql, (err, result) => {
-    if (err) {
-      console.log('ITEMS Table Error ', err);
-      connection.end();
-    } else {
-      console.log("ITEMS Table created");
-    }
-  });
+  // let sql = "CREATE TABLE ITEMS ( I_ID INTEGER NOT NULL UNIQUE, I_NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(I_ID) )"
+  // connection.query(sql, (err, result) => {
+  //   if (err) {
+  //     console.log('ITEMS Table Error ', err);
+  //     connection.end();
+  //   } else {
+  //     console.log("ITEMS Table created");
+  //   }
+  // });
   // connection.end();
 });
 

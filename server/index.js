@@ -103,13 +103,13 @@ const catalog = {
 
 app.get('/queryDB', (req, res) => {
   // updating process start
-  for (var prop in catalog) {
-    dbMethod.updateyMySQL(prop, catalog[prop]);
-  }
+  // for (var prop in catalog) {
+  //   dbMethod.updateyMySQL(prop, catalog[prop]);
+  // }
   // updateing process end
 
   let item = req.query.item.toLowerCase();
-  dbMethod.searchMySQL(item.toLowerCase(), (result) => {
+  dbMethod.searchMySQL(item, (result) => {
     if (result !== null) {
       // pass result to selectAll
       console.log('Item ID: ', result[0].I_ID);

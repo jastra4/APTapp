@@ -30,7 +30,6 @@ class Search extends React.Component {
         this.props.loadItems(res.data);
 			})
 			.catch((res) => {
-        console.log('Error: ', res);
         this.props.clearMarketSummary();
         this.props.loadItems([]);
         this.props.loadingStatus(false);

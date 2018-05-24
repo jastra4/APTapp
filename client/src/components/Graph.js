@@ -23,6 +23,8 @@ class Graph extends React.Component {
     if (dumpDates.length > 0 && priceData.length > 0) {
       let reversedDates = dumpDates.reverse();
       this.updateGraph(dumpDates, priceData, reversedDates);
+    } else {
+      this.updateGraph(dumpDates, priceData, []);
     }
   }
 

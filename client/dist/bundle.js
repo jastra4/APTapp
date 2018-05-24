@@ -21874,7 +21874,6 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       this.props.clearMarketSummary();
       this.props.loadItems(res.data);
     }).catch(res => {
-      console.log('Error: ', res);
       this.props.clearMarketSummary();
       this.props.loadItems([]);
       this.props.loadingStatus(false);
@@ -33433,6 +33432,8 @@ class Graph extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     if (dumpDates.length > 0 && priceData.length > 0) {
       let reversedDates = dumpDates.reverse();
       this.updateGraph(dumpDates, priceData, reversedDates);
+    } else {
+      this.updateGraph(dumpDates, priceData, []);
     }
   }
 

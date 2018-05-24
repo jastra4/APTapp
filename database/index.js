@@ -32,30 +32,35 @@ connection.connect(function (err) {
 });
 
 var updateyMySQL = (itemName, itemID) => {
-  // console.log('itemName ', itemName);
-  // console.log('itemID ', itemID);
-  var update = "INSERT INTO ITEMS (I_ID, I_NAME) VALUES (" + itemID + "," + itemName + ")";
+  itemName = itemName.replace("'", "''");
+  var update = "INSERT INTO ITEMS (I_ID, I_NAME) VALUES (" + itemID + ",'" + itemName + "')";
   connection.query(update, function (err, result) {
     if (err) {
       console.log('insert error ', err);
-      // connection.end();
     } else {
       console.log("1 record inserted");
     };
-  })  
+  })
+}
+
+var removeMySQL = (itemName) => {
+  connection.query("DELETE FROM ITEMS WHERE I_NAME LIKE '" + itemName + "'", (err) => {
+    if (err) {
+      console.log('failed to delete ', itemName);
+    } else {
+      console.log('deleted ', itemName);
+    }
+  }) 
 }
 
 var searchMySQL = (itemName, callback) => {
-  console.log('searchMySQL search for ', itemName);
-  connection.query("SELECT * FROM ITEMS WHERE I_NAME LIKE '" + itemName + "'", function (err, result, fields) {
+  let test = itemName.replace("'", "''");
+  connection.query("SELECT * FROM ITEMS WHERE I_NAME LIKE '" + test + "'", function (err, result, fields) {
     if (err) {
       console.log('query error ', err);
       callback(null);
-      // connection.end();
     } else {
-      // console.log(result);
       callback(result)
-      // connection.end();
     };
   });
 }
@@ -175,5 +180,6 @@ module.exports = {
   selectAll,
   deleteBatch,
   searchMySQL,
-  updateyMySQL
+  updateyMySQL,
+  removeMySQL,
 }

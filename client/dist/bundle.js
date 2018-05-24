@@ -21875,6 +21875,10 @@ class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
       this.props.loadItems(res.data);
     }).catch(res => {
       console.log('Error: ', res);
+      this.props.clearMarketSummary();
+      this.props.loadItems([]);
+      this.props.loadingStatus(false);
+      this.setState({ itemName: 'item not found' });
     });
   }
 

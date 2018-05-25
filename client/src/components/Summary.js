@@ -71,7 +71,7 @@ class Summary extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ( { dailySummaries: state.dailySummaries, loading: state.loading } );
+  return ( { dailySummaries: state.dailySummaries } );
 };
 
 const SummaryConnected = connect(mapStateToProps)(Summary);

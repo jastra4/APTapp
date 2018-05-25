@@ -1,16 +1,11 @@
 import React from 'react';
 import ItemConnected from './Item';
 import { connect } from 'react-redux';
-import { loadingStatus } from '../../src/actions/loadingActions';
 
 class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.props.loadingStatus(false);
   }
 
   render () {
@@ -40,10 +35,6 @@ const mapStateToProps = (state) => {
   return ({ allResults: state.searchResults });
 };
 
-const mapDispatchToProps = dispatch => (
-  { loadingStatus: (status) => dispatch(loadingStatus(status)) }
-);
-
-const ItemListConnected = connect(mapStateToProps, mapDispatchToProps)(ItemList);
+const ItemListConnected = connect(mapStateToProps)(ItemList);
 
 export default ItemListConnected;

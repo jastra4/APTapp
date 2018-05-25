@@ -13,11 +13,6 @@ class Main extends React.Component {
     this.state = {};
   }
 
-  componentWillUnmount() {
-    // send request to server to close mysql connection
-    // unless connetions are automatically closed when the app closes
-  }
-
   render () {
     return (
       <div>
@@ -25,6 +20,8 @@ class Main extends React.Component {
         <div className="header1">Wowmiser
           <div className="header2">A World of Warcraft app</div>
         </div>
+        <div className="intro">Use this app to find a competitive price to buy or sell items on the World of Warcraft auction house (in game). It works with a Blizzard API to collect data on hundreds of thousands of items from other players and applies an algorithm to get you market color.</div>
+        <div className="disclaimer">* Due to database limits, real time updates from Blizzard have been suspended. 500 MB of historical data is still available.</div>
         <SearchConnected />
         <GraphConnected />  
         <SummaryConnected />

@@ -2,9 +2,9 @@
   position: fixed; 
   top: 0; 
   left: 0; 
-  z-index: -1;
   min-width: 100%;
   min-height: 100%;
+  z-index: -1;
 }
 
 .mainContainer {
@@ -19,7 +19,6 @@
 }
 
 .header1 {
-  /* color: #464a94; */
   color: #115D8C;
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
@@ -28,7 +27,6 @@
   text-align: center;
   padding-bottom: 0.5em;
   border-radius: 0.28571429rem;
-  /* border: black solid 1px; */
 }
 
 .header2 {
@@ -58,7 +56,7 @@
 }
 
 .searchBar {
-  width: 20%;
+  width: 19em;
   margin-left: 2%;
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 0.28571429rem;
@@ -76,11 +74,9 @@
   margin-left: 1em ;
   margin-top: 1em;
   background-color: #C7D9D9;
-  /* background: rgba(255, 255, 255, 0.7); */
   width: 35em;
   height: 25em;
   padding: 0em;
-  /* border: black solid 1px; */
   border-radius: 0.28571429rem;
   box-shadow:0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
@@ -103,7 +99,6 @@
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
   border-radius: 0.28571429rem;
-  /* border: black solid 1px; */
   padding: 1em;
 }
 
@@ -115,7 +110,6 @@
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   border-radius: 0.28571429rem;
-  /* border: black solid 1px; */
   padding: 1em;
   margin-bottom: 5%;
 }

@@ -1,4 +1,4 @@
-export const loadingStatus = (status) => ({
+export const loadingStatus = (update) => ({
     type: 'LOADING',
-    payload: status,
+    payload: update,
 });

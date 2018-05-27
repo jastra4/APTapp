@@ -22,24 +22,28 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/viewItems', (req, res) => {
   let profs = req.query.item.split(',');
-  let results = {};
+  let results = {
+    'reagent': [],
+    'consumable': [],
+    'equipment': [],
+  };
+  if (profs[0] !== '') {
+    dbMethod.searchMySQL2(profs, 'reagent', (list) => {
+      results['reagent'] = list;
 
-  dbMethod.searchMySQL2(profs, 'reagent', (list) => {
-    console.log('reagent res', list);
-    results['reagent'] = list;
+      dbMethod.searchMySQL2(profs, 'consumable', (list) => {
+        results['consumable'] = list;
 
-    dbMethod.searchMySQL2(profs, 'consumable', (list) => {
-      console.log('consumable res', list);
-      results['consumable'] = list;
-
-      dbMethod.searchMySQL2(profs, 'equipment', (list) => {
-        console.log('equipment res', list);
-        results['equipment'] = list;
-
-        res.send(results);        
+        dbMethod.searchMySQL2(profs, 'equipment', (list) => {
+          results['equipment'] = list;
+          res.send(results);
+        });
       });
     });
-  });
+  } else {
+    res.send(results);
+  }
+
 })
 
 // app.get('/updateDB', (req, res) => {

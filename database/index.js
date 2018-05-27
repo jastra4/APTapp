@@ -12,12 +12,12 @@ var connection = mysql.createConnection({
   database: "test",
 });
 
-connection.connect(function (err) {
-  if (err) {
-    console.error('Database connection failed: ' + err.stack);
-    return;
-  }
-  console.log('Connected to sql database.');
+// connection.connect(function (err) {
+//   if (err) {
+//     console.error('Database connection failed: ' + err.stack);
+//     return;
+//   }
+//   console.log('Connected to sql database.');
 
   // let drp = "DROP TABLE ITEMS";
   // connection.query(drp, (err, result) => {
@@ -54,7 +54,7 @@ connection.connect(function (err) {
   //     console.log("ITEMS Table created");
   //   }
   // });
-});
+// });
 
 var updateyMySQLprofessions = (id, name) => {
   name = name.replace("'", "''");

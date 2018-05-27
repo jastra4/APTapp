@@ -162,34 +162,48 @@
   margin-bottom: 0.5em;
 }
 
-.itemSelect {
+.DBview {
   margin: 1em 1em 0em 1em; 
 }
 
-.professions {
+.profsHeader {
+  font-size: 1.2em;
+}
+
+.DBprofs {
   width: 25%;
   float: left;
   text-align: left;
 }
 
-.sub {
+.DBbutton {
   display: block;
 }
 
-.reagents {
-  width: 25%;
+.DBlist {
+  width: 20%;
   float: left;
+  margin-left: 1em;
+}
+
+.DBlistHeader {
+  font-size: 1.2em;
   text-align: center;
 }
 
-.consumables {
-  width: 25%;
-  float: left;
-  text-align: center;
+.DBlistItems {
+  height: 25em;
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+  border-radius: 0.28571429rem;
 }
 
-.equipable {
-  width: 25%;
-  float: left;
-  text-align: center;
+.DBlistItem {
+  font-size: .8em;
+  border-bottom: 1px solid gray;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.2em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
 }

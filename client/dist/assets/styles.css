@@ -161,3 +161,35 @@
   padding-bottom: 0.5em;
   margin-bottom: 0.5em;
 }
+
+.itemSelect {
+  margin: 1em 1em 0em 1em; 
+}
+
+.professions {
+  width: 25%;
+  float: left;
+  text-align: left;
+}
+
+.sub {
+  display: block;
+}
+
+.reagents {
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+
+.consumables {
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+
+.equipable {
+  width: 25%;
+  float: left;
+  text-align: center;
+}

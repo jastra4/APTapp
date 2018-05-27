@@ -51,7 +51,7 @@ class Main extends React.Component {
 
   renderItemsView () {
     if (this.state.view === 'itemsView') {
-      return (<div>TEST RENDERING ITEMS</div>);
+      return (<div><Professions /></div>);
     } else {
       return (<div></div>);
     }

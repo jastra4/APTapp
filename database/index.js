@@ -19,17 +19,79 @@ connection.connect(function (err) {
   }
   console.log('Connected to sql database.');
 
-  // let sql = "CREATE TABLE ITEMS ( I_ID INTEGER NOT NULL UNIQUE, I_NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(I_ID) )"
-  // connection.query(sql, (err, result) => {
+  // let drp = "DROP TABLE ITEMS";
+  // connection.query(drp, (err, result) => {
+  //   if (err) {
+  //     console.log('ITEMS drop Error ', err);
+  //   } else {
+  //     console.log("ITEMS Table dropped");
+  //   }
+  // });
+
+  // let profs = "CREATE TABLE PROFESSIONS ( ID INTEGER NOT NULL UNIQUE, NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(ID) )"
+  // connection.query(profs, (err, result) => {
+  //   if (err) {
+  //     console.log('PROFESSIONS Table Error ', err);
+  //   } else {
+  //     console.log("PROFESSIONS Table created");
+  //   }
+  // });
+
+  // let cats = "CREATE TABLE CATEGORIES ( ID INTEGER NOT NULL UNIQUE, NAME VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY(ID) )"
+  // connection.query(cats, (err, result) => {
+  //   if (err) {
+  //     console.log('CATEGORIES Table Error ', err);
+  //   } else {
+  //     console.log("CATEGORIES Table created");
+  //   }
+  // });
+
+  // let items = "CREATE TABLE ITEMS ( ID INTEGER NOT NULL UNIQUE, NAME VARCHAR(50) NOT NULL UNIQUE, C_ID INTEGER NOT NULL, P_ID INTEGER NOT NULL, PRIMARY KEY(ID), FOREIGN KEY (C_ID) REFERENCES CATEGORIES(ID), FOREIGN KEY (P_ID) REFERENCES PROFESSIONS (ID) )"
+  // connection.query(items, (err, result) => {
   //   if (err) {
   //     console.log('ITEMS Table Error ', err);
-  //     connection.end();
   //   } else {
   //     console.log("ITEMS Table created");
   //   }
   // });
-  // connection.end();
 });
+
+var updateyMySQLprofessions = (id, name) => {
+  name = name.replace("'", "''");
+  var update = "INSERT INTO PROFESSIONS (ID, NAME ) VALUES (" + id + ",'" + name + "')";
+  connection.query(update, function (err, result) {
+    if (err) {
+      console.log('insert error ', err);
+    } else {
+      console.log("1 record inserted for ", name);
+    };
+  })
+}
+
+var updateyMySQLcategories = (id, name) => {
+  name = name.replace("'", "''");
+  var update = "INSERT INTO CATEGORIES (ID, NAME ) VALUES (" + id + ",'" + name + "')";
+  connection.query(update, function (err, result) {
+    if (err) {
+      console.log('insert error ', err);
+    } else {
+      console.log("1 record inserted for ", name);
+    };
+  })
+}
+
+var updateyMySQLitems = (id, name, category, profession) => {
+  name = name.replace("'", "''");
+  var update = "INSERT INTO ITEMS (ID, NAME, C_ID, P_ID ) VALUES (" + id + ",'" + name + "','" + category + "','" + profession + "')";
+  // var update = "INSERT INTO ITEMS (ID, NAME, C_ID, P_ID) VALUES (" + id + "," + name + ",'" + category + "','" + profession + "')";
+  connection.query(update, function (err, result) {
+    if (err) {
+      console.log('insert error ', err);
+    } else {
+      console.log("1 record inserted for ", name);
+    };
+  })
+}
 
 var updateyMySQL = (itemName, itemID) => {
   itemName = itemName.replace("'", "''");
@@ -53,9 +115,10 @@ var removeMySQL = (itemName) => {
   }) 
 }
 
+// get an item's id based on name
 var searchMySQL = (itemName, callback) => {
   let test = itemName.replace("'", "''");
-  connection.query("SELECT * FROM ITEMS WHERE I_NAME LIKE '" + test + "'", function (err, result, fields) {
+  connection.query("SELECT * FROM ITEMS WHERE NAME LIKE '" + test + "'", function (err, result, fields) {
     if (err) {
       console.log('query error ', err);
       callback(null);
@@ -63,6 +126,39 @@ var searchMySQL = (itemName, callback) => {
       callback(result)
     };
   });
+}
+
+// get a list of item names based on profession(s) and category
+var searchMySQL2 = (professions, category, callback) => {
+  let customIN = '';
+  professions.forEach((prof, i, profs) => {
+    connection.query("select ID from PROFESSIONS where NAME = '" + prof + "'", function (err, result, fields) {
+      if (err) {
+        console.log('query error ', err);
+      } else {
+        customIN += result[0].ID + ', ';
+        if (i === profs.length - 1) {
+          customIN = customIN.substring(0, customIN.length - 2);
+          connection.query("SELECT NAME FROM ITEMS WHERE C_ID IN (select ID from CATEGORIES where NAME = '" + category + "') AND P_ID IN (" + customIN + ")", function (err, result, fields) {
+            if (err) {
+              console.log('query error ', err);
+              callback(null);
+            } else {
+              callback(result)
+            };
+          });
+        }
+      };
+    });
+  })
+  // connection.query("SELECT NAME FROM ITEMS WHERE C_ID IN (select ID from CATEGORIES where NAME = '" + category + "') AND P_ID IN (select ID from PROFESSIONS where NAME = '" + professions[0] + "' OR NAME = '" + professions[1] + "' OR NAME = '" + professions[2] + "')", function (err, result, fields) {
+  //   if (err) {
+  //     console.log('query error ', err);
+  //     callback(null);
+  //   } else {
+  //     callback(result)
+  //   };
+  // });
 }
 
 /************************************************************/
@@ -180,6 +276,10 @@ module.exports = {
   selectAll,
   deleteBatch,
   searchMySQL,
+  searchMySQL2,
   updateyMySQL,
   removeMySQL,
+  updateyMySQLitems,
+  updateyMySQLprofessions,
+  updateyMySQLcategories,
 }

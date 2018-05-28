@@ -12,12 +12,12 @@ var connection = mysql.createConnection({
   database: "test",
 });
 
-// connection.connect(function (err) {
-//   if (err) {
-//     console.error('Database connection failed: ' + err.stack);
-//     return;
-//   }
-//   console.log('Connected to sql database.');
+connection.connect(function (err) {
+  if (err) {
+    console.error('Database connection failed: ' + err.stack);
+    return;
+  }
+  console.log('Connected to sql database.');
 
   // let drp = "DROP TABLE ITEMS";
   // connection.query(drp, (err, result) => {
@@ -54,7 +54,7 @@ var connection = mysql.createConnection({
   //     console.log("ITEMS Table created");
   //   }
   // });
-// });
+});
 
 var updateyMySQLprofessions = (id, name) => {
   name = name.replace("'", "''");
@@ -106,7 +106,8 @@ var updateyMySQL = (itemName, itemID) => {
 }
 
 var removeMySQL = (itemName) => {
-  connection.query("DELETE FROM ITEMS WHERE I_NAME LIKE '" + itemName + "'", (err) => {
+  itemName = itemName.replace("'", "''");
+  connection.query("DELETE FROM ITEMS WHERE NAME LIKE '" + itemName + "'", (err) => {
     if (err) {
       console.log('failed to delete ', itemName);
     } else {

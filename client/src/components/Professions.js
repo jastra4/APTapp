@@ -7,7 +7,7 @@ class Professions extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        categories: [],
+        professions: [],
         reagent: [],
         consumable: [],
         equipment: [],
@@ -21,35 +21,45 @@ class Professions extends React.Component {
     e.preventDefault();
     // $('input[type="checkbox"]:checked').prop('checked', false);
     this.setState({
-      categories: [],
-      reagent: [{ NAME: 'Dreamleaf' }, { NAME: 'Felwort' }, { NAME: 'Astral Glory' }],
-      consumable: [{ NAME: 'avalanche elixir' }, { NAME: 'astral healing potion' }, { NAME: 'flask of ten thousand scars' }],
-      equipment: [{ NAME: 'demonsteel helm' }, { NAME: 'empyrial breastplate' }, { NAME: 'infernal alchemist stone' }],
+      // professions: [],
+      reagent: [],
+      consumable: [],
+      equipment: [],
     })
-    // axios.get(`/viewItems?item=${this.state.categories}`)
-    //   .then((res) => {
-    //     console.log('res ', res.data);
-    //     this.setState({
-    //       categories: [],
-    //       reagent: res.data.reagent,
-    //       consumable: res.data.consumable,
-    //       equipment: res.data.equipment,
-    //     })
-    //   })
-    //   .catch((res) => {
-    //     console.log('error ', res);
-    //     this.setState({
-    //       categories: []
-    //     })
-    //   });
+    axios.get(`/viewItems?item=${this.state.professions}`)
+      .then((res) => {
+        console.log('res ', res.data);
+        this.setState({
+          //professions: [],
+          reagent: res.data.reagent,
+          consumable: res.data.consumable,
+          equipment: res.data.equipment,
+        })
+      })
+      .catch((res) => {
+        console.log('error ', res);
+        this.setState({
+          professions: []
+        })
+      });
   }
 
   add(val) {
-    let arr = this.state.categories;
-    arr.push(val);
-    this.setState({
-      categories: arr
-    })
+    // add to profs if not selected, remove from profs if it was selected
+    if (this.state.professions.includes(val) === false) {
+      let arr = this.state.professions;
+      arr.push(val);
+      this.setState({
+        professions: arr
+      })
+    } else {
+      var index = this.state.professions.indexOf(val);
+      this.state.professions.splice(index, 1)
+      // this.setState({
+      //   professions: this.state.professions.splice(index, 1)
+      // })
+    }
+    console.log(this.state);
   }
 
   render() {
@@ -72,32 +82,32 @@ class Professions extends React.Component {
             <button className="DBbutton" onClick={this.viewItems}>Submit</button>
           </form>
         </div>
-
-        <div className="DBlist">
-          <div className="DBlistHeader">Reagents</div>
-          <div className="DBlistItems">
-            {this.state.reagent.map((data, i) => {
-              return (<DBitem key={i} name={data.NAME}/> );
-            })}
+        <div className="test">
+          <div className="DBlist">
+            <div className="DBlistHeader">Reagents</div>
+            <div className="DBlistItems">
+              {this.state.reagent.map((data, i) => {
+                return (<DBitem key={i} name={data.NAME}/> );
+              })}
+            </div>
+          </div>
+          <div className="DBlist">
+            <div className="DBlistHeader">Comsumables</div>
+            <div className="DBlistItems">
+              {this.state.consumable.map((data, i) => {
+                return (<DBitem key={i} name={data.NAME} />);
+              })}
+            </div>
+          </div>
+          <div className="DBlist">
+            <div className="DBlistHeader">Equipment</div>
+            <div className="DBlistItems">
+              {this.state.equipment.map((data, i) => {
+                return (<DBitem key={i} name={data.NAME} />);
+              })}
+            </div>
           </div>
         </div>
-        <div className="DBlist">
-          <div className="DBlistHeader">Comsumables</div>
-          <div className="DBlistItems">
-            {this.state.consumable.map((data, i) => {
-              return (<DBitem key={i} name={data.NAME} />);
-            })}
-          </div>
-        </div>
-        <div className="DBlist">
-          <div className="DBlistHeader">Equipment</div>
-          <div className="DBlistItems">
-            {this.state.equipment.map((data, i) => {
-              return (<DBitem key={i} name={data.NAME} />);
-            })}
-          </div>
-        </div>
-
       </div>
     );
   }

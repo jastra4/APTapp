@@ -63,13 +63,10 @@ class Main extends React.Component {
         <img src="https://i.imgur.com/jIa2Ebd.jpg" id="background"/>
         <div className="header1">Wowmiser
           <div onClick={this.marketView} className="marketView">Market View</div>
-          <div onClick={this.itemsView} className="itemView">Items View</div>
+          <div onClick={this.itemsView} className="itemView">Item Database</div>
           <div>
             <div className="header2">A World of Warcraft app</div>
-          </div>
-
-
-          
+          </div>          
         </div>
         {this.renderMarketView()}
         {this.renderItemsView()}

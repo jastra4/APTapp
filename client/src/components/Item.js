@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateMarketSummary } from '../../src/actions/summaryActions';
+import { updateMarketSummary, clearMarketSummary } from '../../src/actions/summaryActions';
 
 class Item extends React.Component {
   constructor(props) {
@@ -21,6 +21,10 @@ class Item extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.getDailySummary(nextProps.dailyData);
+  }
+
+  componentWillUnmount() {
+    this.props.clearMarketSummary();
   }
 
   getDailySummary(dailyData) {
@@ -78,7 +82,10 @@ class Item extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => (
-  { updateMarketSummary: dailySummary => dispatch(updateMarketSummary(dailySummary)), }
+  { 
+    updateMarketSummary: dailySummary => dispatch(updateMarketSummary(dailySummary)), 
+    clearMarketSummary: () => dispatch(clearMarketSummary()),
+  }
 );
 
 const ItemConnected = connect(null, mapDispatchToProps)(Item);

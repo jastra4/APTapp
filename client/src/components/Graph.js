@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { clearMarketSummary } from '../../src/actions/summaryActions';
+import { clearSearchResults } from '../../src/actions/searchActions';
 
 class Graph extends React.Component {
   constructor(props) {
@@ -9,6 +11,11 @@ class Graph extends React.Component {
 
   componentDidMount() {
     this.createGraph();
+  }
+
+  componentWillUnmount() {
+    this.props.clearMarketSummary();
+    this.props.clearSearchResults();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -266,10 +273,17 @@ class Graph extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => (
+  {
+    clearSearchResults: itemList => dispatch(clearSearchResults()),
+    clearMarketSummary: () => dispatch(clearMarketSummary()),
+  }
+);
+
 const mapStateToProps = (state) => {
   return ({ dailySummaries: state.dailySummaries });
 };
 
-const GraphConnected = connect(mapStateToProps)(Graph);
+const GraphConnected = connect(mapStateToProps, mapDispatchToProps)(Graph);
 
 export default GraphConnected;

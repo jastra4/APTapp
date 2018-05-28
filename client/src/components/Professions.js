@@ -115,3 +115,9 @@ class Professions extends React.Component {
 
 export default Professions;
 
+// when user clicks back on market view, the list of daily breakdowns gets re-renderd, and they all update the store again
+// this creates duplicates in the store of all summaries
+// additionally, the time stamp on the duplicates is not formatted correctly for parseTime in Graph.js
+// returning null and causing the front end to crash
+
+// I expect preventing duplicates from being added to solve both issues

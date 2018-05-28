@@ -33880,25 +33880,39 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
             } }),
           'Cooking',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Enchanting' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Enchanting', onClick: () => {
+              this.add('enchanting');
+            } }),
           'Enchanting',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Engineering' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Engineering', onClick: () => {
+              this.add('engineering');
+            } }),
           'Engineering',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'First Aid' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'First Aid', onClick: () => {
+              this.add('first aid');
+            } }),
           'First Aid',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Inscription' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Inscription', onClick: () => {
+              this.add('inscription');
+            } }),
           'Inscription',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Jewel Crafting' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Jewel Crafting', onClick: () => {
+              this.add('jewel crafting');
+            } }),
           'Jewel Crafting',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Leatherworking' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Leatherworking', onClick: () => {
+              this.add('leatherworking');
+            } }),
           'Leatherworking',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Tailoring' }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', value: 'Tailoring', onClick: () => {
+              this.add('tailoring');
+            } }),
           'Tailoring',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

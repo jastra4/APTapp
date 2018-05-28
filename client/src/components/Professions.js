@@ -72,13 +72,13 @@ class Professions extends React.Component {
             <input type="checkbox" value="Alchemy" onClick={() => {this.add('alchemy')} }></input>Alchemy<br></br>
             <input type="checkbox" value="Blacksmithing" onClick={() => { this.add('blacksmithing') }}></input>Blacksmithing<br></br>
             <input type="checkbox" value="Cooking" onClick={() => { this.add('cooking') }}></input>Cooking<br></br>
-            <input type="checkbox" value="Enchanting"></input>Enchanting<br></br>
-            <input type="checkbox" value="Engineering"></input>Engineering<br></br>
-            <input type="checkbox" value="First Aid"></input>First Aid<br></br>
-            <input type="checkbox" value="Inscription"></input>Inscription<br></br>
-            <input type="checkbox" value="Jewel Crafting"></input>Jewel Crafting<br></br>
-            <input type="checkbox" value="Leatherworking"></input>Leatherworking<br></br>
-            <input type="checkbox" value="Tailoring"></input>Tailoring<br></br>
+            <input type="checkbox" value="Enchanting" onClick={() => { this.add('enchanting') }}></input>Enchanting<br></br>
+            <input type="checkbox" value="Engineering" onClick={() => { this.add('engineering') }}></input>Engineering<br></br>
+            <input type="checkbox" value="First Aid" onClick={() => { this.add('first aid') }}></input>First Aid<br></br>
+            <input type="checkbox" value="Inscription" onClick={() => { this.add('inscription') }}></input>Inscription<br></br>
+            <input type="checkbox" value="Jewel Crafting" onClick={() => { this.add('jewel crafting') }}></input>Jewel Crafting<br></br>
+            <input type="checkbox" value="Leatherworking" onClick={() => { this.add('leatherworking') }}></input>Leatherworking<br></br>
+            <input type="checkbox" value="Tailoring" onClick={() => { this.add('tailoring') }}></input>Tailoring<br></br>
             <button className="DBbutton" onClick={this.viewItems}>Submit</button>
           </form>
         </div>

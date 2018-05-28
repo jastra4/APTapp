@@ -1,4 +1,6 @@
-export const searchReducer = (state = [], action) => {
+const defaultState = [];
+
+export const searchReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'ITEM_LIST':
       return action.payload;

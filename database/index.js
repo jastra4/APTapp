@@ -56,7 +56,7 @@ connection.connect(function (err) {
   // });
 });
 
-var updateyMySQLprofessions = (id, name) => {
+var addProfessionSQL = (id, name) => {
   name = name.replace("'", "''");
   var update = "INSERT INTO PROFESSIONS (ID, NAME ) VALUES (" + id + ",'" + name + "')";
   connection.query(update, function (err, result) {
@@ -68,7 +68,7 @@ var updateyMySQLprofessions = (id, name) => {
   })
 }
 
-var updateyMySQLcategories = (id, name) => {
+var addTypeSQL = (id, name) => {
   name = name.replace("'", "''");
   var update = "INSERT INTO CATEGORIES (ID, NAME ) VALUES (" + id + ",'" + name + "')";
   connection.query(update, function (err, result) {
@@ -80,10 +80,9 @@ var updateyMySQLcategories = (id, name) => {
   })
 }
 
-var updateyMySQLitems = (id, name, category, profession) => {
+var addItemSQL = (id, name, category, profession) => {
   name = name.replace("'", "''");
   var update = "INSERT INTO ITEMS (ID, NAME, C_ID, P_ID ) VALUES (" + id + ",'" + name + "','" + category + "','" + profession + "')";
-  // var update = "INSERT INTO ITEMS (ID, NAME, C_ID, P_ID) VALUES (" + id + "," + name + ",'" + category + "','" + profession + "')";
   connection.query(update, function (err, result) {
     if (err) {
       console.log('insert error ', err);
@@ -93,19 +92,7 @@ var updateyMySQLitems = (id, name, category, profession) => {
   })
 }
 
-var updateyMySQL = (itemName, itemID) => {
-  itemName = itemName.replace("'", "''");
-  var update = "INSERT INTO ITEMS (I_ID, I_NAME) VALUES (" + itemID + ",'" + itemName + "')";
-  connection.query(update, function (err, result) {
-    if (err) {
-      console.log('insert error ', err);
-    } else {
-      console.log("1 record inserted");
-    };
-  })
-}
-
-var removeMySQL = (itemName) => {
+var deleteItemSQL = (itemName) => {
   itemName = itemName.replace("'", "''");
   connection.query("DELETE FROM ITEMS WHERE NAME LIKE '" + itemName + "'", (err) => {
     if (err) {
@@ -117,7 +104,7 @@ var removeMySQL = (itemName) => {
 }
 
 // get an item's id based on name
-var searchMySQL = (itemName, callback) => {
+var lookupItemID = (itemName, callback) => {
   let test = itemName.replace("'", "''");
   connection.query("SELECT * FROM ITEMS WHERE NAME LIKE '" + test + "'", function (err, result, fields) {
     if (err) {
@@ -130,7 +117,7 @@ var searchMySQL = (itemName, callback) => {
 }
 
 // get a list of item names based on profession(s) and category
-var searchMySQL2 = (professions, category, callback) => {
+var lookupItems = (professions, category, callback) => {
   let customIN = '';
   professions.forEach((prof, i, profs) => {
     connection.query("select ID from PROFESSIONS where NAME = '" + prof + "'", function (err, result, fields) {
@@ -152,14 +139,6 @@ var searchMySQL2 = (professions, category, callback) => {
       };
     });
   })
-  // connection.query("SELECT NAME FROM ITEMS WHERE C_ID IN (select ID from CATEGORIES where NAME = '" + category + "') AND P_ID IN (select ID from PROFESSIONS where NAME = '" + professions[0] + "' OR NAME = '" + professions[1] + "' OR NAME = '" + professions[2] + "')", function (err, result, fields) {
-  //   if (err) {
-  //     console.log('query error ', err);
-  //     callback(null);
-  //   } else {
-  //     callback(result)
-  //   };
-  // });
 }
 
 /************************************************************/
@@ -234,7 +213,6 @@ var selectAll = function(item, callback) {
         col.find({"item": item}, (err, results) => {
           if (err) {
             let hist = {};
-            // could change null to []
             hist.results = [];
             hist.stamp = doc.name;
             list.push(hist);
@@ -273,14 +251,13 @@ const deleteBatch = function() {
 /************************************************************/
 
 module.exports = {
+  addProfessionSQL,
+  addTypeSQL,
+  addItemSQL,
+  deleteItemSQL,
+  lookupItemID,
+  lookupItems,
   insertBatch,
   selectAll,
   deleteBatch,
-  searchMySQL,
-  searchMySQL2,
-  updateyMySQL,
-  removeMySQL,
-  updateyMySQLitems,
-  updateyMySQLprofessions,
-  updateyMySQLcategories,
 }

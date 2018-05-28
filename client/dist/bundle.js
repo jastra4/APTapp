@@ -1149,14 +1149,14 @@ module.exports = defaults;
 
 "use strict";
 const updateMarketSummary = dailySummary => ({
-    type: 'UPDATE',
-    payload: dailySummary
+  type: 'UPDATE',
+  payload: dailySummary
 });
 /* harmony export (immutable) */ __webpack_exports__["b"] = updateMarketSummary;
 
 
 const clearMarketSummary = () => ({
-    type: 'CLEAR'
+  type: 'CLEAR'
 });
 /* harmony export (immutable) */ __webpack_exports__["a"] = clearMarketSummary;
 
@@ -12630,14 +12630,14 @@ return jQuery;
 
 "use strict";
 const loadResults = items => ({
-   type: 'ITEM_LIST',
-   payload: items
+  type: 'ITEM_LIST',
+  payload: items
 });
 /* harmony export (immutable) */ __webpack_exports__["b"] = loadResults;
 
 
 const clearSearchResults = () => ({
-   type: 'CLEAR'
+  type: 'CLEAR'
 });
 /* harmony export (immutable) */ __webpack_exports__["a"] = clearSearchResults;
 
@@ -32231,7 +32231,9 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const searchReducer = (state = [], action) => {
+const defaultState = [];
+
+const searchReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'ITEM_LIST':
       return action.payload;
@@ -32249,11 +32251,11 @@ const searchReducer = (state = [], action) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const summaryReducer = (state = [], action) => {
+const defaultState = [];
+
+const summaryReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'UPDATE':
-      console.log('summaryReducer updated');
-
       return [...state, action.payload];
     case 'CLEAR':
       return [];
@@ -32269,7 +32271,9 @@ const summaryReducer = (state = [], action) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const loadingReducer = (state = { status: false, message: '' }, action) => {
+const defaultState = { status: false, message: '' };
+
+const loadingReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'LOADING':
       return action.payload;
@@ -33257,8 +33261,8 @@ module.exports = function spread(callback) {
 
 "use strict";
 const loadingStatus = update => ({
-    type: 'LOADING',
-    payload: update
+  type: 'LOADING',
+  payload: update
 });
 /* harmony export (immutable) */ __webpack_exports__["a"] = loadingStatus;
 
@@ -33839,17 +33843,13 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 
   viewItems(e) {
     e.preventDefault();
-    // $('input[type="checkbox"]:checked').prop('checked', false);
     this.setState({
-      // professions: [],
       reagent: [],
       consumable: [],
       equipment: []
     });
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/viewItems?item=${this.state.professions}`).then(res => {
-      console.log('res ', res.data);
       this.setState({
-        //professions: [],
         reagent: res.data.reagent,
         consumable: res.data.consumable,
         equipment: res.data.equipment
@@ -33863,7 +33863,6 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
   }
 
   add(val) {
-    // add to profs if not selected, remove from profs if it was selected
     if (this.state.professions.includes(val) === false) {
       let arr = this.state.professions;
       arr.push(val);
@@ -33873,11 +33872,7 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
     } else {
       var index = this.state.professions.indexOf(val);
       this.state.professions.splice(index, 1);
-      // this.setState({
-      //   professions: this.state.professions.splice(index, 1)
-      // })
     }
-    console.log(this.state);
   }
 
   render() {
@@ -33955,7 +33950,7 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'test' },
+        { className: 'typeLists' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'DBlist' },
@@ -34010,13 +34005,6 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Professions);
-
-// when user clicks back on market view, the list of daily breakdowns gets re-renderd, and they all update the store again
-// this creates duplicates in the store of all summaries
-// additionally, the time stamp on the duplicates is not formatted correctly for parseTime in Graph.js
-// returning null and causing the front end to crash
-
-// I expect preventing duplicates from being added to solve both issues
 
 /***/ }),
 /* 113 */

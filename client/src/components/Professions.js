@@ -19,18 +19,14 @@ class Professions extends React.Component {
 
   viewItems(e) {
     e.preventDefault();
-    // $('input[type="checkbox"]:checked').prop('checked', false);
     this.setState({
-      // professions: [],
       reagent: [],
       consumable: [],
       equipment: [],
     })
     axios.get(`/viewItems?item=${this.state.professions}`)
       .then((res) => {
-        console.log('res ', res.data);
         this.setState({
-          //professions: [],
           reagent: res.data.reagent,
           consumable: res.data.consumable,
           equipment: res.data.equipment,
@@ -45,7 +41,6 @@ class Professions extends React.Component {
   }
 
   add(val) {
-    // add to profs if not selected, remove from profs if it was selected
     if (this.state.professions.includes(val) === false) {
       let arr = this.state.professions;
       arr.push(val);
@@ -55,11 +50,7 @@ class Professions extends React.Component {
     } else {
       var index = this.state.professions.indexOf(val);
       this.state.professions.splice(index, 1)
-      // this.setState({
-      //   professions: this.state.professions.splice(index, 1)
-      // })
     }
-    console.log(this.state);
   }
 
   render() {
@@ -82,7 +73,7 @@ class Professions extends React.Component {
             <button className="DBbutton" onClick={this.viewItems}>Submit</button>
           </form>
         </div>
-        <div className="test">
+        <div className="typeLists">
           <div className="DBlist">
             <div className="DBlistHeader">Reagents</div>
             <div className="DBlistItems">
@@ -114,10 +105,3 @@ class Professions extends React.Component {
 }
 
 export default Professions;
-
-// when user clicks back on market view, the list of daily breakdowns gets re-renderd, and they all update the store again
-// this creates duplicates in the store of all summaries
-// additionally, the time stamp on the duplicates is not formatted correctly for parseTime in Graph.js
-// returning null and causing the front end to crash
-
-// I expect preventing duplicates from being added to solve both issues

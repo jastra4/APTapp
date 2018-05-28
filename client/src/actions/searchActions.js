@@ -1,8 +1,8 @@
 export const loadResults = (items) => ({
-   type: 'ITEM_LIST',
-   payload: items,
+  type: 'ITEM_LIST',
+  payload: items,
 });
 
 export const clearSearchResults = () => ({
-    type: 'CLEAR',
+  type: 'CLEAR',
 });

@@ -1,8 +1,8 @@
-export const summaryReducer = (state = [], action) => {
+const defaultState = [];
+
+export const summaryReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'UPDATE':
-      console.log('summaryReducer updated');
-    
       return (
       	[...state,
       	action.payload]

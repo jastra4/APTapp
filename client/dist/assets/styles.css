@@ -171,17 +171,24 @@
 }
 
 .DBprofs {
-  width: 25%;
+  width: 19%;
+  min-width: 8em;
   float: left;
   text-align: left;
 }
 
 .DBbutton {
   display: block;
+  margin: 0.2em;
+}
+
+.test {
+  width: 80%;
+  display: inline-block;
 }
 
 .DBlist {
-  width: 20%;
+  width: 30%;
   float: left;
   margin-left: 1em;
 }

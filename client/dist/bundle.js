@@ -12738,7 +12738,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { onClick: this.itemsView, className: 'itemView' },
-          'Items View'
+          'Item Database'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
@@ -33796,7 +33796,7 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
+      professions: [],
       reagent: [],
       consumable: [],
       equipment: []
@@ -33810,35 +33810,43 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
     e.preventDefault();
     // $('input[type="checkbox"]:checked').prop('checked', false);
     this.setState({
-      categories: [],
-      reagent: [{ NAME: 'Dreamleaf' }, { NAME: 'Felwort' }, { NAME: 'Astral Glory' }],
-      consumable: [{ NAME: 'avalanche elixir' }, { NAME: 'astral healing potion' }, { NAME: 'flask of ten thousand scars' }],
-      equipment: [{ NAME: 'demonsteel helm' }, { NAME: 'empyrial breastplate' }, { NAME: 'infernal alchemist stone' }]
+      // professions: [],
+      reagent: [],
+      consumable: [],
+      equipment: []
     });
-    // axios.get(`/viewItems?item=${this.state.categories}`)
-    //   .then((res) => {
-    //     console.log('res ', res.data);
-    //     this.setState({
-    //       categories: [],
-    //       reagent: res.data.reagent,
-    //       consumable: res.data.consumable,
-    //       equipment: res.data.equipment,
-    //     })
-    //   })
-    //   .catch((res) => {
-    //     console.log('error ', res);
-    //     this.setState({
-    //       categories: []
-    //     })
-    //   });
+    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(`/viewItems?item=${this.state.professions}`).then(res => {
+      console.log('res ', res.data);
+      this.setState({
+        //professions: [],
+        reagent: res.data.reagent,
+        consumable: res.data.consumable,
+        equipment: res.data.equipment
+      });
+    }).catch(res => {
+      console.log('error ', res);
+      this.setState({
+        professions: []
+      });
+    });
   }
 
   add(val) {
-    let arr = this.state.categories;
-    arr.push(val);
-    this.setState({
-      categories: arr
-    });
+    // add to profs if not selected, remove from profs if it was selected
+    if (this.state.professions.includes(val) === false) {
+      let arr = this.state.professions;
+      arr.push(val);
+      this.setState({
+        professions: arr
+      });
+    } else {
+      var index = this.state.professions.indexOf(val);
+      this.state.professions.splice(index, 1);
+      // this.setState({
+      //   professions: this.state.professions.splice(index, 1)
+      // })
+    }
+    console.log(this.state);
   }
 
   render() {
@@ -33902,50 +33910,54 @@ class Professions extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'DBlist' },
+        { className: 'test' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'DBlistHeader' },
-          'Reagents'
+          { className: 'DBlist' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'DBlistHeader' },
+            'Reagents'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'DBlistItems' },
+            this.state.reagent.map((data, i) => {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__DBitem__["a" /* default */], { key: i, name: data.NAME });
+            })
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'DBlistItems' },
-          this.state.reagent.map((data, i) => {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__DBitem__["a" /* default */], { key: i, name: data.NAME });
-          })
-        )
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'DBlist' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'DBlistHeader' },
-          'Comsumables'
+          { className: 'DBlist' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'DBlistHeader' },
+            'Comsumables'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'DBlistItems' },
+            this.state.consumable.map((data, i) => {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__DBitem__["a" /* default */], { key: i, name: data.NAME });
+            })
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'DBlistItems' },
-          this.state.consumable.map((data, i) => {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__DBitem__["a" /* default */], { key: i, name: data.NAME });
-          })
-        )
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'DBlist' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'DBlistHeader' },
-          'Equipment'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'DBlistItems' },
-          this.state.equipment.map((data, i) => {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__DBitem__["a" /* default */], { key: i, name: data.NAME });
-          })
+          { className: 'DBlist' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'DBlistHeader' },
+            'Equipment'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'DBlistItems' },
+            this.state.equipment.map((data, i) => {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__DBitem__["a" /* default */], { key: i, name: data.NAME });
+            })
+          )
         )
       )
     );

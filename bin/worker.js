@@ -31,7 +31,7 @@ const dumpSchema = mongoose.Schema({
 const blizzard = require('blizzard.js').initialize({ apikey: process.env.BLIZZARD_API });
 const rp = require('request-promise');
 
-blizzard.wow.auction({ realm: 'Thrall', origin: 'US' })
+blizzard.wow.auction({ realm: 'Tichondrius', origin: 'US' })
 .then(response => {
 		rp(response.data.files[0].url).then((results) => {
 		insertBatch(results)
